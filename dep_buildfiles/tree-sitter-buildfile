@@ -1,0 +1,51 @@
+project := "tree-sitter-project".
+
+project_version := "1.0.0".
+
+buildfile_version := "1.0".
+
+url_to_src := "https://github.com/tree-sitter/tree-sitter/archive/cfa474b82a55eca5ba3905c27d9ebbe99fcfb823.zip".
+
+build tree_sitter.
+
+ options.
+
+  on toolchain_select("-s", "--select_toolchain=tool", "Select toolchain.").
+
+  on get_filepath("-g", "--get_filepath=filepath", "Get filepath(include path).").
+
+ end options.
+
+ get toolchain_select.
+
+ get get_filepath.
+
+ if ( toolchain_select == nil ).
+
+  var toolchain_select := "clang".
+
+ end if.
+
+ files Files("lib/src/lib.c").
+
+ sources Source(Files).
+
+ make filepath include_path from "resources" to "lib/include".
+
+ compiler CompilerFlags("-Wall", "-I " + include_path,"-I " + get_filepath).
+
+ toolchain ToolChain(toolchain_select,CompilerFlags).
+
+ output tree_sitter_lib("library",Source,ToolChain).
+
+end build.
+
+build clean_build.
+
+ message("Cleaning tree-sitter...").
+
+ clean("build").
+
+end build.
+
+default tree_sitter.

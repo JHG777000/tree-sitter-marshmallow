@@ -1,0 +1,17 @@
+{
+  "name": "tree-sitter-marshmallow",
+  "version": "0.0.1",
+  "description": "tree-sitter parser for marshmallow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jacob Gordon",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.12.1"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.14.5"
+  }
+}
