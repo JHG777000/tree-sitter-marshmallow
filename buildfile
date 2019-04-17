@@ -1,6 +1,6 @@
 project := "tree-sitter-marshmallow-parser-project".
 
-project_version := "0.0.3".
+project_version := "0.0.4".
 
 buildfile_version := "1.0".
 
@@ -37,6 +37,8 @@ build tree_sitter_marshmallow_parser.
  format(tree_sitter_dep_utf8proc_include).
 
  subproject tree_sitter_project("local",tree_sitter_buildfile,"-d -i __g_" + tree_sitter_dep_utf8proc_include).
+
+ return_output tree_sitter_project.
 
  grab tree_sitter_lib from tree_sitter_project.
 
