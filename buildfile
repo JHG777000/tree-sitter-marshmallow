@@ -1,6 +1,6 @@
 project := "tree-sitter-marshmallow-parser-project".
 
-project_version := "0.0.4".
+project_version := "0.0.5".
 
 buildfile_version := "1.0".
 
@@ -28,6 +28,8 @@ build tree_sitter_marshmallow_parser.
 
  subproject tree_sitter_dep_utf8proc_project("local",tree_sitter_dep_utf8proc_buildfile,"-d").
 
+ return_output tree_sitter_dep_utf8proc_project.
+
  make filepath tree_sitter_buildfile_path from "resources" to "dep_buildfiles/tree-sitter-buildfile".
 
  files tree_sitter_buildfile(tree_sitter_buildfile_path).
@@ -46,7 +48,7 @@ build tree_sitter_marshmallow_parser.
 
  files Files("src/parser.c").
 
- sources Source(Files,tree_sitter_lib,tree_sitter_dep_utf8proc_lib).
+ sources Source(Files).
 
  make filepath tree_sitter_include from "resources" to "lib/include" from tree_sitter_project.
 
