@@ -391,7 +391,7 @@ module.exports = grammar({
 
     null: $ => 'null',
 
-    identifier: $ => /[a-zA-Z_]\w*/,
+    identifier: $ => /[a-zA-Z]\w*/,
 
     string: $ => seq('"',repeat(token(/[^\"]+/)),'"'),
 
@@ -426,9 +426,9 @@ module.exports = grammar({
 
     long: $ => token(seq(/\d+/,'l')),
 
-    float: $ => token(seq(choice(/\d+(\.(\d+)?)?/,/\.\d+/),'f')),
+    float: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),'f',')')),
 
-    double: $ => token(choice(/\d+(\.(\d+)?)?/,/\.\d+/)),
+    double: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),')')),
 
     hex: $ => token(seq('0x', /[0-9a-fA-f]+/)),
 

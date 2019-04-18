@@ -1590,7 +1590,7 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_]\\w*"
+      "value": "[a-zA-Z]\\w*"
     },
     "string": {
       "type": "SEQ",
@@ -1767,6 +1767,10 @@
         "type": "SEQ",
         "members": [
           {
+            "type": "STRING",
+            "value": "("
+          },
+          {
             "type": "CHOICE",
             "members": [
               {
@@ -1782,6 +1786,10 @@
           {
             "type": "STRING",
             "value": "f"
+          },
+          {
+            "type": "STRING",
+            "value": ")"
           }
         ]
       }
@@ -1789,15 +1797,28 @@
     "double": {
       "type": "TOKEN",
       "content": {
-        "type": "CHOICE",
+        "type": "SEQ",
         "members": [
           {
-            "type": "PATTERN",
-            "value": "\\d+(\\.(\\d+)?)?"
+            "type": "STRING",
+            "value": "("
           },
           {
-            "type": "PATTERN",
-            "value": "\\.\\d+"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "\\d+(\\.(\\d+)?)?"
+              },
+              {
+                "type": "PATTERN",
+                "value": "\\.\\d+"
+              }
+            ]
+          },
+          {
+            "type": "STRING",
+            "value": ")"
           }
         ]
       }

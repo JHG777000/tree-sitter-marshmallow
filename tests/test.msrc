@@ -13,7 +13,11 @@ module mymod.
 
  constructor myclass().
 
-  i32 myvar := (.2f).
+  f32 myvar := (.2f).
+
+  i32 myvar2 := 1.
+
+  u64 😀 := '😀'.
 
   f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
 
@@ -29,7 +33,7 @@ module mymod.
 
  function myfunc(i8 arg1, i32 arg2 := '\0', f32 arg3 := null) returns i32, i32.
 
-   i32 myvar := (.2f).
+   f32 myvar := (.2f).
 
    f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
 
