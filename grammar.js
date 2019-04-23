@@ -391,7 +391,7 @@ module.exports = grammar({
 
     null: $ => 'null',
 
-    identifier: $ => /[a-zA-Z]\w*/,
+    identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\){}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\){}:=,!]*/,
 
     string: $ => seq('"',repeat(token(/[^\"]+/)),'"'),
 
