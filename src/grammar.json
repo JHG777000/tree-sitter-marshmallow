@@ -429,20 +429,20 @@
         },
         {
           "type": "SYMBOL",
-          "name": "compound_template"
+          "name": "compound_macro"
         },
         {
           "type": "SYMBOL",
-          "name": "compound_template_block"
+          "name": "compound_macro_block"
         }
       ]
     },
-    "compound_template_block": {
+    "compound_macro_block": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "compound_template"
+          "name": "compound_macro"
         },
         {
           "type": "REPEAT",
@@ -453,11 +453,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "end_compound_template"
+          "name": "end_compound_macro"
         }
       ]
     },
-    "end_compound_template": {
+    "end_compound_macro": {
       "type": "SEQ",
       "members": [
         {
@@ -466,11 +466,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "compound_template"
+          "name": "compound_macro"
         }
       ]
     },
-    "compound_template": {
+    "compound_macro": {
       "type": "SEQ",
       "members": [
         {
@@ -1869,7 +1869,7 @@
   "conflicts": [
     [
       "_definitions",
-      "compound_template_block"
+      "compound_macro_block"
     ]
   ],
   "externals": [],

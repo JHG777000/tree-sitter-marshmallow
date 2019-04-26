@@ -6,7 +6,7 @@ module.exports = grammar({
       $._comment,
     ],
     conflicts: $ => [
-    [$._definitions, $.compound_template_block],
+    [$._definitions, $.compound_macro_block],
   ],
 
   rules: {
@@ -78,19 +78,19 @@ module.exports = grammar({
      $.function_definition,
      $.variable_definition,
      $.enum_definition,
-     $.compound_template,
-     $.compound_template_block,
+     $.compound_macro,
+     $.compound_macro_block,
     ),
 
-    compound_template_block: $ => seq(
-      $.compound_template,
+    compound_macro_block: $ => seq(
+      $.compound_macro,
       repeat($._statement),
-      $.end_compound_template,
+      $.end_compound_macro,
     ),
 
-    end_compound_template: $ => seq('end',$.compound_template),
+    end_compound_macro: $ => seq('end',$.compound_macro),
 
-    compound_template: $ => seq(
+    compound_macro: $ => seq(
       $.identifier,
       repeat(seq($._space,$.identifier)),
       optional($.parameter_list),
