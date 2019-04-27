@@ -9,9 +9,9 @@
   "author": "Jacob Gordon",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.12.1"
+    "nan": "^2.13.2"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.14.5"
+    "tree-sitter-cli": "^0.14.6"
   }
 }

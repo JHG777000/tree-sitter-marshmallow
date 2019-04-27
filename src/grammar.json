@@ -420,8 +420,17 @@
           "name": "function_definition"
         },
         {
-          "type": "SYMBOL",
-          "name": "variable_definition"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "variable_definition"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            }
+          ]
         },
         {
           "type": "SYMBOL",

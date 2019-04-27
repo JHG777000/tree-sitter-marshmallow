@@ -76,7 +76,7 @@ module.exports = grammar({
     _definitions: $ => choice(
      $.declaration_definition,
      $.function_definition,
-     $.variable_definition,
+     seq($.variable_definition,'.'),
      $.enum_definition,
      $.compound_macro,
      $.compound_macro_block,
