@@ -2,11 +2,40 @@
   "name": "marshmallow",
   "rules": {
     "source_file": {
-      "type": "REPEAT",
-      "content": {
-        "type": "SYMBOL",
-        "name": "module_definition"
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "module_definition"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sentences"
+        }
+      ]
+    },
+    "sentences": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "​"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "sentence"
+          }
+        }
+      ]
+    },
+    "sentence": {
+      "type": "SYMBOL",
+      "name": "module_definition"
     },
     "_space": {
       "type": "PATTERN",

@@ -11,7 +11,11 @@ module.exports = grammar({
 
   rules: {
 
-    source_file: $ => repeat($.module_definition),
+    source_file: $ => choice(repeat($.module_definition),$.sentences),
+
+    sentences: $ => seq('\u{200B}',repeat($.sentence)),
+
+    sentence: $ => $.module_definition,
 
     _space: $ => /\s/,
 
