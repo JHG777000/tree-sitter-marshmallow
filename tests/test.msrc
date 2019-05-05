@@ -1,12 +1,12 @@
--+*************************************************************
++-*************************************************************
 *  Block comments in marshmallow.                             *
 *                                                             *
 *                                                             *
-*************************************************************+-
+*************************************************************-+
 
 module mymod.
 
- external function puts(u8* string).
+ external function puts(s8 string).
 
  enum ( enum1 := 5223, enum2, enum3 := 42, enum4 := (-(40+2)), enum5 := 0, enum6 := (3<<3) ) myenum.
 
@@ -30,7 +30,7 @@ module mymod.
 
  end constructor.
 
- function myfunc(i8 arg1, i32 arg2 := '\0', f32 arg3 := null) returns i32, i32.
+ function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null) returns i32, i32.
 
    f32 myvar := (.2f).
 
@@ -78,7 +78,7 @@ module mymod.
 
    if (j) goto helloworld.
 
-   return (1+1).
+   return {4,(1+1)}.
 
  end function.
 

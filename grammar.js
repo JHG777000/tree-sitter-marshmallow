@@ -15,8 +15,6 @@ module.exports = grammar({
 
     sentences: $ => seq('\u{200B}',repeat($.sentence)),
 
-    sentence: $ => $.module_definition,
-
     _space: $ => /\s/,
 
     //https://github.com/tree-sitter/tree-sitter-c/blob/5b250e138af1d56331117e328ff87ec9d5feb829/grammar.js#L734
@@ -24,9 +22,9 @@ module.exports = grammar({
      seq('//', /.*/),
      seq('---', /.*/),
      seq(
-       '-+',
-       /[^+]*\++([^+-][^+]*\++)*/,
-       '-'
+       '+-',
+       /[^-]*\-+([^-+][^-]*\-+)*/,
+       '+'
      ),
    )),
 
@@ -44,32 +42,54 @@ module.exports = grammar({
 
     _comma_list_types: $ => seq($.type,repeat(seq(',',$.type))),
 
-   readonly: $ => 'readonly',
+    readonly: $ => 'readonly',
 
-   access_control: $ => choice('private', 'protected', 'publish'),
+    access_control: $ => choice('private', 'protected', 'publish'),
 
-   end_module: $ => seq('end','module'),
+    end_module: $ => seq('end','module'),
 
-   end_function: $ => seq('end','function'),
+    end_function: $ => seq('end','function'),
 
-   end_method: $ => seq('end','method'),
+    end_method: $ => seq('end','method'),
 
-   end_if: $ => seq('end','if'),
+    end_if: $ => seq('end','if'),
 
-   end_while: $ => seq('end','while'),
+    end_while: $ => seq('end','while'),
 
-   end_switch: $ => seq('end','switch'),
+    end_switch: $ => seq('end','switch'),
 
-   end_case: $ => seq('end','case'),
+    end_case: $ => seq('end','case'),
 
-   end_default: $ => seq('end','default'),
+    end_default: $ => seq('end','default'),
 
-   _end_function: $ => choice($.end_function,$.end_method),
+    _end_function: $ => choice($.end_function,$.end_method),
+
+    _start_module_definition: $ => seq('module',$.identifier,'.',),
+
+    start_module_definition: $ => $._start_module_definition,
+
+    //unstructured subgrammar for eval statements
+    sentence: $ => choice(
+      $.start_module_definition,
+      $.function_signature,
+      $.enum_definition,
+      $.compound_macro,
+      $.end_compound_macro,
+      $.expression_statement,
+      $.return_statement,
+      $.single_line_if_statement,
+      seq($._control_flow_statement_without_block,'.'),
+      seq($._variable_statement,'.'),
+      seq($.end_module,'.'),
+      seq($.end_if,'.'),
+      seq($.end_while,'.'),
+      seq($.end_case,'.'),
+      seq($.end_default,'.'),
+      seq($._end_function,'.'),
+    ),
 
     module_definition: $ => seq(
-      'module',
-      $.identifier,
-      '.',
+      $._start_module_definition,
       repeat(
         $._definitions
       ),
@@ -207,6 +227,14 @@ module.exports = grammar({
   ),
 
   _control_flow_statement: $ => choice(
+    $.if_statement_with_block,
+    $.while_statement_with_block,
+    $.switch_statement_with_block,
+    $.goto_statement,
+    $.section_statement,
+  ),
+
+  _control_flow_statement_without_block: $ => choice(
     $.if_statement,
     $.while_statement,
     $.switch_statement,
@@ -231,43 +259,73 @@ module.exports = grammar({
     ,
   ),
 
-  if_statement: $ => seq(
+  if_statement: $ => $._if_statement,
+
+  _if_statement: $ => seq(
    'if',
    $.group_expression,
    '.',
+  ),
+
+  if_statement_with_block: $ => seq(
+   $._if_statement,
    repeat($._statement),
    $.end_if,
   ),
 
-  while_statement: $ => seq(
+  while_statement: $ => $._while_statement,
+
+  _while_statement: $ => seq(
    'while',
    $.group_expression,
    '.',
+  ),
+
+  while_statement_with_block: $ => seq(
+   $._while_statement,
    repeat($._statement),
    $.end_while,
   ),
 
-  switch_statement: $ => seq(
+  switch_statement: $ => $._switch_statement,
+
+  _switch_statement: $ => seq(
    'switch',
    $.group_expression,
    '.',
-   repeat($.case_statement),
-   $.default_statement,
+  ),
+
+  switch_statement_with_block: $ => seq(
+   $._switch_statement,
+   repeat($.case_statement_with_block),
+   $.default_statement_with_block,
    $.end_switch,
   ),
 
-  case_statement: $ => seq(
+  case_statement: $ => $._case_statement,
+
+  _case_statement: $ => seq(
    'case',
    $.group_expression,
    '.',
+  ),
+
+  case_statement_with_block: $ => seq(
+   $._case_statement,
    repeat($._statement),
    $.end_case,
    '.',
   ),
 
-  default_statement: $ => seq(
+  default_statement: $ => $._default_statement,
+
+  _default_statement: $ => seq(
    'default',
    '.',
+  ),
+
+  default_statement_with_block: $ => seq(
+   $._default_statement,
    repeat($._statement),
    $.end_default,
    '.',
@@ -376,7 +434,7 @@ module.exports = grammar({
 
     collection: $ => seq(
     '{',
-     $._comma_list_collection_or_value,
+     $._comma_list_assignment_or_collection_or_value,
     '}',
     ),
 
