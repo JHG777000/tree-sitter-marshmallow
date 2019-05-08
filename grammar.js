@@ -51,12 +51,12 @@ module.exports = grammar({
 
     _sentence: $ => seq(
       choice(
-        $._definition,
-        $._statement),
+        $.definition,
+        $.statement),
         '.',
       ),
 
-    _definition: $ => choice(
+    definition: $ => choice(
      $.module_definition,
      $.declaration_definition,
      $.function_definition,
@@ -163,7 +163,7 @@ module.exports = grammar({
      ),
    ),
 
-    _statement: $ => choice(
+    statement: $ => choice(
       choice(
       $.expression_statement,
       $._control_flow_statement,
@@ -210,7 +210,7 @@ module.exports = grammar({
   single_line_if_statement: $ => seq(
     'if',
     $.group_expression,
-    $._statement
+    $.statement
     ,
   ),
 
