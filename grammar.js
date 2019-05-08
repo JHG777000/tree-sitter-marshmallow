@@ -6,14 +6,12 @@ module.exports = grammar({
       $._comment,
     ],
     conflicts: $ => [
-    [$._definitions, $.compound_macro_block],
+    [$._value, $.compound_macro],
   ],
 
   rules: {
 
-    source_file: $ => choice(repeat($.module_definition),$.sentences),
-
-    sentences: $ => seq('\u{200B}',repeat($.sentence)),
+    source_file: $ => repeat($._sentence),
 
     _space: $ => /\s/,
 
@@ -51,80 +49,35 @@ module.exports = grammar({
 
     access_control: $ => choice('private', 'protected', 'publish'),
 
-    end_module: $ => seq('end','module'),
+    _sentence: $ => seq(
+      choice(
+        $._definition,
+        $._statement),
+        '.',
+      ),
 
-    end_function: $ => seq('end','function'),
-
-    end_method: $ => seq('end','method'),
-
-    end_if: $ => seq('end','if'),
-
-    end_while: $ => seq('end','while'),
-
-    end_switch: $ => seq('end','switch'),
-
-    end_case: $ => seq('end','case'),
-
-    end_default: $ => seq('end','default'),
-
-    _end_function: $ => choice($.end_function,$.end_method),
-
-    _start_module_definition: $ => seq('module',$.identifier,'.',),
-
-    start_module_definition: $ => $._start_module_definition,
-
-    //unstructured subgrammar for eval statements
-    sentence: $ => choice(
-      $.start_module_definition,
-      $.function_signature,
-      $.enum_definition,
-      $.compound_macro,
-      $.end_compound_macro,
-      $.expression_statement,
-      $.return_statement,
-      $.single_line_if_statement,
-      seq($._control_flow_statement_without_block,'.'),
-      seq($._variable_statement,'.'),
-      seq($.end_module,'.'),
-      seq($.end_if,'.'),
-      seq($.end_while,'.'),
-      seq($.end_case,'.'),
-      seq($.end_default,'.'),
-      seq($._end_function,'.'),
+    _definition: $ => choice(
+     $.module_definition,
+     $.declaration_definition,
+     $.function_definition,
+     $.variable_definition,
+     $.enum_definition,
+     $.compound_macro,
+     $.end_compound_macro,
     ),
 
     module_definition: $ => seq(
-      $._start_module_definition,
-      repeat(
-        $._definitions
-      ),
-      $.end_module,
-      '.',
+      'module',
+      $.identifier,
     ),
-
-    _definitions: $ => choice(
-     $.declaration_definition,
-     $.function_definition,
-     seq($.variable_definition,'.'),
-     $.enum_definition,
-     $.compound_macro,
-     $.compound_macro_block,
-    ),
-
-    compound_macro_block: $ => seq(
-      $.compound_macro,
-      repeat($._statement),
-      $.end_compound_macro,
-    ),
-
-    end_compound_macro: $ => seq('end',$.compound_macro),
 
     compound_macro: $ => seq(
       $.identifier,
       repeat(seq($._space,$.identifier)),
       optional($.parameter_list),
-      '.'
     ),
+
+    end_compound_macro: $ => seq('end',$.compound_macro),
 
     _enum_element: $ => seq($.identifier,optional($.static_assignment)),
 
@@ -134,14 +87,13 @@ module.exports = grammar({
     seq($._enum_element,repeat(seq(',',$._enum_element))),
     ')',
     $.identifier,
-    '.',
     ),
 
     is_function: $ => 'function',
 
     is_method: $ => 'method',
 
-    function_signature: $ => seq(
+    function_definition: $ => seq(
     optional($.access_control),
     choice(
      $.is_function,
@@ -150,14 +102,6 @@ module.exports = grammar({
     $.identifier,
     optional($.parameter_list),
     optional($.return_list),
-    '.',
-    ),
-
-    function_definition: $ => seq(
-      $.function_signature,
-      repeat($._statement),
-      $._end_function,
-      '.',
     ),
 
     variable_definition: $ => seq(
@@ -214,37 +158,43 @@ module.exports = grammar({
    declaration_definition: $ => seq(
      choice($.is_declare,
      $.is_external),
-     choice($.function_signature,
+     choice($.function_definition,
      $.variable_definition,
      ),
    ),
 
     _statement: $ => choice(
-      seq(choice(
-      $._variable_statement,
+      choice(
       $.expression_statement,
       $._control_flow_statement,
       $.return_statement,
+      $.end_statement,
     ),
-    '.',
-    ),
-    $.single_line_if_statement,
+  ),
+
+  end_statement: $ => seq(
+    'end',
+    choice(
+    'module',
+    'function',
+    'method',
+    'if',
+    'while',
+    'switch',
+    'case',
+    'default',
+   ),
   ),
 
   _control_flow_statement: $ => choice(
-    $.if_statement_with_block,
-    $.while_statement_with_block,
-    $.switch_statement_with_block,
-    $.goto_statement,
-    $.section_statement,
-  ),
-
-  _control_flow_statement_without_block: $ => choice(
     $.if_statement,
     $.while_statement,
     $.switch_statement,
+    $.case_statement,
+    $.default_statement,
     $.goto_statement,
     $.section_statement,
+    $.single_line_if_statement,
   ),
 
   goto_statement: $ => seq(
@@ -264,79 +214,29 @@ module.exports = grammar({
     ,
   ),
 
-  if_statement: $ => $._if_statement,
-
-  _if_statement: $ => seq(
+  if_statement: $ => seq(
    'if',
    $.group_expression,
-   '.',
   ),
 
-  if_statement_with_block: $ => seq(
-   $._if_statement,
-   repeat($._statement),
-   $.end_if,
-  ),
-
-  while_statement: $ => $._while_statement,
-
-  _while_statement: $ => seq(
+  while_statement: $ => seq(
    'while',
    $.group_expression,
-   '.',
   ),
 
-  while_statement_with_block: $ => seq(
-   $._while_statement,
-   repeat($._statement),
-   $.end_while,
-  ),
-
-  switch_statement: $ => $._switch_statement,
-
-  _switch_statement: $ => seq(
+  switch_statement: $ => seq(
    'switch',
    $.group_expression,
-   '.',
   ),
 
-  switch_statement_with_block: $ => seq(
-   $._switch_statement,
-   repeat($.case_statement_with_block),
-   $.default_statement_with_block,
-   $.end_switch,
-  ),
-
-  case_statement: $ => $._case_statement,
-
-  _case_statement: $ => seq(
+  case_statement: $ => seq(
    'case',
    $.group_expression,
-   '.',
   ),
 
-  case_statement_with_block: $ => seq(
-   $._case_statement,
-   repeat($._statement),
-   $.end_case,
-   '.',
-  ),
-
-  default_statement: $ => $._default_statement,
-
-  _default_statement: $ => seq(
+  default_statement: $ => seq(
    'default',
-   '.',
   ),
-
-  default_statement_with_block: $ => seq(
-   $._default_statement,
-   repeat($._statement),
-   $.end_default,
-   '.',
-  ),
-
-  _variable_statement: $ => $.variable_definition,
 
   static_assignment: $ => seq(
     ':=',
@@ -374,6 +274,7 @@ module.exports = grammar({
     assignment_expression: $ => choice(
       seq(
         $._collection_or_value,
+        repeat($._space), //why?
         $.assignment_op,
         $._collection_or_value,
       ),
