@@ -12,6 +12,8 @@ module mymod.
 
  constructor myclass().
 
+  s8 mystring := "Hello World!!!!".
+
   f32 myvar := (.2f).
 
   i32 myvar2 := 1.

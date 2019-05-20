@@ -361,7 +361,7 @@ module.exports = grammar({
 
     identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\){}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\){}:=,!]*/,
 
-    string: $ => seq('"',repeat(token(/[^\"]+/)),'"'),
+    string: $ => seq('"',repeat(choice(token(/[^\"]/),$._escape_sequence)),'"'),
 
     character: $ => seq("'",choice(token(/[^\'\s]/),$._escape_sequence),"'"),
 
@@ -376,6 +376,8 @@ module.exports = grammar({
     '\\r',
     '\\t',
     '\\v',
+    '\\\"',
+    '\\\'',
     ),
 
     _number: $ => choice(
