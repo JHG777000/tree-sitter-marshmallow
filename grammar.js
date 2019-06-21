@@ -16,17 +16,11 @@ module.exports = grammar({
 
     _space: $ => /\s/,
 
-    _block_comment_star: $ => seq(
-      '/',
-       seq('*',repeat(choice(/[^*/]/,$._block_comment_star,$._block_comment_plus)),'*'),
-      '/'
-    ),
+    _block_comment_star: $ =>
+       seq('/*',repeat(choice(/[^/]/,$._block_comment_star,$._block_comment_plus)),'*/'),
 
-   _block_comment_plus: $ => seq(
-      '+',
-      seq('-',repeat(choice(/[^-+]/,$._block_comment_plus,$._block_comment_star)),'-'),
-      '+'
-   ),
+   _block_comment_plus: $ =>
+      seq('+-',repeat(choice(/[^+]/,$._block_comment_plus,$._block_comment_star)),'-+'),
 
     _comment: $ => choice(
      seq('//', /.*/),
