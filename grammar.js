@@ -3,7 +3,6 @@ module.exports = grammar({
 
   extras: $ => [
       /\s/,
-      $._comment,
     ],
     conflicts: $ => [
     [$._value, $.compound_macro],
@@ -11,25 +10,31 @@ module.exports = grammar({
 
   rules: {
 
-    source_file: $ => repeat($._sentence),
+    source_file: $ => choice(
+      repeat($._sentence),
+    ),
 
     _space: $ => /\s/,
 
-    //https://github.com/tree-sitter/tree-sitter-c/blob/5b250e138af1d56331117e328ff87ec9d5feb829/grammar.js#L734
-    _comment: $ => token(choice(
+    _block_comment_star: $ => seq(
+      '/',
+       seq('*',repeat(choice(/[^*/]/,$._block_comment_star,$._block_comment_plus)),'*'),
+      '/'
+    ),
+
+   _block_comment_plus: $ => seq(
+      '+',
+      seq('-',repeat(choice(/[^-+]/,$._block_comment_plus,$._block_comment_star)),'-'),
+      '+'
+   ),
+
+    _comment: $ => choice(
      seq('//', /.*/),
      seq('---', /.*/),
-     seq(
-       '/*',
-       /[^*]*\*+([^/*][^*]*\*+)*/,
-       '/'
-     ),
-     seq(
-       '+-',
-       /[^-]*\-+([^-+][^-]*\-+)*/,
-       '+'
-     ),
-   )),
+     seq('***', /.*/),
+     $._block_comment_star,
+     $._block_comment_plus,
+   ),
 
     _comma_list_variables: $ => seq($.variable_definition,repeat(seq(',',$.variable_definition))),
 
@@ -49,12 +54,15 @@ module.exports = grammar({
 
     access_control: $ => choice('private', 'protected', 'publish'),
 
-    _sentence: $ => seq(
+    _sentence: $ => choice(
+    seq(
       choice(
         $.definition,
         $.statement),
         '.',
       ),
+      $._comment,
+    ),
 
     definition: $ => choice(
      $.module_definition,
