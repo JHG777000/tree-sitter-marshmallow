@@ -28,6 +28,8 @@ module mymod.
 
   myvar++.
 
+  myvar--.
+
   (myvar++)++.
 
  end constructor.

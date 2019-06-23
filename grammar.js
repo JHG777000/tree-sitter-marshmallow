@@ -24,8 +24,8 @@ module.exports = grammar({
 
     _comment: $ => choice(
      seq('//', /.*/),
-     seq('---', /.*/),
-     seq('***', /.*/),
+     seq('--', /.*/),
+     seq('**', /.*/),
      $._block_comment_star,
      $._block_comment_plus,
    ),
