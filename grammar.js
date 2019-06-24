@@ -26,6 +26,7 @@ module.exports = grammar({
      seq('//', /.*/),
      seq('--', /.*/),
      seq('**', /.*/),
+     seq('++', /.*/),
      $._block_comment_star,
      $._block_comment_plus,
    ),
@@ -52,7 +53,8 @@ module.exports = grammar({
     seq(
       choice(
         $.definition,
-        $.statement),
+        $.statement,
+       ),
         '.',
       ),
       $._comment,
