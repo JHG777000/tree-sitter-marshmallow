@@ -4,9 +4,6 @@ module.exports = grammar({
   extras: $ => [
       /\s/,
     ],
-    conflicts: $ => [
-    [$._value, $.compound_macro],
-  ],
 
   rules: {
 
@@ -45,9 +42,7 @@ module.exports = grammar({
 
     _comma_list_types: $ => seq($.type,repeat(seq(',',$.type))),
 
-    readonly: $ => 'readonly',
-
-    access_control: $ => choice('private', 'protected', 'publish'),
+    access_control: $ => choice('private', 'protected'),
 
     _sentence: $ => choice(
     seq(
@@ -66,8 +61,8 @@ module.exports = grammar({
      $.function_definition,
      $.variable_definition,
      $.enum_definition,
-     $.compound_macro,
-     $.end_compound_macro,
+     $.compound_extension,
+     $.end_extension,
     ),
 
     module_definition: $ => seq(
@@ -75,13 +70,15 @@ module.exports = grammar({
       $.identifier,
     ),
 
-    compound_macro: $ => seq(
-      $.identifier,
-      repeat(seq($._space,$.identifier)),
-      optional($.parameter_list),
-    ),
+    compound_extension: $ => seq(
+     $.identifier,
+     $.scope_op,
+     $.identifier,
+     repeat(seq(optional($._space),choice(seq($.identifier),$.string))),
+     optional($.parameter_list),
+   ),
 
-    end_compound_macro: $ => seq('end',$.compound_macro),
+    end_extension: $ => seq('end',$.identifier),
 
     _enum_element: $ => seq($.identifier,optional($.static_assignment)),
 
@@ -97,8 +94,21 @@ module.exports = grammar({
 
     is_method: $ => 'method',
 
+    is_interface: $ => 'interface',
+
+    is_overridable: $ => 'overridable',
+
+    is_override: $ => 'override',
+
+    _override: $ => choice($.is_overridable,$.is_override),
+
+    is_primitive: $ => 'primitive',
+
     function_definition: $ => seq(
     optional($.access_control),
+    optional($.is_interface),
+    optional($._override),
+    optional($.is_primitive),
     choice(
      $.is_function,
      $.is_method,
@@ -108,9 +118,18 @@ module.exports = grammar({
     optional($.return_list),
     ),
 
+    readability: $ => seq(
+      'readonly',
+      'writelimited',
+      'private_write',
+      'protected_write',
+      'system_readwrite',
+       optional($.array),
+    ),
+
     variable_definition: $ => seq(
      optional($.access_control),
-     optional($.readonly),
+     optional($.readability),
      $.type,
      $.identifier,
      optional($.static_assignment),
@@ -162,8 +181,9 @@ module.exports = grammar({
    declaration_definition: $ => seq(
      choice($.is_declare,
      $.is_external),
-     choice($.function_definition,
-     $.variable_definition,
+     choice(
+      $.function_definition,
+      $.variable_definition,
      ),
    ),
 
@@ -278,7 +298,6 @@ module.exports = grammar({
     assignment_expression: $ => choice(
       seq(
         $._collection_or_value,
-        repeat($._space), //why?
         $.assignment_op,
         $._collection_or_value,
       ),
@@ -288,12 +307,23 @@ module.exports = grammar({
       ),
     ),
 
+
+   scope_op: $ => '::',
+
+   cast_ops: $ => seq(
+    choice('$','$$','$$$'),
+    '(',
+     $.type,
+    ')',
+   ),
+
     unary_op: $ => choice(
      '-',
      '&',
      '*',
      '!',
      '~',
+     $.cast_ops,
     ),
 
     binary_op: $ => choice(
@@ -307,6 +337,7 @@ module.exports = grammar({
       '^',
       '>',
       '<',
+      '$',
       '>=',
       '<=',
       '!=',
@@ -363,7 +394,7 @@ module.exports = grammar({
 
     null: $ => 'null',
 
-    identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\){}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\){}:=,!]*/,
+    identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
 
     string: $ => seq('"',repeat(choice(token(/[^\"]/),$._escape_sequence)),'"'),
 

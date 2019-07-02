@@ -10,7 +10,7 @@ module mymod.
 
  enum ( enum1 := 5223, enum2, enum3 := 42, enum4 := (-(40+2)), enum5 := 0, enum6 := (3<<3) ) myenum.
 
- constructor myclass().
+ constructor::myclass().
 
   s8 mystring := "Hello World!!!!".
 
@@ -19,6 +19,10 @@ module mymod.
   i32 myvar2 := 1.
 
   u64 😃 := '😃'.
+
+  u32 😃2 := ($(u32)😃).
+
+  hello x := ($(i8)($$$(u64)($$$(int*)($$(int[])array)))).
 
   f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
 
