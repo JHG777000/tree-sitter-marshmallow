@@ -4,6 +4,15 @@ module.exports = grammar({
   extras: $ => [
       /\s/,
     ],
+    conflicts: $ => [
+    [$._base_type,$.array_expression],
+    [$._base_type,$.extension],
+    [$._base_type,$._value],
+    [$.access_expression,$.call_expression],
+    [$.access_expression,$.array_expression],
+    [$.scope_expression],
+    [$.access_expression],
+   ],
 
   rules: {
 
@@ -28,7 +37,8 @@ module.exports = grammar({
      $._block_comment_plus,
    ),
 
-    _comma_list_variables: $ => seq($.variable_definition,repeat(seq(',',$.variable_definition))),
+    _comma_list_variables: $ => seq(choice($.variable_definition,$.container_definition),
+      repeat(seq(',',choice($.variable_definition,$.container_definition)))),
 
     _comma_list_values: $ => seq($._value,repeat(seq(',',$._value))),
 
@@ -56,27 +66,51 @@ module.exports = grammar({
     ),
 
     definition: $ => choice(
+     $.use_definition,  
      $.module_definition,
      $.declaration_definition,
      $.function_definition,
      $.variable_definition,
+     $.container_definition,
      $.enum_definition,
-     $.compound_extension,
+     $.extension,
      $.end_extension,
+    ),
+
+    use_definition: $ => seq(
+      choice(
+        'use',
+        'require',
+      ),
+      choice(
+        'module',
+        'package',
+      ),
+      choice(
+       $.identifier,
+       $.scope_expression,
+      ),
     ),
 
     module_definition: $ => seq(
       'module',
-      $.identifier,
+      choice(
+       $.identifier,
+       $.scope_expression,
+      ),
     ),
 
-    compound_extension: $ => seq(
-     $.identifier,
-     $.scope_op,
+    //identifier_definition: $ => prec(1,seq($.identifier,$.identifier)),
+
+    extension: $ => prec.dynamic(1,seq(
+      choice(
+       $.identifier,
+       $.scope_expression,
+      ),
      $.identifier,
      repeat(seq(optional($._space),choice(seq($.identifier),$.string))),
      optional($.parameter_list),
-   ),
+   )),
 
     end_extension: $ => seq('end',$.identifier),
 
@@ -128,12 +162,23 @@ module.exports = grammar({
     ),
 
     variable_definition: $ => seq(
-     optional($.access_control),
-     optional($.readability),
-     $.type,
-     $.identifier,
-     optional($.static_assignment),
-    ),
+      seq(
+       optional($.access_control),
+       optional($.readability),
+       $.type,
+       $.identifier,
+       ),
+       optional($.static_assignment),
+     ),
+
+     container_definition: $ => seq(
+       seq(
+        $.identifier,
+        ':',
+        $.container_types,
+        ),
+        optional($.static_assignment),
+      ),
 
     parameter_list: $ => seq(
       '(',
@@ -146,16 +191,23 @@ module.exports = grammar({
        optional($._comma_list_types),
     ),
 
+    container_types: $ => choice(
+      'string',
+      'symbol',
+      'arguments',
+      $.type,
+    ),
+
     type: $ => seq(
      $._base_type,
      repeat($.pointer),
      repeat($.array),
    ),
 
-   _base_type: $ => choice(
+   _base_type: $ => prec.dynamic(1,choice(
      $.identifier,
      $.primitive_type,
-   ),
+   )),
 
    primitive_type: $ => choice(
      ...[8, 16, 32, 64].map(n => `i${n}`),
@@ -290,6 +342,7 @@ module.exports = grammar({
           $._value
         ),
         $._value,
+        $.cast_expression,
         $.assignment_expression,
        ),
      ')',
@@ -307,14 +360,73 @@ module.exports = grammar({
       ),
     ),
 
+   access_expression: $ => seq(
+    $._value,
+    $._access_op,
+    $._value,
+   ),
 
-   scope_op: $ => '::',
+    cast_expression: $ => seq(
+      $.cast_ops,
+      $.group_expression,
+    ),
+
+    cast_expression: $ => seq(
+      $.cast_ops,
+      $.group_expression,
+    ),
+
+    array_expression: $ => seq(
+      $._value,
+      $.array,
+    ),
+
+    call_expression: $ => seq(
+      $._value,
+      '(',
+      $._comma_list_values,
+      ')',
+    ),
+
+    scope_expression: $ => seq(
+      choice(
+       $.identifier,
+       $.scope_expression,
+      ),
+      $._scope_op,
+      choice(
+       $.identifier,
+       $.scope_expression,
+      ),
+    ),
+
+    binding_expression: $ => seq(
+     choice(
+     $.access_expression,
+     $.array_expression,
+     $.call_expression,
+     $.scope_expression,
+   )
+  ),
+
+   _container_op: $ => ':',
+
+   _scope_op: $ => '::',
+
+   _access_op: $ => '->',
+
+   _cast_op: $ => '$',
+
+   _reinterpret_op: $ => '$$',
+
+   _convert_op: $ => '$$$',
 
    cast_ops: $ => seq(
-    choice('$','$$','$$$'),
-    '(',
-     $.type,
-    ')',
+    choice(
+      '$',
+      '$$',
+      '$$$'),
+      $.type,
    ),
 
     unary_op: $ => choice(
@@ -323,7 +435,6 @@ module.exports = grammar({
      '*',
      '!',
      '~',
-     $.cast_ops,
     ),
 
     binary_op: $ => choice(
@@ -383,6 +494,7 @@ module.exports = grammar({
       $._literal,
       $.identifier,
       $.group_expression,
+      $.binding_expression,
     ),
 
     _literal: $ => choice(

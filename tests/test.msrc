@@ -6,11 +6,13 @@
 
 module mymod.
 
+ require module othermod.
+
  external function puts(s8 string).
 
  enum ( enum1 := 5223, enum2, enum3 := 42, enum4 := (-(40+2)), enum5 := 0, enum6 := (3<<3) ) myenum.
 
- constructor::myclass().
+ constructor myclass().
 
   s8 mystring := "Hello World!!!!".
 
@@ -20,13 +22,15 @@ module mymod.
 
   u64 😃 := '😃'.
 
-  u32 😃2 := ($(u32)😃).
+  u32 😃2 := ($u32(😃)).
 
-  hello x := ($(i8)($$$(u64)($$$(int*)($$(int[])array)))).
+  hello x := ($i8($$$u64($$$int*($$int[](array))))).
 
   f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
 
   myvar := (3+(myvar:=1)).
+
+  myvar := othermod::array[1]->func(1).
 
   (myvar+=3).
 
@@ -38,7 +42,7 @@ module mymod.
 
  end constructor.
 
- function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null) returns i32, i32.
+ function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, va_args: arguments) returns i32, i32.
 
    f32 myvar := (.2f).
 
