@@ -3,7 +3,9 @@ module.exports = grammar({
 
   extras: $ => [
       /\s/,
+      $._comment,
     ],
+    
     conflicts: $ => [
     [$._base_type,$.array_expression],
     [$._base_type,$.extension],
@@ -22,29 +24,19 @@ module.exports = grammar({
 
     _space: $ => /\s/,
 
-    _block_comment_star: $ =>
-       seq('/*',repeat(choice(/[^/]/,$._block_comment_star,$._block_comment_plus)),'*/'),
-
-   _block_comment_plus: $ =>
-      seq('+-',repeat(choice(/[^+]/,$._block_comment_plus,$._block_comment_star)),'-+'),
-
-    _comment: $ => choice(
-     seq('//', /.*/),
-     seq('--', /.*/),
-     seq('**', /.*/),
-     seq('++', /.*/),
-     $._block_comment_star,
-     $._block_comment_plus,
-   ),
+    _comment: $ => token(
+      choice(
+       seq('+++', /.*/),
+       seq('---', /.*/),
+       seq('**', /.*/),
+       seq('//', /.*/),
+      )
+     ),
 
     _comma_list_variables: $ => seq(choice($.variable_definition,$.container_definition),
       repeat(seq(',',choice($.variable_definition,$.container_definition)))),
 
     _comma_list_values: $ => seq($._value,repeat(seq(',',$._value))),
-
-    _comma_list_collection_or_value: $ => seq($._collection_or_value,repeat(seq(',',$._collection_or_value))),
-
-    _comma_list_assignment_or_collection_or_value: $ => seq($._assignment_or_collection_or_value,repeat(seq(',',$._assignment_or_collection_or_value))),
 
     _comma_list_assignment_or_values: $ => seq($._assignment_or_value,repeat(seq(',',$._assignment_or_value))),
 
@@ -66,12 +58,13 @@ module.exports = grammar({
     ),
 
     definition: $ => choice(
-     $.use_definition,  
+     $.use_definition,
      $.module_definition,
      $.declaration_definition,
      $.function_definition,
      $.variable_definition,
      $.container_definition,
+     $.class_definition,
      $.enum_definition,
      $.extension,
      $.end_extension,
@@ -124,6 +117,15 @@ module.exports = grammar({
     $.identifier,
     ),
 
+    class_definition: $ => seq(
+     'class',
+     '(',
+     seq($.variable_definition,repeat(seq(',',$.variable_definition))),
+     ')',
+     optional($.pointer),
+     $.identifier,
+   ),
+
     is_function: $ => 'function',
 
     is_method: $ => 'method',
@@ -153,12 +155,14 @@ module.exports = grammar({
     ),
 
     readability: $ => seq(
-      'readonly',
-      'writelimited',
-      'private_write',
-      'protected_write',
-      'system_readwrite',
-       optional($.array),
+      choice(
+       'readonly',
+       'writelimited',
+       'private_write',
+       'protected_write',
+       'system_readwrite',
+      ),
+      optional($.array),
     ),
 
     variable_definition: $ => seq(
@@ -316,7 +320,7 @@ module.exports = grammar({
 
   static_assignment: $ => seq(
     ':=',
-    $._collection_or_value,
+    $._value,
   ),
 
     expression_statement: $ => choice(
@@ -326,7 +330,7 @@ module.exports = grammar({
 
     return_statement: $ => seq(
       'return',
-      $._assignment_or_collection_or_value,
+      $._assignment_or_value,
     ),
 
     group_expression: $ => seq(
@@ -350,9 +354,9 @@ module.exports = grammar({
 
     assignment_expression: $ => choice(
       seq(
-        $._collection_or_value,
+        $._value,
         $.assignment_op,
-        $._collection_or_value,
+        $._value,
       ),
       seq(
         $._value,
@@ -478,20 +482,17 @@ module.exports = grammar({
       '--',
     ),
 
-    _assignment_or_collection_or_value: $ => choice($._collection_or_value,$.assignment_expression),
-
     _assignment_or_value: $ => choice($._value,$.assignment_expression),
-
-    _collection_or_value: $ => choice($._value,$.collection),
 
     collection: $ => seq(
     '{',
-     $._comma_list_assignment_or_collection_or_value,
+     $._comma_list_assignment_or_values,
     '}',
     ),
 
     _value: $ => choice(
       $._literal,
+      $.collection,
       $.identifier,
       $.group_expression,
       $.binding_expression,
