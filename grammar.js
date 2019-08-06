@@ -5,7 +5,7 @@ module.exports = grammar({
       /\s/,
       $._comment,
     ],
-    
+
     conflicts: $ => [
     [$._base_type,$.array_expression],
     [$._base_type,$.extension],
@@ -46,16 +46,14 @@ module.exports = grammar({
 
     access_control: $ => choice('private', 'protected'),
 
-    _sentence: $ => choice(
-    seq(
+    _sentence: $ => seq(
       choice(
         $.definition,
         $.statement,
        ),
         '.',
       ),
-      $._comment,
-    ),
+
 
     definition: $ => choice(
      $.use_definition,
@@ -375,11 +373,6 @@ module.exports = grammar({
       $.group_expression,
     ),
 
-    cast_expression: $ => seq(
-      $.cast_ops,
-      $.group_expression,
-    ),
-
     array_expression: $ => seq(
       $._value,
       $.array,
@@ -399,6 +392,7 @@ module.exports = grammar({
       ),
       $._scope_op,
       choice(
+       $.array,  
        $.identifier,
        $.scope_expression,
       ),

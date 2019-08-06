@@ -38,7 +38,9 @@ module mymod.
 
  constructor myclass().
 
-  obj->val2 := ($otherclass({"helloworld"})).
+  otherclass::[0]->val := "helloworld".
+
+  self->val2 := otherclass::[0].
 
   s8 mystring := "Hello World!!!!".
 
@@ -68,7 +70,7 @@ module mymod.
 
  end constructor.
 
- function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, va_args: arguments) returns i32, i32.
+ function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, my_args: arguments) returns i32, i32.
 
    f32 myvar := (.2f).
 

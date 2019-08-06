@@ -234,33 +234,24 @@
       ]
     },
     "_sentence": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "definition"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "statement"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "definition"
             },
             {
-              "type": "STRING",
-              "value": "."
+              "type": "SYMBOL",
+              "name": "statement"
             }
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_comment"
+          "type": "STRING",
+          "value": "."
         }
       ]
     },
@@ -1521,6 +1512,10 @@
         {
           "type": "CHOICE",
           "members": [
+            {
+              "type": "SYMBOL",
+              "name": "array"
+            },
             {
               "type": "SYMBOL",
               "name": "identifier"
