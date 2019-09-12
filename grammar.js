@@ -117,11 +117,10 @@ module.exports = grammar({
 
     class_definition: $ => seq(
      'class',
-     '(',
-     seq($.variable_definition,repeat(seq(',',$.variable_definition))),
-     ')',
+     optional($.array),
      optional($.pointer),
      $.identifier,
+     optional($.array),
    ),
 
     is_function: $ => 'function',
@@ -254,6 +253,7 @@ module.exports = grammar({
     'end',
     choice(
     'module',
+    'class',
     'function',
     'method',
     'if',
@@ -392,7 +392,7 @@ module.exports = grammar({
       ),
       $._scope_op,
       choice(
-       $.array,  
+       $.array,
        $.identifier,
        $.scope_expression,
       ),
