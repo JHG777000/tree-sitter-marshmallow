@@ -10,7 +10,7 @@ module mymod.
 
  external function puts(s8 string).
 
- class *myclass.
+ class myclass*.
   u32 val := 42.
   otherclass val2.
  end class.
@@ -19,7 +19,7 @@ module mymod.
   s8 val.
  end class.
 
- class *myclass2.
+ class myclass2*.
   //hello
   private system_readwrite u32 a := 42.
   +++hello
@@ -38,7 +38,14 @@ module mymod.
   private_write u32 h := 42.
  end class.
 
- enum ( enum1 := 5223, enum2, enum3 := 42, enum4 := (-(40+2)), enum5 := 0, enum6 := (3<<3) ) myenum.
+ enumeration myenum.
+  enum enum1 := 5223.
+  enum enum2.
+  enum enum3 := 42.
+  enum enum4 := (-(40+2)).
+  enum enum5 := 0.
+  enum enum6 := (3<<3).
+ end enumeration.
 
  constructor myclass().
 

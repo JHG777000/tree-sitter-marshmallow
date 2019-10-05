@@ -74,6 +74,7 @@ module.exports = grammar({
         'require',
       ),
       choice(
+        'enum',
         'module',
         'package',
       ),
@@ -91,35 +92,31 @@ module.exports = grammar({
       ),
     ),
 
-    //identifier_definition: $ => prec(1,seq($.identifier,$.identifier)),
-
-    extension: $ => prec.dynamic(1,seq(
+    extension: $ => seq(
       choice(
        $.identifier,
        $.scope_expression,
       ),
      $.identifier,
      repeat(seq(optional($._space),choice(seq($.identifier),$.string))),
-     optional($.parameter_list),
-   )),
+     $.parameter_list,
+    ),
 
     end_extension: $ => seq('end',$.identifier),
 
     _enum_element: $ => seq($.identifier,optional($.static_assignment)),
 
     enum_definition: $ => seq(
-    'enum',
-    '(',
-    seq($._enum_element,repeat(seq(',',$._enum_element))),
-    ')',
+    'enumeration',
+    optional($.primitive_type),
     $.identifier,
     ),
 
     class_definition: $ => seq(
      'class',
      optional($.array),
-     optional($.pointer),
      $.identifier,
+     optional($.pointer),
      optional($.array),
    ),
 
@@ -243,17 +240,21 @@ module.exports = grammar({
     statement: $ => choice(
       choice(
       $.expression_statement,
+      $.enum_statement,
       $._control_flow_statement,
       $.return_statement,
       $.end_statement,
     ),
   ),
 
+  enum_statement: $ => seq('enum',$._enum_element),
+
   end_statement: $ => seq(
     'end',
     choice(
     'module',
     'class',
+    'enumeration',
     'function',
     'method',
     'if',
