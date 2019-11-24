@@ -220,7 +220,10 @@ module.exports = grammar({
 
    array: $ => seq(
      '[',
-     optional($.integer),
+     choice(
+      optional($.integer),
+      optional($.identifier),
+     ),
      ']',
    ),
 

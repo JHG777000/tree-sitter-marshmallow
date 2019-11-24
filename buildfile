@@ -1,6 +1,6 @@
 project := "tree-sitter-marshmallow-parser-project".
 
-project_version := "0.0.27".
+project_version := "0.0.28".
 
 buildfile_version := "1.0".
 
@@ -22,23 +22,11 @@ build tree_sitter_marshmallow_parser.
 
  end if.
 
- make filepath tree_sitter_dep_utf8proc_buildfile_path from "resources" to "dep_buildfiles/tree-sitter-dep-utf8proc-buildfile".
-
- files tree_sitter_dep_utf8proc_buildfile(tree_sitter_dep_utf8proc_buildfile_path).
-
- subproject tree_sitter_dep_utf8proc_project("local",tree_sitter_dep_utf8proc_buildfile,"-d").
-
- return_output tree_sitter_dep_utf8proc_project.
-
  make filepath tree_sitter_buildfile_path from "resources" to "dep_buildfiles/tree-sitter-buildfile".
 
  files tree_sitter_buildfile(tree_sitter_buildfile_path).
 
- make filepath tree_sitter_dep_utf8proc_include from "resources" to "" from tree_sitter_dep_utf8proc_project.
-
- format(tree_sitter_dep_utf8proc_include).
-
- subproject tree_sitter_project("local",tree_sitter_buildfile,"-d -i __g_" + tree_sitter_dep_utf8proc_include).
+ subproject tree_sitter_project("local",tree_sitter_buildfile,"-d").
 
  return_output tree_sitter_project.
 
@@ -48,7 +36,9 @@ build tree_sitter_marshmallow_parser.
 
  make filepath tree_sitter_include from "resources" to "lib/include" from tree_sitter_project.
 
- compiler CompilerFlags("-Wall", "-I " + tree_sitter_include).
+ make filepath include_path_unicode from "resources" to "lib/src" from tree_sitter_project.
+
+ compiler CompilerFlags("-Wall", "-I " + tree_sitter_include, "-I " + include_path_unicode).
 
  toolchain ToolChain(toolchain_select,CompilerFlags).
 
@@ -57,12 +47,6 @@ build tree_sitter_marshmallow_parser.
 end build.
 
 build clean_build.
-
- make filepath tree_sitter_dep_utf8proc_buildfile_path from "resources" to "dep_buildfiles/tree-sitter-dep-utf8proc-buildfile".
-
- files tree_sitter_dep_utf8proc_buildfile(tree_sitter_dep_utf8proc_buildfile_path).
-
- subproject tree_sitter_dep_utf8proc_project("local",tree_sitter_dep_utf8proc_buildfile,"-b clean_build").
 
  make filepath tree_sitter_buildfile_path from "resources" to "dep_buildfiles/tree-sitter-buildfile".
 

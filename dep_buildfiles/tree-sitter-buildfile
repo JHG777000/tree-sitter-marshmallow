@@ -1,10 +1,10 @@
 project := "tree-sitter-project".
 
-project_version := "1.0.2".
+project_version := "1.0.3".
 
 buildfile_version := "1.0".
 
-url_to_src := "https://github.com/tree-sitter/tree-sitter/archive/0.14.7.zip".
+url_to_src := "https://github.com/tree-sitter/tree-sitter/archive/0.15.14.zip".
 
 build tree_sitter.
 
@@ -32,7 +32,9 @@ build tree_sitter.
 
  make filepath include_path from "resources" to "lib/include".
 
- compiler CompilerFlags("-Wall", "-I " + include_path,"-I " + get_filepath).
+ make filepath include_path_unicode from "resources" to "lib/src".
+
+ compiler CompilerFlags("-Wall", "-I " + include_path, "-I " + include_path_unicode).
 
  toolchain ToolChain(toolchain_select,CompilerFlags).
 
