@@ -1,8 +1,9 @@
-*****************************************************************
-**  Block comments in marshmallow.                             **
-**                                                             **
-**                                                             **
-*****************************************************************
+             ---Comments in marshmallow.---
+
+//Comment
+**Comment
++++Comment
+---Comment
 
 module mymod.
 
