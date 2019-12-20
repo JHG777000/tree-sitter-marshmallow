@@ -62,6 +62,8 @@ module mymod.
 
   i32* myvar2 := null.
 
+  u64 val987 := get_val()->got().
+
   u64 😃 := '😃'.
 
   u32 😃2 := ($u32(😃)).

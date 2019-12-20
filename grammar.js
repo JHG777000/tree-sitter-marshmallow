@@ -385,7 +385,7 @@ module.exports = grammar({
     call_expression: $ => seq(
       $._value,
       '(',
-      $._comma_list_values,
+      optional($._comma_list_values),
       ')',
     ),
 

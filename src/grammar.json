@@ -1484,8 +1484,16 @@
           "value": "("
         },
         {
-          "type": "SYMBOL",
-          "name": "_comma_list_values"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_comma_list_values"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "STRING",

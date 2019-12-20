@@ -9,7 +9,8 @@ module.exports = grammar({
   rules: {
 
     source_file: $ => choice(
-      repeat($.root_definition),
+      $.package_definition,
+      repeat($.module_definition),
     ),
 
     _space: $ => /\s/,
@@ -83,11 +84,6 @@ module.exports = grammar({
 
      end_of_line: $ => '.',
 
-     root_definition: $ => choice(
-       $.package_definition,
-       repeat($.module_definition),
-     ),
-
      package_definition: $ => seq(
       'package',
        $.scoped_identifier,
@@ -110,9 +106,9 @@ module.exports = grammar({
          $.declaration_definition,
          $.tye_definition,
          $.variable_definition,
-         $.code_definition,
-         $.class_definition,
          $.enum_definition,
+         $.class_definition,
+         $.code_definition,
          $.statement_definition,
        ),
        'end',
