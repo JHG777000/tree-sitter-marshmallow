@@ -7,145 +7,236 @@ module.exports = grammar({
     ],
 
     conflicts: $ => [
-    [$._base_type,$.array_expression],
-    [$._base_type,$.extension],
-    [$._base_type,$._value],
-    [$.access_expression,$.call_expression],
-    [$.access_expression,$.array_expression],
+    [$.readability],
+    [$._base_type,$.binding_expression],
+    [$.property_definition,$._value],
+    [$.attribute_definition,$._value],
+    [$._basic_type_value],
+    [$.type_expression,$._value],
+    [$._polymorph_type_value,$._value],
+    [$.expression_statement,$._value],
+    [$.scope_expression,$._value],
     [$.scope_expression],
+    [$.scope_expression,$.binding_expression],
+    [$.return_list],
+    [$.access_expression,$.call_expression],
     [$.access_expression],
+    [$.static_assignment,$.call_expression],
+    [$.assignment_expression,$.call_expression],
+    [$.type_expression,$._base_type],
+    [$.type_expression,$._base_type,$._value],
+    [$._base_type,$._value],
+    [$.case_statement],
    ],
 
   rules: {
 
     source_file: $ => choice(
-      repeat($._sentence),
+      $.package_definition,
+      repeat($.module_definition),
     ),
 
-    _space: $ => /\s/,
+     package_definition: $ => seq(
+      field('access_control',optional($.access_control)),
+      'package',
+      field('name',$.identifier),
+       $.end_of_line,
+       repeat(
+        choice(
+         $.use_definition_package,
+         $.property_definition,
+         $.attribute_definition,
+       ),
+     ),
+     'end',
+     'package',
+     $.end_of_line,
+   ),
 
-    _comment: $ => token(
+   module_definition: $ => seq(
+    field('access_control',optional($.access_control)),
+    'module',
+     field('name',$.identifier),
+     $.end_of_line,
+     repeat(
       choice(
-       seq('+++', /.*/),
-       seq('---', /.*/),
-       seq('**', /.*/),
-       seq('//', /.*/),
+       $.use_definition_module,
+       $.property_definition,
+       $.attribute_definition,
+       $.traits_definition,
+       $.declaration_definition,
+       $.type_definition,
+       $.variable_definition,
+       //$.enum_definition,
+       //$.class_definition,
+       $.code_definition,
+       $.control_flow_definition,
       )
      ),
-
-    _comma_list_variables: $ => seq(choice($.variable_definition,$.container_definition),
-      repeat(seq(',',choice($.variable_definition,$.container_definition)))),
-
-    _comma_list_values: $ => seq($._value,repeat(seq(',',$._value))),
-
-    _comma_list_assignment_or_values: $ => seq($._assignment_or_value,repeat(seq(',',$._assignment_or_value))),
-
-    _comma_list_literals: $ => seq($._literal,repeat(seq(',',$._literal))),
-
-    _comma_list_types: $ => seq($.type,repeat(seq(',',$.type))),
-
-    access_control: $ => choice('private', 'protected'),
-
-    _sentence: $ => seq(
-      choice(
-        $.definition,
-        $.statement,
-       ),
-        '.',
-      ),
-
-
-    definition: $ => choice(
-     $.use_definition,
-     $.module_definition,
-     $.declaration_definition,
-     $.function_definition,
-     $.variable_definition,
-     $.container_definition,
-     $.class_definition,
-     $.enum_definition,
-     $.extension,
-     $.end_extension,
+     'end',
+     'module',
+     $.end_of_line,
     ),
 
-    use_definition: $ => seq(
+    use_definition_module : $ => seq(
       choice(
         'use',
         'require',
       ),
       choice(
         'enum',
+        'class',
         'module',
+      ),
+      $.scope_expression,
+    ),
+
+    use_definition_package : $ => seq(
+      choice(
+        'use',
+        'require',
+      ),
+      choice(
+        'source',
         'package',
       ),
+      $.string,
+    ),
+
+    traits_definition: $ => seq(
+      'traits',
+      '(',
+       field('variable',$.identifier),
+      ')',
+       $.end_of_line,
+       repeat(
+        choice(
+         $.property_definition,
+         $.attribute_definition,
+        ),
+       ),
+       'end',
+       'traits',
+       $.end_of_line,
+    ),
+
+    property_definition: $ => seq(
+      'property',
       choice(
-       $.identifier,
-       $.scope_expression,
+       field('name',$.identifier),
+       field('value',optional($._value)),
+      ),
+      $.end_of_line,
+    ),
+
+    attribute_definition: $ => seq(
+      'attribute',
+      choice(
+       field('name',$.identifier),
+       field('value',optional($._value)),
+      ),
+      $.end_of_line,
+    ),
+
+    declaration_definition: $ => seq(
+      field('access_control',optional($.access_control)),
+      field('declaration_type',choice('declare','external')),
+      choice(
+       $.code_definition,
+       $.variable_definition,
       ),
     ),
 
-    module_definition: $ => seq(
-      'module',
+    type_definition: $ => seq(
+     'typedef',
+     field('old_type',$.type_expression),
+     field('new_type',$.type_expression),
+    ),
+
+    type_expression: $ => choice(
+      $.freeable_expression,
+      $.binding_expression,
+      $._type_value,
+    ),
+
+    freeable_expression: $ => seq(
+     'freeable',
+     $._type_value,
+    ),
+
+    _type_value: $ => choice(
+     $._static_type_value,
+     $._polymorph_type_value,
+     $._basic_type_value,
+    ),
+
+    _static_type_value: $ => seq(
+      'static',
       choice(
-       $.identifier,
-       $.scope_expression,
+        $.static_types,
+        $._basic_type_value,
       ),
     ),
 
-    extension: $ => seq(
+    _polymorph_type_value: $ => seq(
+      'polymorph',
       choice(
-       $.identifier,
-       $.scope_expression,
+        $.polymorph_types,
+        $.binding_expression,
       ),
-     $.identifier,
-     repeat(seq(optional($._space),choice(seq($.identifier),$.string))),
-     $.parameter_list,
     ),
 
-    end_extension: $ => seq('end',$.identifier),
-
-    _enum_element: $ => seq($.identifier,optional($.static_assignment)),
-
-    enum_definition: $ => seq(
-    'enumeration',
-    optional($.primitive_type),
-    $.identifier,
+    _basic_type_value: $ => seq(
+      $._base_type,
+      repeat($.pointer),
+      repeat(
+        choice(
+        $.array_definition,
+        $.unsafe_array_definition,
+      )),
     ),
 
-    class_definition: $ => seq(
-     'class',
-     optional($.array),
-     $.identifier,
-     optional($.pointer),
-     optional($.array),
-   ),
-
-    is_function: $ => 'function',
-
-    is_method: $ => 'method',
-
-    is_interface: $ => 'interface',
-
-    is_overridable: $ => 'overridable',
-
-    is_override: $ => 'override',
-
-    _override: $ => choice($.is_overridable,$.is_override),
-
-    is_primitive: $ => 'primitive',
-
-    function_definition: $ => seq(
-    optional($.access_control),
-    optional($.is_interface),
-    optional($._override),
-    optional($.is_primitive),
-    choice(
-     $.is_function,
-     $.is_method,
+    _base_type: $ => choice(
+      $.binding_expression,
+      $.primitive_type,
     ),
-    $.identifier,
-    optional($.parameter_list),
-    optional($.return_list),
+
+    static_types: $ => choice(
+      'datum',
+      'field',
+    ),
+
+    polymorph_types: $ => choice(
+      'type',
+      'anyvar',
+      'vardef',
+      'arguments',
+      'identifier',
+    ),
+
+    primitive_type: $ => choice(
+      ...[8, 16, 32, 64].map(n => `i${n}`),
+      ...[8, 16, 32, 64].map(n => `u${n}`),
+      ...[32, 64].map(n => `f${n}`),
+      ...[8, 16, 32].map(n => `s${n}`),
+    ),
+
+    pointer: $ => '*',
+
+    array_definition: $ => seq(
+      '[',
+       optional(
+         $._value,
+       ),
+      ']',
+    ),
+
+    unsafe_array_definition: $ => seq(
+      '[[',
+       optional(
+         $._value,
+       ),
+      ']]',
     ),
 
     readability: $ => seq(
@@ -155,281 +246,247 @@ module.exports = grammar({
        'private_write',
        'protected_write',
        'system_readwrite',
+       'thread_readwrite',
       ),
-      optional($.array),
+      optional($.array_definition),
     ),
 
     variable_definition: $ => seq(
-      seq(
        optional($.access_control),
+       field('is_export',optional('export')),
        optional($.readability),
-       $.type,
+       $.type_expression,
        $.identifier,
+       optional($.static_assignment),
+       $.end_of_line,
+     ),
+
+     local_variable_definition: $ => seq(
+       choice(
+        seq(
+         field('is_preserved',optional('preserved')),
+         field('is_persistent',optional('persistent')),
+        ),
+        field('inoutpass',choice('in','out','inout','pass')),
        ),
+       optional($.readability),
+       $.type_expression,
+       $.identifier,
+       optional($.static_assignment),
+       $.end_of_line,
+     ),
+
+     parameter_variable_definition: $ => seq(
+       $.type_expression,
+       $.identifier,
        optional($.static_assignment),
      ),
 
-     container_definition: $ => seq(
-       seq(
-        $.identifier,
-        ':',
-        $.container_types,
-        ),
-        optional($.static_assignment),
-      ),
+     static_assignment: $ => seq(
+       ':=',
+       $._value,
+     ),
 
-    parameter_list: $ => seq(
-      '(',
-       optional($._comma_list_variables),
-      ')',
+     control_flow_definition: $ => $.control_flow_statement,
+
+     _code_types: $ => choice(
+      'function',
+      'method',
+      'procedure',
+      'extension',
+      'operator',
     ),
 
-    return_list: $ => seq(
+    _operator_token: $ => token(
+      choice(
+        '+',
+        '-',
+        '*',
+        '%',
+        '>',
+        '<',
+        '@',
+        '#',
+        '&',
+        '|',
+        '^',
+        '!',
+        '?',
+      ),
+    ),
+
+    operator_name: $ => choice(
+       seq(
+        $._operator_token,
+        $._operator_token,
+        $._operator_token,
+      ),
+      '[]',
+      '[[]]',
+    ),
+
+    _code_block: $ => repeat1(
+    choice(
+     $.property_definition,
+     $.attribute_definition,
+     $.traits_definition,
+     $.local_variable_definition,
+     $.code_definition,
+     $.statement,
+     )
+    ),
+
+    code_definition_type: $ => choice('export','override','overridable','omega'),
+
+    end_code: $ => seq('end',field('end_code_type',$._code_types)),
+
+     code_definition: $ => seq(
+       optional($.access_control),
+       optional($.code_definition_type),
+       field('code_type',$._code_types),
+       field('name',choice($.identifier,$.operator_name)),
+       //optional($.extension_list),
+       optional($.parameter_list),
+       optional($.return_list),
+       $.end_of_line,
+       optional($._code_block),
+       $.end_code,
+       $.end_of_line,
+     ),
+
+     parameter_list: $ => seq(
+       '(',
+        optional($._comma_list_parameter_variable_definition),
+       ')',
+     ),
+
+     return_list: $ => seq(
       'returns',
        optional($._comma_list_types),
+      ),
+
+      statement: $ => choice(
+        $.expression_statement,
+        $.control_flow_statement,
+      ),
+
+     control_flow_statement: $ => choice(
+       $.if_statement,
+       $.while_statement,
+       $.switch_statement,
+       $.case_statement,
+       $.default_statement,
+       $.goto_statement,
+       $.section_statement,
+       $.single_line_if_statement,
+       $.return_statement,
+     ),
+
+     goto_statement: $ => seq(
+       'goto',
+       $.identifier,
+       $.end_of_line,
+     ),
+
+     section_statement: $ => seq(
+       'section',
+       $.identifier,
+       $.end_of_line,
+     ),
+
+     single_line_if_statement: $ => seq(
+       'if',
+       $.group_expression,
+       $.statement,
     ),
 
-    container_types: $ => choice(
-      'string',
-      'symbol',
-      'arguments',
-      $.type,
+    end_if: $ => seq('end','if'),
+
+    if_statement: $ => seq(
+     'if',
+     $.group_expression,
+     $.end_of_line,
+    optional($._code_block),
+     $.end_if,
+     $.end_of_line,
     ),
 
-    type: $ => seq(
-     $._base_type,
-     repeat($.pointer),
-     repeat($.array),
-   ),
+    end_while: $ => seq('end','while'),
 
-   _base_type: $ => prec.dynamic(1,choice(
-     $.identifier,
-     $.primitive_type,
-   )),
+    while_statement: $ => seq(
+     'while',
+     $.group_expression,
+     $.end_of_line,
+     optional($._code_block),
+     $.end_while,
+     $.end_of_line,
+    ),
 
-   primitive_type: $ => choice(
-     ...[8, 16, 32, 64].map(n => `i${n}`),
-     ...[8, 16, 32, 64].map(n => `u${n}`),
-     ...[32, 64].map(n => `f${n}`),
-     ...[8, 16, 32].map(n => `s${n}`),
-   ),
+    end_switch: $ => seq('end','switch'),
 
-   pointer: $ => seq(
-     '*',
-   ),
+    end_case: $ => seq('end','case',$.end_of_line),
 
-   array: $ => seq(
-     '[',
-     choice(
-      optional($.integer),
-      optional($.identifier),
-     ),
-     ']',
-   ),
-
-   is_declare: $ => 'declare',
-
-   is_external: $ => 'external',
-
-   declaration_definition: $ => seq(
-     choice($.is_declare,
-     $.is_external),
-     choice(
-      $.function_definition,
-      $.variable_definition,
-     ),
-   ),
-
-    statement: $ => choice(
+    switch_statement: $ => seq(
+     'switch',
+     $.group_expression,
+     $.end_of_line,
+     repeat(
       choice(
-      $.expression_statement,
-      $.enum_statement,
-      $._control_flow_statement,
-      $.return_statement,
-      $.end_statement,
+      $.case_statement,
+      $.end_case,
+      $.default_statement,
+      ),
+     ),
+     $.end_switch,
+     $.end_of_line,
     ),
-  ),
 
-  enum_statement: $ => seq('enum',$._enum_element),
+    case_statement: $ => seq(
+     'case',
+     $.group_expression,
+     $.end_of_line,
+     optional($._code_block),
+    ),
 
-  end_statement: $ => seq(
-    'end',
-    choice(
-    'module',
-    'class',
-    'enumeration',
-    'function',
-    'method',
-    'if',
-    'while',
-    'switch',
-    'case',
-    'default',
-   ),
-  ),
+    end_default: $ => seq('end','default'),
 
-  _control_flow_statement: $ => choice(
-    $.if_statement,
-    $.while_statement,
-    $.switch_statement,
-    $.case_statement,
-    $.default_statement,
-    $.goto_statement,
-    $.section_statement,
-    $.single_line_if_statement,
-  ),
-
-  goto_statement: $ => seq(
-    'goto',
-    $.identifier,
-  ),
-
-  section_statement: $ => seq(
-    'section',
-    $.identifier,
-  ),
-
-  single_line_if_statement: $ => seq(
-    'if',
-    $.group_expression,
-    $.statement
-    ,
-  ),
-
-  if_statement: $ => seq(
-   'if',
-   $.group_expression,
-  ),
-
-  while_statement: $ => seq(
-   'while',
-   $.group_expression,
-  ),
-
-  switch_statement: $ => seq(
-   'switch',
-   $.group_expression,
-  ),
-
-  case_statement: $ => seq(
-   'case',
-   $.group_expression,
-  ),
-
-  default_statement: $ => seq(
-   'default',
-  ),
-
-  static_assignment: $ => seq(
-    ':=',
-    $._value,
-  ),
-
-    expression_statement: $ => choice(
-      $.group_expression,
-      $.assignment_expression,
+    default_statement: $ => seq(
+     'default',
+     $.end_of_line,
+     optional($._code_block),
+     $.end_default,
+     $.end_of_line,
     ),
 
     return_statement: $ => seq(
       'return',
       $._assignment_or_value,
+      $.end_of_line,
     ),
 
-    group_expression: $ => seq(
-     '(',
-      choice(
-        seq(
-          $.unary_op,
-          $._value
-        ),
-        seq(
-          $._value,
-          $.binary_op,
-          $._value
-        ),
-        $._value,
-        $.cast_expression,
-        $.assignment_expression,
-       ),
-     ')',
-    ),
-
-    assignment_expression: $ => choice(
-      seq(
-        $._value,
-        $.assignment_op,
-        $._value,
-      ),
-      seq(
-        $._value,
-        $.assignment_post_op,
-      ),
-    ),
-
-   access_expression: $ => seq(
-    $._value,
-    $._access_op,
-    $._value,
-   ),
-
-    cast_expression: $ => seq(
-      $.cast_ops,
-      $.group_expression,
-    ),
-
-    array_expression: $ => seq(
-      $._value,
-      $.array,
-    ),
-
-    call_expression: $ => seq(
-      $._value,
-      '(',
-      optional($._comma_list_values),
-      ')',
-    ),
-
-    scope_expression: $ => seq(
-      choice(
-       $.identifier,
-       $.scope_expression,
-      ),
-      $._scope_op,
-      choice(
-       $.array,
-       $.identifier,
-       $.scope_expression,
-      ),
-    ),
-
-    binding_expression: $ => seq(
+    expression_statement: $ => seq(
      choice(
-     $.access_expression,
-     $.array_expression,
-     $.call_expression,
-     $.scope_expression,
-   )
-  ),
+      $.group_expression,
+      $.assignment_expression,
+     ),
+     $.end_of_line
+    ),
 
-   _container_op: $ => ':',
+    _scope_op: $ => '::',
 
-   _scope_op: $ => '::',
+    _access_op: $ => '->',
 
-   _access_op: $ => '->',
+    safe_index_op: $ => seq('[',$._value,']'),
 
-   _cast_op: $ => '$',
+    unsafe_index_op: $ => seq('[[',$._value,']]'),
 
-   _reinterpret_op: $ => '$$',
-
-   _convert_op: $ => '$$$',
-
-   cast_ops: $ => seq(
-    choice(
-      '$',
-      '$$',
-      '$$$'),
-      $.type,
-   ),
+    _cast_ops: $ => seq(
+     choice(
+       '$',
+       '$$',
+       '$$$'),
+       $.type_expression,
+    ),
 
     unary_op: $ => choice(
      '-',
@@ -480,75 +537,183 @@ module.exports = grammar({
       '--',
     ),
 
-    _assignment_or_value: $ => choice($._value,$.assignment_expression),
-
-    collection: $ => seq(
-    '{',
-     $._comma_list_assignment_or_values,
-    '}',
+    group_expression: $ => seq(
+     '(',
+      choice(
+        seq(
+          $.unary_op,
+          $._value
+        ),
+        seq(
+          $._value,
+          $.binary_op,
+          $._value
+        ),
+        $._value,
+        $.cast_expression,
+        $.assignment_expression,
+       ),
+     ')',
     ),
 
-    _value: $ => choice(
-      $._literal,
-      $.collection,
-      $.identifier,
+    assignment_expression: $ => choice(
+      seq(
+        $._value,
+        $.assignment_op,
+        $._value,
+      ),
+      seq(
+        $._value,
+        $.assignment_post_op,
+      ),
+    ),
+
+    access_expression: $ => seq(
+     $._value,
+     $._access_op,
+     $._value,
+    ),
+
+    cast_expression: $ => seq(
+      $._cast_ops,
       $.group_expression,
-      $.binding_expression,
     ),
 
-    _literal: $ => choice(
-      $._number,
-      $.string,
-      $.character,
-      $.null,
+    index_expression: $ => choice(
+      $.safe_index_op,
+      $.unsafe_index_op,
     ),
 
-    null: $ => 'null',
-
-    identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
-
-    string: $ => seq('"',repeat(choice(token(/[^\"]/),$._escape_sequence)),'"'),
-
-    character: $ => seq("'",choice(token(/[^\'\s]/),$._escape_sequence),"'"),
-
-    _escape_sequence: $ => choice(
-    '\\\\',
-    '\\0',
-    '\\a',
-    '\\b',
-    '\\f',
-    '\\n',
-    '\\n',
-    '\\r',
-    '\\t',
-    '\\v',
-    '\\\"',
-    '\\\'',
+    call_expression: $ => seq(
+      $._value,
+      '(',
+      optional($._comma_list_assignment_or_values),
+      ')',
     ),
 
-    _number: $ => choice(
-      $.integer,
-      $.long,
-      $.float,
-      $.double,
-      $.hex,
-      $.oct,
-      $.binary,
+    scope_expression: $ => seq(
+      choice(
+       $.identifier,
+       $.scope_expression,
+      ),
+      $._scope_op,
+      choice(
+       $.identifier,
+       $.binding_expression,
+      ),
     ),
 
-    oct: $ => token(seq('0',/[0-7]/)),
+    binding_expression: $ => seq(
+     choice(
+     $.access_expression,
+     $.index_expression,
+     $.call_expression,
+     $.scope_expression,
+   )
+  ),
 
-    integer: $ => token(/\d+/),
+    _space: $ => /\s/,
 
-    long: $ => token(seq(/\d+/,'l')),
+    _comment: $ => token(
+      choice(
+       seq('----', /.*/),
+       seq('++++', /.*/),
+       seq('****', /.*/),
+       seq('...', /.*/),
+       seq('//', /.*/),
+      )
+     ),
 
-    float: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),'f',')')),
+     null: $ => 'null',
 
-    double: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),')')),
+     identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
 
-    hex: $ => token(seq('0x', /[0-9a-fA-f]+/)),
+     datum_literal: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
 
-    binary: $ => token(seq('0b', /[01]+/)),
+     string: $ => seq('"',repeat(choice(token(/[^\"]/),$._escape_sequence)),'"'),
+
+     character: $ => seq("'",choice(token(/[^\'\s]/),$._escape_sequence),"'"),
+
+     _escape_sequence: $ => choice(
+     '\\\\',
+     '\\0',
+     '\\a',
+     '\\b',
+     '\\f',
+     '\\n',
+     '\\n',
+     '\\r',
+     '\\t',
+     '\\v',
+     '\\\"',
+     '\\\'',
+     ),
+
+     _number: $ => choice(
+       $.integer,
+       $.long,
+       $.float,
+       $.double,
+       $.hex,
+       $.oct,
+       $.binary,
+     ),
+
+     collection: $ => seq(
+     '{',
+      $._comma_list_assignment_or_values,
+     '}',
+     ),
+
+     _value: $ => choice(
+       $._literal,
+       $.collection,
+       $.identifier,
+       $.group_expression,
+       $.binding_expression,
+     ),
+
+     _literal: $ => choice(
+       $._number,
+       $.string,
+       $.datum_literal,
+       $.character,
+       $.null,
+     ),
+
+     oct: $ => token(seq('0',/[0-7]/)),
+
+     integer: $ => token(/\d+/),
+
+     long: $ => token(seq(/\d+/,'l')),
+
+     float: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),'f',')')),
+
+     double: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),')')),
+
+     hex: $ => token(seq('0x', /[0-9a-fA-f]+/)),
+
+     binary: $ => token(seq('0b', /[01]+/)),
+
+     _assignment_or_value: $ => choice($._value,$.assignment_expression),
+
+     _comma_list_variables: $ => seq($.variable_definition,
+       repeat(seq(',',$.variable_definition))),
+
+     _comma_list_values: $ => seq($._value,repeat(seq(',',$._value))),
+
+     _comma_list_assignment_or_values: $ => seq($._assignment_or_value,repeat(seq(',',$._assignment_or_value))),
+
+     _comma_list_literals: $ => seq($._literal,repeat(seq(',',$._literal))),
+
+     _comma_list_types: $ => seq($.type_expression,repeat(seq(',',$.type_expression))),
+
+     _comma_list_parameter_variable_definition: $ => seq($.parameter_variable_definition,repeat(seq(',',$.parameter_variable_definition))),
+
+     access_control: $ => choice('private', 'protected'),
+
+     end_of_line: $ => '.',
 
   }
+
 });

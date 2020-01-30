@@ -1,9 +1,9 @@
-             ---Comments in marshmallow.---
+----Comments in marshmallow.----
 
-//Comment
-**Comment
-+++Comment
----Comment
+ ++++Comment
+ ****Comment
+ ...Comment
+ //Comment
 
 module mymod.
 
@@ -21,21 +21,21 @@ module mymod.
  end class.
 
  class myclass2*.
-  //hello
+  ...hello
   private system_readwrite u32 a := 42.
-  +++hello
+  ----hello
   private readonly u32 b := 42.
-  ---hello
+  ++++hello
   protected private_write u32 c := 42.
-  ---hello
+  ****hello
   protected system_readwrite u32 d := 42.
-  ---hello
+  //hello
   protected writelimited u32 e := 42.
-  ---hello
+  ----hello
   private writelimited u32 f := 42.
-  ---hello
+  ----hello
   system_readwrite u32 g := 42.
-  ---hello
+  ----hello
   private_write u32 h := 42.
  end class.
 
@@ -50,7 +50,15 @@ module mymod.
 
  constructor myclass().
 
-  otherclass::[0]->val := "helloworld".
+  otherclass::[0]->val := "//".
+
+  otherclass::[0]->val := "----".
+
+  otherclass::[0]->val := "...".
+
+  otherclass::[0]->val := "++++".
+
+  otherclass::[0]->val := "****".
 
   self->val2 := otherclass::[0].
 

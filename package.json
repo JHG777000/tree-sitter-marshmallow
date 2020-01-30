@@ -4,7 +4,8 @@
   "description": "tree-sitter parser for marshmallow",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
   },
   "author": "Jacob Gordon",
   "license": "MIT",
@@ -13,5 +14,17 @@
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.15.14"
-  }
+  },
+  "gypfile": true,
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JHG777000/tree-sitter-marshmallow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JHG777000/tree-sitter-marshmallow/issues"
+  },
+  "homepage": "https://github.com/JHG777000/tree-sitter-marshmallow#readme"
 }

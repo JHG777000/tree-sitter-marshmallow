@@ -1,0 +1,35 @@
+----Comments in marshmallow.----
+
+ ++++Comment
+ ****Comment
+ ...Comment
+ //Comment
+
+module mymod.
+ function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, polymorph arguments my_args ) returns i32, i32.
+  f32 myvar := (.2f).
+  f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
+  myvar := (3+(myvar:=1)).
+  (myvar+=3).
+  myvar++.
+  (myvar++)++.
+  myvar := ((myvar++)+1).
+  section helloworld.
+  if (myvar).
+   myvar--.
+   if ((myvar++):=3).
+    myvar++.
+   end if.
+  end if.
+  if (1) while ( myvar!=(myvar!=42) ).
+   switch (myvar).
+    case (1).
+    end case.
+    default.
+    end default.
+   end switch.
+  end while.
+  if (j) goto helloworld.
+  return {4,(1+1)}.
+ end function.
+end module.
