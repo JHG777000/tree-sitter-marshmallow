@@ -6,6 +6,28 @@
  //Comment
 
 module mymod.
+
+ message "hello world".
+  hello x := ($i8($$$u64($$$int*($$int[](array))))).
+ end message.
+
+ constructor myclass().
+  self->val2 := val.
+  s8 mystring := "Hello World!!!!".
+  f32 myvar := (.2f).
+  i32 myvar2 := 1.
+  i32* myvar2 := null.
+  u64 val987 := get_val()->got().
+  u64 😃 := '😃'.
+  u32 😃2 := ($u32(😃)).
+  f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
+  myvar := (3+(myvar:=1)).
+  (myvar+=3).
+  myvar++.
+  myvar--.
+  (myvar++)++.
+ end constructor.
+
  function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, polymorph arguments my_args ) returns i32, i32.
   f32 myvar := (.2f).
   f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.

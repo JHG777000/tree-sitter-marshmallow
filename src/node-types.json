@@ -443,11 +443,7 @@
       "required": true,
       "types": [
         {
-          "type": "attribute_definition",
-          "named": true
-        },
-        {
-          "type": "code_definition",
+          "type": "code_block",
           "named": true
         },
         {
@@ -456,22 +452,6 @@
         },
         {
           "type": "group_expression",
-          "named": true
-        },
-        {
-          "type": "local_variable_definition",
-          "named": true
-        },
-        {
-          "type": "property_definition",
-          "named": true
-        },
-        {
-          "type": "statement",
-          "named": true
-        },
-        {
-          "type": "traits_definition",
           "named": true
         }
       ]
@@ -500,6 +480,45 @@
     "type": "character",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "code_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "attribute_definition",
+          "named": true
+        },
+        {
+          "type": "code_definition",
+          "named": true
+        },
+        {
+          "type": "extension_definition",
+          "named": true
+        },
+        {
+          "type": "local_variable_definition",
+          "named": true
+        },
+        {
+          "type": "property_definition",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        },
+        {
+          "type": "traits_definition",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "code_definition",
@@ -555,11 +574,7 @@
           "named": true
         },
         {
-          "type": "attribute_definition",
-          "named": true
-        },
-        {
-          "type": "code_definition",
+          "type": "code_block",
           "named": true
         },
         {
@@ -575,27 +590,11 @@
           "named": true
         },
         {
-          "type": "local_variable_definition",
-          "named": true
-        },
-        {
           "type": "parameter_list",
           "named": true
         },
         {
-          "type": "property_definition",
-          "named": true
-        },
-        {
           "type": "return_list",
-          "named": true
-        },
-        {
-          "type": "statement",
-          "named": true
-        },
-        {
-          "type": "traits_definition",
           "named": true
         }
       ]
@@ -796,11 +795,7 @@
       "required": true,
       "types": [
         {
-          "type": "attribute_definition",
-          "named": true
-        },
-        {
-          "type": "code_definition",
+          "type": "code_block",
           "named": true
         },
         {
@@ -809,22 +804,6 @@
         },
         {
           "type": "end_of_line",
-          "named": true
-        },
-        {
-          "type": "local_variable_definition",
-          "named": true
-        },
-        {
-          "type": "property_definition",
-          "named": true
-        },
-        {
-          "type": "statement",
-          "named": true
-        },
-        {
-          "type": "traits_definition",
           "named": true
         }
       ]
@@ -883,6 +862,21 @@
     "fields": {}
   },
   {
+    "type": "end_extension_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "end_if",
     "named": true,
     "fields": {}
@@ -921,6 +915,52 @@
     }
   },
   {
+    "type": "extension_definition",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "code_block",
+          "named": true
+        },
+        {
+          "type": "end_extension_definition",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "parameter_list",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "freeable_expression",
     "named": true,
     "fields": {},
@@ -934,6 +974,10 @@
         },
         {
           "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "identifier_expression",
           "named": true
         },
         {
@@ -1066,6 +1110,25 @@
     }
   },
   {
+    "type": "identifier_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "scope_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "if_statement",
     "named": true,
     "fields": {},
@@ -1074,11 +1137,7 @@
       "required": true,
       "types": [
         {
-          "type": "attribute_definition",
-          "named": true
-        },
-        {
-          "type": "code_definition",
+          "type": "code_block",
           "named": true
         },
         {
@@ -1091,22 +1150,6 @@
         },
         {
           "type": "group_expression",
-          "named": true
-        },
-        {
-          "type": "local_variable_definition",
-          "named": true
-        },
-        {
-          "type": "property_definition",
-          "named": true
-        },
-        {
-          "type": "statement",
-          "named": true
-        },
-        {
-          "type": "traits_definition",
           "named": true
         }
       ]
@@ -1252,6 +1295,10 @@
         },
         {
           "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "extension_definition",
           "named": true
         },
         {
@@ -1951,6 +1998,10 @@
           "named": true
         },
         {
+          "type": "identifier_expression",
+          "named": true
+        },
+        {
           "type": "pointer",
           "named": true
         },
@@ -2129,7 +2180,7 @@
       "required": true,
       "types": [
         {
-          "type": "scope_expression",
+          "type": "identifier_expression",
           "named": true
         }
       ]
@@ -2205,11 +2256,7 @@
       "required": true,
       "types": [
         {
-          "type": "attribute_definition",
-          "named": true
-        },
-        {
-          "type": "code_definition",
+          "type": "code_block",
           "named": true
         },
         {
@@ -2222,22 +2269,6 @@
         },
         {
           "type": "group_expression",
-          "named": true
-        },
-        {
-          "type": "local_variable_definition",
-          "named": true
-        },
-        {
-          "type": "property_definition",
-          "named": true
-        },
-        {
-          "type": "statement",
-          "named": true
-        },
-        {
-          "type": "traits_definition",
           "named": true
         }
       ]

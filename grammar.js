@@ -27,6 +27,11 @@ module.exports = grammar({
     [$.type_expression,$._base_type,$._value],
     [$._base_type,$._value],
     [$.case_statement],
+    [$.binding_expression,$.identifier_expression],
+    [$.assignment_expression,$.identifier_expression],
+    [$.code_block],
+    [$._base_type,$.extension_definition],
+    [$.identifier_expression,$._value],
    ],
 
   rules: {
@@ -69,6 +74,7 @@ module.exports = grammar({
        $.variable_definition,
        //$.enum_definition,
        //$.class_definition,
+       $.extension_definition,
        $.code_definition,
        $.control_flow_definition,
       )
@@ -88,7 +94,7 @@ module.exports = grammar({
         'class',
         'module',
       ),
-      $.scope_expression,
+      $.identifier_expression,
     ),
 
     use_definition_package : $ => seq(
@@ -197,6 +203,7 @@ module.exports = grammar({
     ),
 
     _base_type: $ => choice(
+      $.identifier_expression,
       $.binding_expression,
       $.primitive_type,
     ),
@@ -325,12 +332,13 @@ module.exports = grammar({
       '[[]]',
     ),
 
-    _code_block: $ => repeat1(
+    code_block: $ => repeat1(
     choice(
      $.property_definition,
      $.attribute_definition,
      $.traits_definition,
      $.local_variable_definition,
+     $.extension_definition,
      $.code_definition,
      $.statement,
      )
@@ -349,9 +357,22 @@ module.exports = grammar({
        optional($.parameter_list),
        optional($.return_list),
        $.end_of_line,
-       optional($._code_block),
+       optional($.code_block),
        $.end_code,
        $.end_of_line,
+     ),
+
+     end_extension_definition: $ => seq('end',$.identifier_expression),
+
+     extension_definition: $ => seq(
+      field('name',$.identifier_expression),
+      choice($.identifier,$.string),
+      repeat(choice($.identifier,$.string)),
+      optional($.parameter_list),
+      $.end_of_line,
+      optional($.code_block),
+      $.end_extension_definition,
+      $.end_of_line,
      ),
 
      parameter_list: $ => seq(
@@ -406,7 +427,7 @@ module.exports = grammar({
      'if',
      $.group_expression,
      $.end_of_line,
-    optional($._code_block),
+     optional($.code_block),
      $.end_if,
      $.end_of_line,
     ),
@@ -417,7 +438,7 @@ module.exports = grammar({
      'while',
      $.group_expression,
      $.end_of_line,
-     optional($._code_block),
+     optional($.code_block),
      $.end_while,
      $.end_of_line,
     ),
@@ -445,7 +466,7 @@ module.exports = grammar({
      'case',
      $.group_expression,
      $.end_of_line,
-     optional($._code_block),
+     optional($.code_block),
     ),
 
     end_default: $ => seq('end','default'),
@@ -453,7 +474,7 @@ module.exports = grammar({
     default_statement: $ => seq(
      'default',
      $.end_of_line,
-     optional($._code_block),
+     optional($.code_block),
      $.end_default,
      $.end_of_line,
     ),
@@ -612,6 +633,8 @@ module.exports = grammar({
    )
   ),
 
+  identifier_expression: $ => choice($.identifier,$.scope_expression),
+
     _space: $ => /\s/,
 
     _comment: $ => token(
@@ -630,7 +653,7 @@ module.exports = grammar({
 
      datum_literal: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
 
-     string: $ => seq('"',repeat(choice(token(/[^\"]/),$._escape_sequence)),'"'),
+     string: $ => seq('"',repeat(choice(token.immediate(prec(1,(/[^\"]/))),$._escape_sequence)),'"'),
 
      character: $ => seq("'",choice(token(/[^\'\s]/),$._escape_sequence),"'"),
 
