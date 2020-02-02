@@ -2215,12 +2215,30 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "safe_index_op"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_value"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "safe_index_op"
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "unsafe_index_op"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_value"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "unsafe_index_op"
+            }
+          ]
         }
       ]
     },
@@ -2398,6 +2416,40 @@
               {
                 "type": "PATTERN",
                 "value": ".*"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "/*"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^*]*\\*+([^\\/*][^*]*\\*+)*"
+              },
+              {
+                "type": "STRING",
+                "value": "/"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "+-"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[^-]*\\-+([^-+][^-]*\\-+)*"
+              },
+              {
+                "type": "STRING",
+                "value": "+"
               }
             ]
           }
@@ -3052,6 +3104,10 @@
     [
       "identifier_expression",
       "_value"
+    ],
+    [
+      "access_expression",
+      "index_expression"
     ]
   ],
   "externals": [],

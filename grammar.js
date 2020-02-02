@@ -32,6 +32,7 @@ module.exports = grammar({
     [$.code_block],
     [$._base_type,$.extension_definition],
     [$.identifier_expression,$._value],
+    [$.access_expression,$.index_expression],
    ],
 
   rules: {
@@ -601,8 +602,8 @@ module.exports = grammar({
     ),
 
     index_expression: $ => choice(
-      $.safe_index_op,
-      $.unsafe_index_op,
+      seq($._value,$.safe_index_op),
+      seq($._value,$.unsafe_index_op),
     ),
 
     call_expression: $ => seq(
@@ -644,7 +645,18 @@ module.exports = grammar({
        seq('****', /.*/),
        seq('...', /.*/),
        seq('//', /.*/),
-      )
+       //https://github.com/tree-sitter/tree-sitter-c/blob/6002fcd5e86bb1e8670157bb008b97dbaf656d95/grammar.js#L918
+       seq(
+       '/*',
+       /[^*]*\*+([^/*][^*]*\*+)*/,
+       '/'
+       ),
+       seq(
+       '+-',
+       /[^-]*\-+([^-+][^-]*\-+)*/,
+       '+'
+       ),
+      ),
      ),
 
      null: $ => 'null',

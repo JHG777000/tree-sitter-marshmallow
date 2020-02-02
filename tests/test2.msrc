@@ -5,10 +5,21 @@
  ...Comment
  //Comment
 
++-*************************************************************
+*  Block comment, in marshmallow.                             *
+*                                                             *
+*************************************************************-+
+
+/**************************************************************
+*  Block comment, in marshmallow.                             *
+*                                                             *
+***************************************************************/
+
 module mymod.
 
  message "hello world".
   hello x := ($i8($$$u64($$$int*($$int[](array))))).
+  i32[5] myvar2 := get_val()->got()[1].
  end message.
 
  constructor myclass().
@@ -28,7 +39,7 @@ module mymod.
   (myvar++)++.
  end constructor.
 
- function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, polymorph arguments my_args ) returns i32, i32.
+ function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, polymorph arguments my_args) returns i32, i32.
   f32 myvar := (.2f).
   f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
   myvar := (3+(myvar:=1)).
