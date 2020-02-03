@@ -13,13 +13,18 @@
 /**************************************************************
 *  Block comment, in marshmallow.                             *
 *                                                             *
-***************************************************************/
+**************************************************************/
 
 module mymod.
+
+ operator + (i32 a, i32 b) returns i32.
+  return (a + b).
+ end operator.
 
  message "hello world".
   hello x := ($i8($$$u64($$$int*($$int[](array))))).
   i32[5] myvar2 := get_val()->got()[1].
+  x := (1 (+) 1).
  end message.
 
  constructor myclass().

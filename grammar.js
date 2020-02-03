@@ -310,6 +310,7 @@ module.exports = grammar({
         '+',
         '-',
         '*',
+        '/',
         '%',
         '>',
         '<',
@@ -326,11 +327,19 @@ module.exports = grammar({
     operator_name: $ => choice(
        seq(
         $._operator_token,
-        $._operator_token,
-        $._operator_token,
+        optional($._operator_token),
+        optional($._operator_token),
       ),
       '[]',
       '[[]]',
+    ),
+
+    overridable_operator: $ => seq(
+      '(',
+      $._operator_token,
+      optional($._operator_token),
+      optional($._operator_token),
+      ')',
     ),
 
     code_block: $ => repeat1(
@@ -538,6 +547,7 @@ module.exports = grammar({
       '||',
       '>>',
       '<<',
+      $.overridable_operator,
     ),
 
     assignment_op: $ => choice(
