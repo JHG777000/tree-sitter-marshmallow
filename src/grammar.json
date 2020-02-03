@@ -1915,9 +1915,13 @@
       "type": "STRING",
       "value": "::"
     },
-    "_access_op": {
+    "access_op": {
       "type": "STRING",
       "value": "->"
+    },
+    "overridable_access_op": {
+      "type": "STRING",
+      "value": "-->"
     },
     "safe_index_op": {
       "type": "SEQ",
@@ -2254,8 +2258,17 @@
           "name": "_value"
         },
         {
-          "type": "SYMBOL",
-          "name": "_access_op"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "access_op"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "overridable_access_op"
+            }
+          ]
         },
         {
           "type": "SYMBOL",

@@ -505,7 +505,9 @@ module.exports = grammar({
 
     _scope_op: $ => '::',
 
-    _access_op: $ => '->',
+    access_op: $ => '->',
+
+    overridable_access_op: $ => '-->',
 
     safe_index_op: $ => seq('[',$._value,']'),
 
@@ -602,7 +604,10 @@ module.exports = grammar({
 
     access_expression: $ => seq(
      $._value,
-     $._access_op,
+     choice(
+       $.access_op,
+       $.overridable_access_op,
+     ),
      $._value,
     ),
 

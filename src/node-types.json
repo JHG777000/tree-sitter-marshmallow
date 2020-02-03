@@ -13,6 +13,10 @@
       "required": true,
       "types": [
         {
+          "type": "access_op",
+          "named": true
+        },
+        {
           "type": "binary",
           "named": true
         },
@@ -66,6 +70,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "overridable_access_op",
           "named": true
         },
         {
@@ -2566,6 +2574,10 @@
     "named": false
   },
   {
+    "type": "access_op",
+    "named": true
+  },
+  {
     "type": "anyvar",
     "named": false
   },
@@ -2683,11 +2695,11 @@
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "if",
@@ -2740,6 +2752,10 @@
   {
     "type": "overridable",
     "named": false
+  },
+  {
+    "type": "overridable_access_op",
+    "named": true
   },
   {
     "type": "override",
