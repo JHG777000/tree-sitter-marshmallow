@@ -608,6 +608,10 @@
           "named": true
         },
         {
+          "type": "extension_list",
+          "named": true
+        },
+        {
           "type": "parameter_list",
           "named": true
         },
@@ -973,6 +977,21 @@
         },
         {
           "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "extension_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "parameter_list",
           "named": true
         }
       ]
@@ -2695,11 +2714,11 @@
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "if",

@@ -17,6 +17,10 @@
 
 module mymod.
 
+ extension constructor,(polymorph type classtype),(polymorph arguments params).
+
+ end extension.
+
  operator + (i32 a, i32 b) returns i32.
   return (a + b).
  end operator.

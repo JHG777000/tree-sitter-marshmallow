@@ -33,6 +33,7 @@ module.exports = grammar({
     [$._base_type,$.extension_definition],
     [$.identifier_expression,$._value],
     [$.access_expression,$.index_expression],
+    [$.extension_list],
    ],
 
   rules: {
@@ -363,7 +364,7 @@ module.exports = grammar({
        optional($.code_definition_type),
        field('code_type',$._code_types),
        field('name',choice($.identifier,$.operator_name)),
-       //optional($.extension_list),
+       optional($.extension_list),
        optional($.parameter_list),
        optional($.return_list),
        $.end_of_line,
@@ -373,6 +374,12 @@ module.exports = grammar({
      ),
 
      end_extension_definition: $ => seq('end',$.identifier_expression),
+
+     extension_list: $ => seq(
+       ',',
+       seq($.parameter_list,repeat(seq(',',$.parameter_list))),
+       ',',
+     ),
 
      extension_definition: $ => seq(
       field('name',$.identifier_expression),
