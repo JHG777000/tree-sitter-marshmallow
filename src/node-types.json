@@ -698,6 +698,33 @@
         {
           "type": "string",
           "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "container_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "identifier_expression",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
         }
       ]
     }
@@ -794,11 +821,15 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "code_definition",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
           "named": true
         },
         {
@@ -924,6 +955,11 @@
   },
   {
     "type": "end_switch",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "end_traits",
     "named": true,
     "fields": {}
   },
@@ -2102,6 +2138,10 @@
           "named": true
         },
         {
+          "type": "end_traits",
+          "named": true
+        },
+        {
           "type": "property_definition",
           "named": true
         }
@@ -2117,7 +2157,7 @@
         "required": true,
         "types": [
           {
-            "type": "type_expression",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -2132,6 +2172,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2148,6 +2198,10 @@
         },
         {
           "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "container_expression",
           "named": true
         },
         {
@@ -2333,9 +2387,17 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
         {
           "type": "identifier_expression",
           "named": true
@@ -2348,9 +2410,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        },
         {
           "type": "string",
           "named": true
@@ -2610,6 +2676,10 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
     "type": ":=",
     "named": false
   },
@@ -2738,6 +2808,10 @@
     "named": false
   },
   {
+    "type": "as",
+    "named": false
+  },
+  {
     "type": "attribute",
     "named": false
   },
@@ -2747,10 +2821,6 @@
   },
   {
     "type": "case",
-    "named": false
-  },
-  {
-    "type": "class",
     "named": false
   },
   {
@@ -2784,10 +2854,6 @@
   {
     "type": "end_of_line",
     "named": true
-  },
-  {
-    "type": "enum",
-    "named": false
   },
   {
     "type": "export",
@@ -2855,11 +2921,11 @@
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "if",

@@ -34,6 +34,7 @@ module.exports = grammar({
     [$.identifier_expression,$._value],
     [$.access_expression,$.index_expression],
     [$.extension_list],
+    [$.container_expression,$._value],
    ],
 
   rules: {
@@ -93,24 +94,30 @@ module.exports = grammar({
         'require',
       ),
       choice(
-        'enum',
-        'class',
         'module',
+        'package',
       ),
       $.identifier_expression,
+      optional(
+        seq(
+         'as',
+         $.identifier,
+       ),
+      ),
+      $.end_of_line,
     ),
 
     use_definition_package : $ => seq(
-      choice(
-        'use',
-        'require',
-      ),
+      'use',
       choice(
         'source',
         'package',
       ),
       $.string,
+      $.end_of_line,
     ),
+
+    end_traits: $ => seq('end','traits'),
 
     traits_definition: $ => seq(
       'traits',
@@ -124,8 +131,7 @@ module.exports = grammar({
          $.attribute_definition,
         ),
        ),
-       'end',
-       'traits',
+       $.end_traits,
        $.end_of_line,
     ),
 
@@ -154,12 +160,14 @@ module.exports = grammar({
        $.code_definition,
        $.variable_definition,
       ),
+      $.end_of_line,
     ),
 
     type_definition: $ => seq(
      'typedef',
      field('old_type',$.type_expression),
-     field('new_type',$.type_expression),
+     field('new_type',$.identifier),
+     $.end_of_line,
     ),
 
     vector_name: $ => seq(
@@ -185,6 +193,7 @@ module.exports = grammar({
     type_expression: $ => choice(
       $.freeable_expression,
       $.binding_expression,
+      $.container_expression,
       $._type_value,
     ),
 
@@ -192,6 +201,17 @@ module.exports = grammar({
      'freeable',
      $._type_value,
     ),
+
+    container_expression: $ => seq(
+      seq(
+       $.identifier_expression,
+       ':',
+       choice(
+        $.type_expression,
+        $.collection,
+       ),
+      ),
+     ),
 
     _type_value: $ => choice(
      $._static_type_value,
@@ -403,7 +423,7 @@ module.exports = grammar({
      ),
 
      extension_definition: $ => seq(
-      optional($.access_control), 
+      optional($.access_control),
       field('name',$.identifier_expression),
       choice($.identifier,$.string),
       repeat(choice($.identifier,$.string)),
@@ -753,7 +773,7 @@ module.exports = grammar({
 
      collection: $ => seq(
      '{',
-      $._comma_list_assignment_or_values,
+      $._comma_list_assignment_or_value_or_type,
      '}',
      ),
 
@@ -787,6 +807,8 @@ module.exports = grammar({
 
      binary: $ => token(seq('0b', /[01]+/)),
 
+     _assignment_or_value_or_type: $ => choice($._assignment_or_value,$.type_expression),
+
      _assignment_or_value: $ => choice($._value,$.assignment_expression),
 
      _comma_list_variables: $ => seq($.variable_definition,
@@ -795,6 +817,8 @@ module.exports = grammar({
      _comma_list_values: $ => seq($._value,repeat(seq(',',$._value))),
 
      _comma_list_assignment_or_values: $ => seq($._assignment_or_value,repeat(seq(',',$._assignment_or_value))),
+
+     _comma_list_assignment_or_value_or_type: $ => seq($._assignment_or_value_or_type,repeat(seq(',',$._assignment_or_value_or_type))),
 
      _comma_list_literals: $ => seq($._literal,repeat(seq(',',$._literal))),
 

@@ -17,6 +17,8 @@
 
 module mymod.
 
+use module othermod.
+
  vector 3,i32 myvec.
   vector_name x,y,z.
  end vector.
@@ -31,6 +33,7 @@ module mymod.
  end extension.
 
  operator + (i32 a, i32 b) returns i32.
+  array:{array:i32,array:i32} myarray := new(new(1,2,3,4,5),new(1,2,3,4,5)).
   return (a + b).
  end operator.
 
