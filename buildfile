@@ -1,6 +1,6 @@
 project := "tree-sitter-marshmallow-parser-project".
 
-project_version := "0.0.36".
+project_version := "0.0.37".
 
 buildfile_version := "1.0".
 

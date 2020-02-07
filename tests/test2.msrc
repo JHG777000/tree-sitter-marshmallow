@@ -1,8 +1,8 @@
-----Comments in marshmallow.----
+---Comments in marshmallow.---
 
- ++++Comment
- ****Comment
+ +++Comment
  ...Comment
+ **Comment
  //Comment
 
 +-*************************************************************
@@ -17,8 +17,17 @@
 
 module mymod.
 
- extension constructor,(polymorph type classtype),(polymorph arguments params).
+ vector 3,i32 myvec.
+  vector_name x,y,z.
+ end vector.
 
+ extension constructor,(polymorph type classtype),(polymorph arguments params).
+ define {
+  function, {
+   override, default, "new", params, classtype, invoke_extension_block
+   }
+  }.
+  generate x := (1 + 1).
  end extension.
 
  operator + (i32 a, i32 b) returns i32.

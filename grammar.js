@@ -73,6 +73,7 @@ module.exports = grammar({
        $.traits_definition,
        $.declaration_definition,
        $.type_definition,
+       $.vector_definition,
        $.variable_definition,
        //$.enum_definition,
        //$.class_definition,
@@ -159,6 +160,26 @@ module.exports = grammar({
      'typedef',
      field('old_type',$.type_expression),
      field('new_type',$.type_expression),
+    ),
+
+    vector_name: $ => seq(
+      'vector_name',
+      $._comma_list_identifiers,
+      $.end_of_line,
+    ),
+
+    end_vector: $ => seq('end','vector'),
+
+    vector_definition: $ => seq(
+     'vector',
+     $._number,
+     ',',
+     $.type_expression,
+     $.identifier,
+     $.end_of_line,
+     repeat($.vector_name),
+     $.end_vector,
+     $.end_of_line,
     ),
 
     type_expression: $ => choice(
@@ -382,6 +403,7 @@ module.exports = grammar({
      ),
 
      extension_definition: $ => seq(
+      optional($.access_control), 
       field('name',$.identifier_expression),
       choice($.identifier,$.string),
       repeat(choice($.identifier,$.string)),
@@ -406,6 +428,19 @@ module.exports = grammar({
       statement: $ => choice(
         $.expression_statement,
         $.control_flow_statement,
+        $.define_statment,
+        $.generate_statment,
+      ),
+
+      define_statment: $ => seq(
+        'define',
+        $.collection,
+        $.end_of_line,
+      ),
+
+      generate_statment: $ => seq(
+       'generate',
+       $.statement,
       ),
 
      control_flow_statement: $ => choice(
@@ -662,10 +697,10 @@ module.exports = grammar({
 
     _comment: $ => token(
       choice(
-       seq('----', /.*/),
-       seq('++++', /.*/),
-       seq('****', /.*/),
+       seq('---', /.*/),
+       seq('+++', /.*/),
        seq('...', /.*/),
+       seq('**', /.*/),
        seq('//', /.*/),
        //https://github.com/tree-sitter/tree-sitter-c/blob/6002fcd5e86bb1e8670157bb008b97dbaf656d95/grammar.js#L918
        seq(
@@ -764,6 +799,8 @@ module.exports = grammar({
      _comma_list_literals: $ => seq($._literal,repeat(seq(',',$._literal))),
 
      _comma_list_types: $ => seq($.type_expression,repeat(seq(',',$.type_expression))),
+
+     _comma_list_identifiers: $ => seq($.identifier,repeat(seq(',',$.identifier))),
 
      _comma_list_parameter_variable_definition: $ => seq($.parameter_variable_definition,repeat(seq(',',$.parameter_variable_definition))),
 

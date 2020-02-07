@@ -832,6 +832,25 @@
     }
   },
   {
+    "type": "define_statment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "end_case",
     "named": true,
     "fields": {},
@@ -909,6 +928,11 @@
     "fields": {}
   },
   {
+    "type": "end_vector",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "end_while",
     "named": true,
     "fields": {}
@@ -955,6 +979,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "access_control",
+          "named": true
+        },
         {
           "type": "code_block",
           "named": true
@@ -1035,6 +1063,21 @@
         },
         {
           "type": "unsafe_array_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "generate_statment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "statement",
           "named": true
         }
       ]
@@ -1416,6 +1459,10 @@
         },
         {
           "type": "variable_definition",
+          "named": true
+        },
+        {
+          "type": "vector_definition",
           "named": true
         }
       ]
@@ -1897,7 +1944,15 @@
           "named": true
         },
         {
+          "type": "define_statment",
+          "named": true
+        },
+        {
           "type": "expression_statement",
+          "named": true
+        },
+        {
+          "type": "generate_statment",
           "named": true
         }
       ]
@@ -2350,6 +2405,84 @@
     }
   },
   {
+    "type": "vector_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binary",
+          "named": true
+        },
+        {
+          "type": "double",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "end_vector",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "hex",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "long",
+          "named": true
+        },
+        {
+          "type": "oct",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        },
+        {
+          "type": "vector_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "vector_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "while_statement",
     "named": true,
     "fields": {},
@@ -2637,6 +2770,10 @@
     "named": false
   },
   {
+    "type": "define",
+    "named": false
+  },
+  {
     "type": "double",
     "named": true
   },
@@ -2689,6 +2826,10 @@
     "named": false
   },
   {
+    "type": "generate",
+    "named": false
+  },
+  {
     "type": "goto",
     "named": false
   },
@@ -2714,11 +2855,11 @@
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "if",
@@ -2910,6 +3051,14 @@
   },
   {
     "type": "vardef",
+    "named": false
+  },
+  {
+    "type": "vector",
+    "named": false
+  },
+  {
+    "type": "vector_name",
     "named": false
   },
   {
