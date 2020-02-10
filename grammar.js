@@ -478,6 +478,7 @@ module.exports = grammar({
 
      control_flow_statement: $ => choice(
        $.if_statement,
+       $.iff_statement,
        $.while_statement,
        $.switch_statement,
        $.case_statement,
@@ -497,6 +498,12 @@ module.exports = grammar({
      section_statement: $ => seq(
        'section',
        $.identifier,
+       $.end_of_line,
+     ),
+
+     iff_statement: $ => seq(
+       'iff',
+       $.group_expression,
        $.end_of_line,
      ),
 
@@ -726,6 +733,33 @@ module.exports = grammar({
 
   identifier_expression: $ => choice($.identifier,$.scope_expression),
 
+  _one_word_operators: $ => choice(
+    '_sizeof',
+    '_itemsof',
+    '_typeofvar',
+    '_typeofptr',
+    '_typeofarray',
+    '_is_ptr',
+    '_isvardef',
+    '_is_number',
+    '_is_float',
+    '_is_string',
+    '_is_lambda',
+    '_is_array',
+    '_is_class',
+    '_is_subclass',
+    '_is_superclass',
+    '_init',
+    '_get_lambda'
+  ),
+
+  one_word_operator: $ => seq(
+    $._one_word_operators,
+    '(',
+    optional($._comma_list_assignment_or_values),
+    ')',
+  ),
+
     _space: $ => /\s/,
 
     _comment: $ => token(
@@ -796,6 +830,7 @@ module.exports = grammar({
        $.identifier,
        $.group_expression,
        $.binding_expression,
+       $.one_word_operator,
      ),
 
      _literal: $ => choice(

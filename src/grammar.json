@@ -1819,6 +1819,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "iff_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "while_statement"
         },
         {
@@ -1878,6 +1882,23 @@
         {
           "type": "SYMBOL",
           "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        }
+      ]
+    },
+    "iff_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "iff"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "group_expression"
         },
         {
           "type": "SYMBOL",
@@ -2703,6 +2724,108 @@
         }
       ]
     },
+    "_one_word_operators": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "_sizeof"
+        },
+        {
+          "type": "STRING",
+          "value": "_itemsof"
+        },
+        {
+          "type": "STRING",
+          "value": "_typeofvar"
+        },
+        {
+          "type": "STRING",
+          "value": "_typeofptr"
+        },
+        {
+          "type": "STRING",
+          "value": "_typeofarray"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_ptr"
+        },
+        {
+          "type": "STRING",
+          "value": "_isvardef"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_number"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_float"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_string"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_lambda"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_array"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_class"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_subclass"
+        },
+        {
+          "type": "STRING",
+          "value": "_is_superclass"
+        },
+        {
+          "type": "STRING",
+          "value": "_init"
+        },
+        {
+          "type": "STRING",
+          "value": "_get_lambda"
+        }
+      ]
+    },
+    "one_word_operator": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_one_word_operators"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_comma_list_assignment_or_values"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "_space": {
       "type": "PATTERN",
       "value": "\\s"
@@ -3016,6 +3139,10 @@
         {
           "type": "SYMBOL",
           "name": "binding_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "one_word_operator"
         }
       ]
     },

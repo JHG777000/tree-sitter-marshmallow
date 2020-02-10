@@ -73,6 +73,10 @@
           "named": true
         },
         {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
           "type": "overridable_access_op",
           "named": true
         },
@@ -145,6 +149,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
           "named": true
         },
         {
@@ -224,6 +232,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
           "named": true
         },
         {
@@ -315,6 +327,10 @@
           },
           {
             "type": "oct",
+            "named": true
+          },
+          {
+            "type": "one_word_operator",
             "named": true
           },
           {
@@ -443,6 +459,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
           "named": true
         },
         {
@@ -711,6 +731,10 @@
           "named": true
         },
         {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
@@ -781,6 +805,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "iff_statement",
           "named": true
         },
         {
@@ -1234,6 +1262,10 @@
           "named": true
         },
         {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
@@ -1279,6 +1311,25 @@
           "type": "end_if",
           "named": true
         },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "group_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "iff_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
         {
           "type": "end_of_line",
           "named": true
@@ -1352,6 +1403,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
           "named": true
         },
         {
@@ -1533,6 +1588,85 @@
         },
         {
           "type": "vector_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "one_word_operator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "binary",
+          "named": true
+        },
+        {
+          "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "character",
+          "named": true
+        },
+        {
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "datum_literal",
+          "named": true
+        },
+        {
+          "type": "double",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "group_expression",
+          "named": true
+        },
+        {
+          "type": "hex",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "long",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -1724,6 +1858,10 @@
             "named": true
           },
           {
+            "type": "one_word_operator",
+            "named": true
+          },
+          {
             "type": "string",
             "named": true
           }
@@ -1844,6 +1982,10 @@
           "named": true
         },
         {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         }
@@ -1912,6 +2054,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
           "named": true
         },
         {
@@ -2090,6 +2236,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
           "named": true
         },
         {
@@ -2343,6 +2493,10 @@
           "named": true
         },
         {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         }
@@ -2411,6 +2565,10 @@
         },
         {
           "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
           "named": true
         },
         {
@@ -2834,6 +2992,74 @@
     "named": false
   },
   {
+    "type": "_get_lambda",
+    "named": false
+  },
+  {
+    "type": "_init",
+    "named": false
+  },
+  {
+    "type": "_is_array",
+    "named": false
+  },
+  {
+    "type": "_is_class",
+    "named": false
+  },
+  {
+    "type": "_is_float",
+    "named": false
+  },
+  {
+    "type": "_is_lambda",
+    "named": false
+  },
+  {
+    "type": "_is_number",
+    "named": false
+  },
+  {
+    "type": "_is_ptr",
+    "named": false
+  },
+  {
+    "type": "_is_string",
+    "named": false
+  },
+  {
+    "type": "_is_subclass",
+    "named": false
+  },
+  {
+    "type": "_is_superclass",
+    "named": false
+  },
+  {
+    "type": "_isvardef",
+    "named": false
+  },
+  {
+    "type": "_itemsof",
+    "named": false
+  },
+  {
+    "type": "_sizeof",
+    "named": false
+  },
+  {
+    "type": "_typeofarray",
+    "named": false
+  },
+  {
+    "type": "_typeofptr",
+    "named": false
+  },
+  {
+    "type": "_typeofvar",
+    "named": false
+  },
+  {
     "type": "access_op",
     "named": true
   },
@@ -2967,6 +3193,10 @@
   },
   {
     "type": "if",
+    "named": false
+  },
+  {
+    "type": "iff",
     "named": false
   },
   {

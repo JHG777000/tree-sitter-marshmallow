@@ -24,10 +24,13 @@ use module othermod.
  end vector.
 
  extension constructor,(polymorph type classtype),(polymorph arguments params).
- define {
-  function, {
-   override, default, "new", params, classtype, invoke_extension_block
-   }
+  iff(_is_array(loop_array)).
+  iff(_itemsof(loop_array) > 0).
+  iff(_typeofvar(loop_item) == _typeofarray(loop_array)).
+  define {
+   function, {
+    override, default, "new", params, classtype, invoke_extension_block
+    }
   }.
   generate x := (1 + 1).
   lambda function() returns int, int mylambda.
