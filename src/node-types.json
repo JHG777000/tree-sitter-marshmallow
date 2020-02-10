@@ -541,6 +541,46 @@
   {
     "type": "code_definition",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "access_control",
+          "named": true
+        },
+        {
+          "type": "code_block",
+          "named": true
+        },
+        {
+          "type": "code_definition_type",
+          "named": true
+        },
+        {
+          "type": "code_signature",
+          "named": true
+        },
+        {
+          "type": "end_code",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "code_definition_type",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "code_signature",
+    "named": true,
     "fields": {
       "code_type": {
         "multiple": false,
@@ -570,7 +610,7 @@
       },
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -585,28 +625,8 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "access_control",
-          "named": true
-        },
-        {
-          "type": "code_block",
-          "named": true
-        },
-        {
-          "type": "code_definition_type",
-          "named": true
-        },
-        {
-          "type": "end_code",
-          "named": true
-        },
-        {
-          "type": "end_of_line",
-          "named": true
-        },
         {
           "type": "extension_list",
           "named": true
@@ -621,11 +641,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "code_definition_type",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "collection",
@@ -1078,7 +1093,11 @@
           "named": true
         },
         {
-          "type": "identifier_expression",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "lambda_type",
           "named": true
         },
         {
@@ -1345,6 +1364,21 @@
         },
         {
           "type": "unsafe_index_op",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lambda_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "code_signature",
           "named": true
         }
       ]
@@ -2209,7 +2243,11 @@
           "named": true
         },
         {
-          "type": "identifier_expression",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "lambda_type",
           "named": true
         },
         {
@@ -2942,6 +2980,10 @@
   {
     "type": "integer",
     "named": true
+  },
+  {
+    "type": "lambda",
+    "named": false
   },
   {
     "type": "long",

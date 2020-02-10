@@ -35,6 +35,9 @@ module.exports = grammar({
     [$.access_expression,$.index_expression],
     [$.extension_list],
     [$.container_expression,$._value],
+    [$._base_type,$.identifier_expression],
+    [$.code_signature],
+    [$._comma_list_types],
    ],
 
   rules: {
@@ -246,9 +249,15 @@ module.exports = grammar({
     ),
 
     _base_type: $ => choice(
-      $.identifier_expression,
       $.binding_expression,
       $.primitive_type,
+      $.lambda_type,
+      $.identifier,
+    ),
+
+    lambda_type: $ => seq(
+      'lambda',
+      $.code_signature,
     ),
 
     static_types: $ => choice(
@@ -400,68 +409,72 @@ module.exports = grammar({
 
     end_code: $ => seq('end',field('end_code_type',$._code_types)),
 
-     code_definition: $ => seq(
-       optional($.access_control),
-       optional($.code_definition_type),
-       field('code_type',$._code_types),
-       field('name',choice($.identifier,$.operator_name)),
-       optional($.extension_list),
-       optional($.parameter_list),
-       optional($.return_list),
-       $.end_of_line,
-       optional($.code_block),
-       $.end_code,
-       $.end_of_line,
-     ),
-
-     end_extension_definition: $ => seq('end',$.identifier_expression),
-
-     extension_list: $ => seq(
-       ',',
-       seq($.parameter_list,repeat(seq(',',$.parameter_list))),
-       ',',
-     ),
-
-     extension_definition: $ => seq(
-      optional($.access_control),
-      field('name',$.identifier_expression),
-      choice($.identifier,$.string),
-      repeat(choice($.identifier,$.string)),
+    code_signature: $ => seq(
+      field('code_type',$._code_types),
+      optional(field('name',choice($.identifier,$.operator_name))),
+      optional($.extension_list),
       optional($.parameter_list),
-      $.end_of_line,
-      optional($.code_block),
-      $.end_extension_definition,
-      $.end_of_line,
-     ),
+      optional($.return_list),
+    ),
 
-     parameter_list: $ => seq(
-       '(',
-        optional($._comma_list_parameter_variable_definition),
-       ')',
-     ),
+    code_definition: $ => seq(
+     optional($.access_control),
+     optional($.code_definition_type),
+     $.code_signature,
+     $.end_of_line,
+     optional($.code_block),
+     $.end_code,
+     $.end_of_line,
+    ),
 
-     return_list: $ => seq(
-      'returns',
-       optional($._comma_list_types),
-      ),
+    end_extension_definition: $ => seq('end',$.identifier_expression),
 
-      statement: $ => choice(
-        $.expression_statement,
-        $.control_flow_statement,
-        $.define_statment,
-        $.generate_statment,
-      ),
+    extension_list: $ => seq(
+     ',',
+     seq($.parameter_list,repeat(seq(',',$.parameter_list))),
+     ',',
+    ),
 
-      define_statment: $ => seq(
-        'define',
-        $.collection,
-        $.end_of_line,
-      ),
+    extension_definition: $ => seq(
+     optional($.access_control),
+     field('name',$.identifier_expression),
+     choice($.identifier,$.string),
+     repeat(choice($.identifier,$.string)),
+     optional($.parameter_list),
+     $.end_of_line,
+     optional($.code_block),
+     $.end_extension_definition,
+     $.end_of_line,
+    ),
 
-      generate_statment: $ => seq(
-       'generate',
-       $.statement,
-      ),
+    parameter_list: $ => seq(
+     '(',
+     optional($._comma_list_parameter_variable_definition),
+     ')',
+    ),
+
+    return_list: $ => seq(
+     'returns',
+     optional($._comma_list_types),
+    ),
+
+    statement: $ => choice(
+     $.expression_statement,
+     $.control_flow_statement,
+     $.define_statment,
+     $.generate_statment,
+    ),
+
+    define_statment: $ => seq(
+     'define',
+     $.collection,
+     $.end_of_line,
+    ),
+
+    generate_statment: $ => seq(
+     'generate',
+     $.statement,
+    ),
 
      control_flow_statement: $ => choice(
        $.if_statement,

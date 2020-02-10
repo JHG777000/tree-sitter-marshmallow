@@ -30,6 +30,7 @@ use module othermod.
    }
   }.
   generate x := (1 + 1).
+  lambda function() returns int, int mylambda.
  end extension.
 
  operator + (i32 a, i32 b) returns i32.
