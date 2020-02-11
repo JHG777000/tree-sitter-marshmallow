@@ -47,6 +47,8 @@ module.exports = grammar({
       repeat($.module_definition),
     ),
 
+     end_package: $ => seq('end','package'),
+
      package_definition: $ => seq(
       field('access_control',optional($.access_control)),
       'package',
@@ -59,10 +61,11 @@ module.exports = grammar({
          $.attribute_definition,
        ),
      ),
-     'end',
-     'package',
+     $.end_package,
      $.end_of_line,
    ),
+
+   end_module: $ => seq('end','module'),
 
    module_definition: $ => seq(
     field('access_control',optional($.access_control)),
@@ -79,15 +82,14 @@ module.exports = grammar({
        $.type_definition,
        $.vector_definition,
        $.variable_definition,
-       //$.enum_definition,
+       $.enum_definition,
        //$.class_definition,
        $.extension_definition,
        $.code_definition,
        $.control_flow_definition,
       )
      ),
-     'end',
-     'module',
+     $.end_module,
      $.end_of_line,
     ),
 
@@ -191,6 +193,29 @@ module.exports = grammar({
      repeat($.vector_name),
      $.end_vector,
      $.end_of_line,
+    ),
+
+    enum_element: $ => seq(
+     choice(
+       'default',
+       $.type_expression,
+     ),
+     $.identifier,
+     optional($.static_assignment),
+     $.end_of_line,
+    ),
+
+    end_enum: $ => seq('end','enum'),
+
+    enum_definition: $ => seq(
+      field('access_control',optional($.access_control)),
+      'enum',
+      optional($.type_expression),
+      $.identifier,
+      $.end_of_line,
+      repeat($.enum_element),
+      $.end_enum,
+      $.end_of_line,
     ),
 
     type_expression: $ => choice(
@@ -348,14 +373,6 @@ module.exports = grammar({
 
      control_flow_definition: $ => $.control_flow_statement,
 
-     _code_types: $ => choice(
-      'function',
-      'method',
-      'procedure',
-      'extension',
-      'operator',
-    ),
-
     _operator_token: $ => token(
       choice(
         '+',
@@ -404,6 +421,14 @@ module.exports = grammar({
      $.statement,
      )
     ),
+
+    _code_types: $ => choice(
+     'function',
+     'method',
+     'procedure',
+     'extension',
+     'operator',
+   ),
 
     code_definition_type: $ => choice('export','override','overridable','omega'),
 

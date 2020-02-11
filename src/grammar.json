@@ -17,6 +17,19 @@
         }
       ]
     },
+    "end_package": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "STRING",
+          "value": "package"
+        }
+      ]
+    },
     "package_definition": {
       "type": "SEQ",
       "members": [
@@ -73,16 +86,25 @@
           }
         },
         {
+          "type": "SYMBOL",
+          "name": "end_package"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        }
+      ]
+    },
+    "end_module": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "STRING",
           "value": "end"
         },
         {
           "type": "STRING",
-          "value": "package"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "end_of_line"
+          "value": "module"
         }
       ]
     },
@@ -160,6 +182,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "enum_definition"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "extension_definition"
               },
               {
@@ -174,12 +200,8 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "end"
-        },
-        {
-          "type": "STRING",
-          "value": "module"
+          "type": "SYMBOL",
+          "name": "end_module"
         },
         {
           "type": "SYMBOL",
@@ -578,6 +600,117 @@
         {
           "type": "SYMBOL",
           "name": "end_vector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        }
+      ]
+    },
+    "enum_element": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "default"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "type_expression"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "static_assignment"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        }
+      ]
+    },
+    "end_enum": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "STRING",
+          "value": "enum"
+        }
+      ]
+    },
+    "enum_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "access_control",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "access_control"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "enum"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "type_expression"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enum_element"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_enum"
         },
         {
           "type": "SYMBOL",
@@ -1191,31 +1324,6 @@
       "type": "SYMBOL",
       "name": "control_flow_statement"
     },
-    "_code_types": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "function"
-        },
-        {
-          "type": "STRING",
-          "value": "method"
-        },
-        {
-          "type": "STRING",
-          "value": "procedure"
-        },
-        {
-          "type": "STRING",
-          "value": "extension"
-        },
-        {
-          "type": "STRING",
-          "value": "operator"
-        }
-      ]
-    },
     "_operator_token": {
       "type": "TOKEN",
       "content": {
@@ -1402,6 +1510,31 @@
           }
         ]
       }
+    },
+    "_code_types": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "function"
+        },
+        {
+          "type": "STRING",
+          "value": "method"
+        },
+        {
+          "type": "STRING",
+          "value": "procedure"
+        },
+        {
+          "type": "STRING",
+          "value": "extension"
+        },
+        {
+          "type": "STRING",
+          "value": "operator"
+        }
+      ]
     },
     "code_definition_type": {
       "type": "CHOICE",

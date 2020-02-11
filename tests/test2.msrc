@@ -19,14 +19,23 @@ module mymod.
 
 use module othermod.
 
+ enum i32 myenum.
+  default enum1 := 5223.
+  default enum2.
+  default enum3 := 42.
+  default enum4 := (-(40+2)).
+  default enum5 := 0.
+  default enum6 := (3<<3).
+ end enum.
+
  vector 3,i32 myvec.
   vector_name x,y,z.
  end vector.
 
  extension constructor,(polymorph type classtype),(polymorph arguments params).
-  iff(_is_array(loop_array)).
-  iff(_itemsof(loop_array) > 0).
-  iff(_typeofvar(loop_item) == _typeofarray(loop_array)).
+  iff (_is_array(loop_array)).
+  iff (_itemsof(loop_array) > 0).
+  iff (_typeofvar(loop_item) == _typeofarray(loop_array)).
   define {
    function, {
     override, default, "new", params, classtype, invoke_extension_block
@@ -43,7 +52,7 @@ use module othermod.
 
  message "hello world".
   hello x := ($i8($$$u64($$$int*($$int[](array))))).
-  i32[5] myvar2 := get_val()-->got()[1].
+  i32[5] myvar2 := get_val()-->got(default)[1].
   x := (1 (+) 1).
  end message.
 
