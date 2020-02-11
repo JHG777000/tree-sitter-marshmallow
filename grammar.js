@@ -38,6 +38,8 @@ module.exports = grammar({
     [$._base_type,$.identifier_expression],
     [$.code_signature],
     [$._comma_list_types],
+    [$._comma_list_assignment_or_values],
+    [$.class_definition,$.binding_expression],
    ],
 
   rules: {
@@ -83,7 +85,7 @@ module.exports = grammar({
        $.vector_definition,
        $.variable_definition,
        $.enum_definition,
-       //$.class_definition,
+       $.class_definition,
        $.extension_definition,
        $.code_definition,
        $.control_flow_definition,
@@ -208,14 +210,43 @@ module.exports = grammar({
     end_enum: $ => seq('end','enum'),
 
     enum_definition: $ => seq(
-      field('access_control',optional($.access_control)),
-      'enum',
-      optional($.type_expression),
-      $.identifier,
-      $.end_of_line,
-      repeat($.enum_element),
-      $.end_enum,
-      $.end_of_line,
+     field('access_control',optional($.access_control)),
+     'enum',
+     optional($.type_expression),
+     $.identifier,
+     $.end_of_line,
+     repeat($.enum_element),
+     $.end_enum,
+     $.end_of_line,
+    ),
+
+    class_parameter_list: $ => seq(
+     '(',
+     optional($._comma_list_class_parameter_variable_definition),
+     ')',
+    ),
+
+    end_class: $ => seq('end','class'),
+
+    class_definition: $ => seq(
+     field('access_control',optional($.access_control)),
+     'class',
+     optional($.array_definition),
+     $.identifier,
+     optional($.class_parameter_list),
+     repeat($.pointer),
+     optional(
+       choice(
+       $.array_definition,
+       $.unsafe_array_definition,
+      )
+     ),
+     $.end_of_line,
+     repeat($.variable_definition),
+     repeat($.class_definition),
+     repeat($.call_expression),
+     $.end_class,
+     $.end_of_line,
     ),
 
     type_expression: $ => choice(
@@ -880,6 +911,8 @@ module.exports = grammar({
 
      binary: $ => token(seq('0b', /[01]+/)),
 
+     _class_parameter_variable_definition: $ => choice($._comma_list_assignment_or_values,$.parameter_variable_definition),
+
      _assignment_or_value_or_type: $ => choice($._assignment_or_value,$.type_expression),
 
      _assignment_or_value: $ => choice($._value,$.assignment_expression),
@@ -900,6 +933,8 @@ module.exports = grammar({
      _comma_list_identifiers: $ => seq($.identifier,repeat(seq(',',$.identifier))),
 
      _comma_list_parameter_variable_definition: $ => seq($.parameter_variable_definition,repeat(seq(',',$.parameter_variable_definition))),
+
+     _comma_list_class_parameter_variable_definition: $ => seq($._class_parameter_variable_definition,repeat(seq(',',$._class_parameter_variable_definition))),
 
      access_control: $ => choice('private', 'protected'),
 

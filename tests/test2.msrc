@@ -19,6 +19,19 @@ module mymod.
 
 use module othermod.
 
+class generic_list_class( polymorph type t )*.
+ private polymorph type list_type := t.
+ private allocator_type memalloc := _get_lambda(mmalloc).
+ private long num_of_nodes.
+ private list_node first.
+ private list_node last.
+ class list_node( t )*.
+  private list_node before.
+  private list_node after.
+  private t data.
+ end class.
+end class.
+
  enum i32 myenum.
   default enum1 := 5223.
   default enum2.

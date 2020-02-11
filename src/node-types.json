@@ -520,6 +520,151 @@
     "fields": {}
   },
   {
+    "type": "class_definition",
+    "named": true,
+    "fields": {
+      "access_control": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "access_control",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "array_definition",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "class_definition",
+          "named": true
+        },
+        {
+          "type": "class_parameter_list",
+          "named": true
+        },
+        {
+          "type": "end_class",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "pointer",
+          "named": true
+        },
+        {
+          "type": "unsafe_array_definition",
+          "named": true
+        },
+        {
+          "type": "variable_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "class_parameter_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "binary",
+          "named": true
+        },
+        {
+          "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "character",
+          "named": true
+        },
+        {
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "datum_literal",
+          "named": true
+        },
+        {
+          "type": "double",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "group_expression",
+          "named": true
+        },
+        {
+          "type": "hex",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "long",
+          "named": true
+        },
+        {
+          "type": "null",
+          "named": true
+        },
+        {
+          "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "parameter_variable_definition",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "code_block",
     "named": true,
     "fields": {},
@@ -938,6 +1083,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "end_class",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "end_code",
@@ -1628,6 +1778,10 @@
       "types": [
         {
           "type": "attribute_definition",
+          "named": true
+        },
+        {
+          "type": "class_definition",
           "named": true
         },
         {
@@ -3181,6 +3335,10 @@
   },
   {
     "type": "case",
+    "named": false
+  },
+  {
+    "type": "class",
     "named": false
   },
   {

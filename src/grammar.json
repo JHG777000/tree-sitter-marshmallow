@@ -186,6 +186,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "class_definition"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "extension_definition"
               },
               {
@@ -711,6 +715,158 @@
         {
           "type": "SYMBOL",
           "name": "end_enum"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        }
+      ]
+    },
+    "class_parameter_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_comma_list_class_parameter_variable_definition"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "end_class": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "STRING",
+          "value": "class"
+        }
+      ]
+    },
+    "class_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "access_control",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "access_control"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "class"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "array_definition"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "class_parameter_list"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "pointer"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "array_definition"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "unsafe_array_definition"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "variable_definition"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "class_definition"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "call_expression"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_class"
         },
         {
           "type": "SYMBOL",
@@ -3437,6 +3593,19 @@
         ]
       }
     },
+    "_class_parameter_variable_definition": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_comma_list_assignment_or_values"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parameter_variable_definition"
+        }
+      ]
+    },
     "_assignment_or_value_or_type": {
       "type": "CHOICE",
       "members": [
@@ -3663,6 +3832,31 @@
         }
       ]
     },
+    "_comma_list_class_parameter_variable_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_class_parameter_variable_definition"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_class_parameter_variable_definition"
+              }
+            ]
+          }
+        }
+      ]
+    },
     "access_control": {
       "type": "CHOICE",
       "members": [
@@ -3806,6 +4000,13 @@
     ],
     [
       "_comma_list_types"
+    ],
+    [
+      "_comma_list_assignment_or_values"
+    ],
+    [
+      "class_definition",
+      "binding_expression"
     ]
   ],
   "externals": [],
