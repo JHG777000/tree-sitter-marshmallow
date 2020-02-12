@@ -2,11 +2,19 @@
   "name": "marshmallow",
   "rules": {
     "source_file": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "package_definition"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "package_definition"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "REPEAT",
@@ -303,6 +311,19 @@
         }
       ]
     },
+    "traits_block": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "property_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "attribute_definition"
+        }
+      ]
+    },
     "end_traits": {
       "type": "SEQ",
       "members": [
@@ -346,17 +367,8 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "property_definition"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "attribute_definition"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "traits_block"
           }
         },
         {
@@ -377,33 +389,28 @@
           "value": "property"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "name",
-              "content": {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
                 "type": "SYMBOL",
-                "name": "identifier"
+                "name": "_value"
+              },
+              {
+                "type": "BLANK"
               }
-            },
-            {
-              "type": "FIELD",
-              "name": "value",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_value"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              }
-            }
-          ]
+            ]
+          }
         },
         {
           "type": "SYMBOL",
@@ -419,33 +426,28 @@
           "value": "attribute"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "name",
-              "content": {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
                 "type": "SYMBOL",
-                "name": "identifier"
+                "name": "_value"
+              },
+              {
+                "type": "BLANK"
               }
-            },
-            {
-              "type": "FIELD",
-              "name": "value",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_value"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              }
-            }
-          ]
+            ]
+          }
         },
         {
           "type": "SYMBOL",
@@ -597,8 +599,17 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "vector_name"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "traits_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "vector_name"
+              }
+            ]
           }
         },
         {
@@ -708,8 +719,21 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "enum_element"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "traits_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "traits_definition"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "enum_element"
+              }
+            ]
           }
         },
         {
@@ -846,22 +870,25 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "variable_definition"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "class_definition"
-          }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "call_expression"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "traits_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "variable_definition"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "class_definition"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "call_expression"
+              }
+            ]
           }
         },
         {
@@ -1638,11 +1665,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "property_definition"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "attribute_definition"
+            "name": "traits_block"
           },
           {
             "type": "SYMBOL",

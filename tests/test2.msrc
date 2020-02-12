@@ -15,6 +15,14 @@
 *                                                             *
 **************************************************************/
 
+package mypackage.
+ use source "main.msrc".
+ use package "marshmallow_standard_libary/package.msrc".
+ property backend c_backend.
+ property debug true.
+ attribute myflag yes.
+end package.
+
 module mymod.
 
 use module othermod.
@@ -67,6 +75,9 @@ end class.
   hello x := ($i8($$$u64($$$int*($$int[](array))))).
   i32[5] myvar2 := get_val()-->got(default)[1].
   x := (1 (+) 1).
+  traits(x).
+   property align 16.
+  end traits.
  end message.
 
  constructor myclass().

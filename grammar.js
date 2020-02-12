@@ -44,8 +44,8 @@ module.exports = grammar({
 
   rules: {
 
-    source_file: $ => choice(
-      $.package_definition,
+    source_file: $ => seq(
+      optional($.package_definition),
       repeat($.module_definition),
     ),
 
@@ -124,6 +124,12 @@ module.exports = grammar({
       $.end_of_line,
     ),
 
+   traits_block: $ =>
+    choice(
+     $.property_definition,
+     $.attribute_definition,
+    ),
+
     end_traits: $ => seq('end','traits'),
 
     traits_definition: $ => seq(
@@ -132,31 +138,22 @@ module.exports = grammar({
        field('variable',$.identifier),
       ')',
        $.end_of_line,
-       repeat(
-        choice(
-         $.property_definition,
-         $.attribute_definition,
-        ),
-       ),
+       repeat($.traits_block),
        $.end_traits,
        $.end_of_line,
     ),
 
     property_definition: $ => seq(
       'property',
-      choice(
        field('name',$.identifier),
        field('value',optional($._value)),
-      ),
       $.end_of_line,
     ),
 
     attribute_definition: $ => seq(
       'attribute',
-      choice(
        field('name',$.identifier),
        field('value',optional($._value)),
-      ),
       $.end_of_line,
     ),
 
@@ -192,7 +189,12 @@ module.exports = grammar({
      $.type_expression,
      $.identifier,
      $.end_of_line,
-     repeat($.vector_name),
+     repeat(
+      choice(
+       $.traits_block,
+       $.vector_name,
+      ),
+     ),
      $.end_vector,
      $.end_of_line,
     ),
@@ -215,7 +217,13 @@ module.exports = grammar({
      optional($.type_expression),
      $.identifier,
      $.end_of_line,
-     repeat($.enum_element),
+     repeat(
+      choice(
+       $.traits_block,
+       $.traits_definition,
+       $.enum_element,
+      ),
+     ),
      $.end_enum,
      $.end_of_line,
     ),
@@ -242,9 +250,14 @@ module.exports = grammar({
       )
      ),
      $.end_of_line,
-     repeat($.variable_definition),
-     repeat($.class_definition),
-     repeat($.call_expression),
+     repeat(
+      choice(
+       $.traits_block,
+       $.variable_definition,
+       $.class_definition,
+       $.call_expression,
+      ),
+     ),
      $.end_class,
      $.end_of_line,
     ),
@@ -443,8 +456,7 @@ module.exports = grammar({
 
     code_block: $ => repeat1(
     choice(
-     $.property_definition,
-     $.attribute_definition,
+     $.traits_block,
      $.traits_definition,
      $.local_variable_definition,
      $.extension_definition,
