@@ -95,7 +95,7 @@ module.exports = grammar({
      $.end_of_line,
     ),
 
-    use_definition_module : $ => seq(
+    use_definition_module: $ => seq(
       choice(
         'use',
         'require',
@@ -114,7 +114,7 @@ module.exports = grammar({
       $.end_of_line,
     ),
 
-    use_definition_package : $ => seq(
+    use_definition_package: $ => seq(
       'use',
       choice(
         'source',
@@ -256,6 +256,7 @@ module.exports = grammar({
        $.variable_definition,
        $.class_definition,
        $.call_expression,
+       $.call_statement,
       ),
      ),
      $.end_class,
@@ -314,7 +315,8 @@ module.exports = grammar({
         choice(
         $.array_definition,
         $.unsafe_array_definition,
-      )),
+      ),
+     ),
     ),
 
     _base_type: $ => choice(
@@ -547,6 +549,7 @@ module.exports = grammar({
      control_flow_statement: $ => choice(
        $.if_statement,
        $.iff_statement,
+       $.call_statement,
        $.while_statement,
        $.switch_statement,
        $.case_statement,
@@ -555,6 +558,24 @@ module.exports = grammar({
        $.section_statement,
        $.single_line_if_statement,
        $.return_statement,
+     ),
+
+     end_call: $ => seq('end','call'),
+
+     call_statement: $ => seq(
+       'call',
+       '(',
+       $._value,
+       ')',
+       $.end_of_line,
+       repeat(
+         seq(
+           $._assignment_or_value,
+           $.end_of_line,
+         ),
+       ),
+       $.end_call,
+       $.end_of_line,
      ),
 
      goto_statement: $ => seq(
@@ -802,13 +823,14 @@ module.exports = grammar({
   identifier_expression: $ => choice($.identifier,$.scope_expression),
 
   _one_word_operators: $ => choice(
+    '_init',
     '_sizeof',
     '_itemsof',
     '_typeofvar',
     '_typeofptr',
     '_typeofarray',
     '_is_ptr',
-    '_isvardef',
+    '_is_vardef',
     '_is_number',
     '_is_float',
     '_is_string',
@@ -817,8 +839,9 @@ module.exports = grammar({
     '_is_class',
     '_is_subclass',
     '_is_superclass',
-    '_init',
-    '_get_lambda'
+    '_get_lambda',
+    '_get_return',
+    '_get_returns',
   ),
 
   one_word_operator: $ => seq(

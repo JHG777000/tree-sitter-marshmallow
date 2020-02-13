@@ -887,6 +887,10 @@
               {
                 "type": "SYMBOL",
                 "name": "call_expression"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "call_statement"
               }
             ]
           }
@@ -2135,6 +2139,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "call_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "while_statement"
         },
         {
@@ -2164,6 +2172,68 @@
         {
           "type": "SYMBOL",
           "name": "return_statement"
+        }
+      ]
+    },
+    "end_call": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "STRING",
+          "value": "call"
+        }
+      ]
+    },
+    "call_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "call"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_value"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_assignment_or_value"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "end_of_line"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
         }
       ]
     },
@@ -3041,6 +3111,10 @@
       "members": [
         {
           "type": "STRING",
+          "value": "_init"
+        },
+        {
+          "type": "STRING",
           "value": "_sizeof"
         },
         {
@@ -3065,7 +3139,7 @@
         },
         {
           "type": "STRING",
-          "value": "_isvardef"
+          "value": "_is_vardef"
         },
         {
           "type": "STRING",
@@ -3101,11 +3175,15 @@
         },
         {
           "type": "STRING",
-          "value": "_init"
+          "value": "_get_lambda"
         },
         {
           "type": "STRING",
-          "value": "_get_lambda"
+          "value": "_get_return"
+        },
+        {
+          "type": "STRING",
+          "value": "_get_returns"
         }
       ]
     },
