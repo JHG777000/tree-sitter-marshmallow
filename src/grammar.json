@@ -1368,78 +1368,96 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "STRING",
+              "value": "parameter"
+            },
+            {
+              "type": "STRING",
+              "value": "argument"
+            },
+            {
               "type": "SEQ",
               "members": [
                 {
-                  "type": "FIELD",
-                  "name": "is_preserved",
-                  "content": {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": "preserved"
-                      },
-                      {
-                        "type": "BLANK"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "FIELD",
+                          "name": "is_preserved",
+                          "content": {
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "STRING",
+                                "value": "preserved"
+                              },
+                              {
+                                "type": "BLANK"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type": "FIELD",
+                          "name": "is_persistent",
+                          "content": {
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "STRING",
+                                "value": "persistent"
+                              },
+                              {
+                                "type": "BLANK"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "FIELD",
+                      "name": "inoutpass",
+                      "content": {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "STRING",
+                            "value": "in"
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "out"
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "inout"
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "pass"
+                          }
+                        ]
                       }
-                    ]
-                  }
+                    }
+                  ]
                 },
                 {
-                  "type": "FIELD",
-                  "name": "is_persistent",
-                  "content": {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": "persistent"
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
-                  }
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "readability"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 }
               ]
-            },
-            {
-              "type": "FIELD",
-              "name": "inoutpass",
-              "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "in"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "out"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "inout"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "pass"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "readability"
-            },
-            {
-              "type": "BLANK"
             }
           ]
         },
@@ -2093,6 +2111,10 @@
         {
           "type": "SYMBOL",
           "name": "generate_statment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "returns_statment"
         }
       ]
     },
@@ -2230,6 +2252,23 @@
         {
           "type": "SYMBOL",
           "name": "end_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        }
+      ]
+    },
+    "returns_statment": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "returns"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_comma_list_types"
         },
         {
           "type": "SYMBOL",

@@ -72,12 +72,15 @@ end class.
  end operator.
 
  message "hello world".
+  parameter i32 z.
+  returns i32, u8.
   hello x := ($i8($$$u64($$$int*($$int[](array))))).
   i32[5] myvar2 := get_val()-->got(default)[1].
   x := (1 (+) 1).
   traits(x).
    property align 16.
   end traits.
+  return {0,0}.
  end message.
 
  constructor myclass().

@@ -393,13 +393,19 @@ module.exports = grammar({
 
      local_variable_definition: $ => seq(
        choice(
+        'parameter',
+        'argument',
         seq(
-         field('is_preserved',optional('preserved')),
-         field('is_persistent',optional('persistent')),
+         choice(
+           seq(
+            field('is_preserved',optional('preserved')),
+            field('is_persistent',optional('persistent')),
+           ),
+           field('inoutpass',choice('in','out','inout','pass')),
+          ),
+         optional($.readability),
         ),
-        field('inoutpass',choice('in','out','inout','pass')),
        ),
-       optional($.readability),
        $.type_expression,
        $.identifier,
        optional($.static_assignment),
@@ -533,6 +539,7 @@ module.exports = grammar({
      $.control_flow_statement,
      $.define_statment,
      $.generate_statment,
+     $.returns_statment,
     ),
 
     define_statment: $ => seq(
@@ -575,6 +582,12 @@ module.exports = grammar({
          ),
        ),
        $.end_call,
+       $.end_of_line,
+     ),
+
+     returns_statment: $ => seq(
+       'returns',
+       $._comma_list_types,
        $.end_of_line,
      ),
 

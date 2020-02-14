@@ -2351,6 +2351,25 @@
     }
   },
   {
+    "type": "returns_statment",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "type_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "safe_index_op",
     "named": true,
     "fields": {},
@@ -2527,6 +2546,10 @@
         },
         {
           "type": "generate_statment",
+          "named": true
+        },
+        {
+          "type": "returns_statment",
           "named": true
         }
       ]
@@ -3453,6 +3476,10 @@
     "named": false
   },
   {
+    "type": "argument",
+    "named": false
+  },
+  {
     "type": "arguments",
     "named": false
   },
@@ -3658,6 +3685,10 @@
   },
   {
     "type": "package",
+    "named": false
+  },
+  {
+    "type": "parameter",
     "named": false
   },
   {
