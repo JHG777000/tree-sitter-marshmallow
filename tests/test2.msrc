@@ -36,7 +36,7 @@ class generic_list_class( polymorph type t )*.
  class list_node( t )*.
   private list_node before.
   private list_node after.
-  private t data.
+  private owned t data.
  end class.
 end class.
 
@@ -66,7 +66,11 @@ end class.
   lambda function() returns int, int mylambda.
  end extension.
 
- operator + (i32 a, i32 b) returns i32.
+ function get_type returns polymorph type.
+  return i32.
+ end function.
+
+ operator + (i32 a, i32 b) returns get_type().
   array:{array:i32,array:i32} myarray := new(new(1,2,3,4,5),new(1,2,3,4,5)).
   return (a + b).
  end operator.
@@ -75,7 +79,7 @@ end class.
   parameter i32 z.
   returns i32, u8.
   hello x := ($i8($$$u64($$$int*($$int[](array))))).
-  i32[5] myvar2 := get_val()-->got(default)[1].
+  i32[5] myvar2 := get_val(transfer_owenership val)-->got(default)[1].
   x := (1 (+) 1).
   traits(x).
    property align 16.

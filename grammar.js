@@ -9,13 +9,13 @@ module.exports = grammar({
     conflicts: $ => [
     [$.readability],
     [$._base_type,$.binding_expression],
-    [$.property_definition,$._value],
-    [$.attribute_definition,$._value],
+    [$.property_definition,$.__value],
+    [$.attribute_definition,$.__value],
     [$._basic_type_value],
-    [$.type_expression,$._value],
-    [$._polymorph_type_value,$._value],
-    [$.expression_statement,$._value],
-    [$.scope_expression,$._value],
+    [$.type_expression,$.__value],
+    [$._polymorph_type_value,$.__value],
+    [$.expression_statement,$.__value],
+    [$.scope_expression,$.__value],
     [$.scope_expression],
     [$.scope_expression,$.binding_expression],
     [$.return_list],
@@ -24,22 +24,23 @@ module.exports = grammar({
     [$.static_assignment,$.call_expression],
     [$.assignment_expression,$.call_expression],
     [$.type_expression,$._base_type],
-    [$.type_expression,$._base_type,$._value],
-    [$._base_type,$._value],
+    [$.type_expression,$._base_type,$.__value],
+    [$._base_type,$.__value],
     [$.case_statement],
     [$.binding_expression,$.identifier_expression],
     [$.assignment_expression,$.identifier_expression],
     [$.code_block],
     [$._base_type,$.extension_definition],
-    [$.identifier_expression,$._value],
+    [$.identifier_expression,$.__value],
     [$.access_expression,$.index_expression],
     [$.extension_list],
-    [$.container_expression,$._value],
+    [$.container_expression,$.__value],
     [$._base_type,$.identifier_expression],
     [$.code_signature],
     [$._comma_list_types],
     [$._comma_list_assignment_or_values],
     [$.class_definition,$.binding_expression],
+    [$.transfer_owenership_expression,$._value],
    ],
 
   rules: {
@@ -264,11 +265,25 @@ module.exports = grammar({
     ),
 
     type_expression: $ => choice(
+      $.ownership_expression,
       $.freeable_expression,
-      $.binding_expression,
       $.container_expression,
       $._type_value,
     ),
+
+    ownership_expression: $ => seq(
+    field( 'ownership_type',
+     choice(
+       'owner',
+       'owned',
+      ),
+     ),
+      choice(
+       $.freeable_expression,
+       $.container_expression,
+       $._type_value,
+      ),
+     ),
 
     freeable_expression: $ => seq(
      'freeable',
@@ -394,7 +409,6 @@ module.exports = grammar({
      local_variable_definition: $ => seq(
        choice(
         'parameter',
-        'argument',
         seq(
          choice(
            seq(
@@ -889,9 +903,11 @@ module.exports = grammar({
 
      null: $ => 'null',
 
-     identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
+     invoke_extension_block: $ => 'invoke_extension_block',
 
-     datum_literal: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
+     embed_extension_block: $ => 'embed_extension_block',
+
+     identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
 
      string: $ => seq('"',repeat(choice(token.immediate(prec(1,(/[^\"]/))),$._escape_sequence)),'"'),
 
@@ -928,7 +944,12 @@ module.exports = grammar({
      '}',
      ),
 
-     _value: $ => choice(
+     transfer_owenership_expression: $ => seq(
+       'transfer_owenership',
+       $.__value,
+     ),
+
+     __value: $ => choice(
        $._literal,
        $.collection,
        $.identifier,
@@ -937,12 +958,18 @@ module.exports = grammar({
        $.one_word_operator,
      ),
 
+     _value: $ => choice(
+       $.__value,
+       $.transfer_owenership_expression,
+      ),
+
      _literal: $ => choice(
        $._number,
        $.string,
-       $.datum_literal,
        $.character,
        $.null,
+       $.invoke_extension_block,
+       $.embed_extension_block,
      ),
 
      oct: $ => token(seq('0',/[0-7]/)),

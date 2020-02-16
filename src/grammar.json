@@ -910,11 +910,11 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "freeable_expression"
+          "name": "ownership_expression"
         },
         {
           "type": "SYMBOL",
-          "name": "binding_expression"
+          "name": "freeable_expression"
         },
         {
           "type": "SYMBOL",
@@ -923,6 +923,45 @@
         {
           "type": "SYMBOL",
           "name": "_type_value"
+        }
+      ]
+    },
+    "ownership_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "ownership_type",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "owner"
+              },
+              {
+                "type": "STRING",
+                "value": "owned"
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "freeable_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "container_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_type_value"
+            }
+          ]
         }
       ]
     },
@@ -1370,10 +1409,6 @@
             {
               "type": "STRING",
               "value": "parameter"
-            },
-            {
-              "type": "STRING",
-              "value": "argument"
             },
             {
               "type": "SEQ",
@@ -3370,13 +3405,17 @@
       "type": "STRING",
       "value": "null"
     },
+    "invoke_extension_block": {
+      "type": "STRING",
+      "value": "invoke_extension_block"
+    },
+    "embed_extension_block": {
+      "type": "STRING",
+      "value": "embed_extension_block"
+    },
     "identifier": {
       "type": "PATTERN",
       "value": "[^\\[\\]\\'\\.\\\"\\*\\-\\+\\\\%\\s\\(\\)${}:=,!_0-9][^\\[\\]\\'\\.\\\"\\*\\-\\+\\\\%\\s\\(\\)${}:=,!]*"
-    },
-    "datum_literal": {
-      "type": "PATTERN",
-      "value": "[^\\[\\]\\'\\.\\\"\\*\\-\\+\\\\%\\s\\(\\)${}:=,!0-9][^\\[\\]\\'\\.\\\"\\*\\-\\+\\\\%\\s\\(\\)${}:=,!]*"
     },
     "string": {
       "type": "SEQ",
@@ -3546,7 +3585,20 @@
         }
       ]
     },
-    "_value": {
+    "transfer_owenership_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "transfer_owenership"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "__value"
+        }
+      ]
+    },
+    "__value": {
       "type": "CHOICE",
       "members": [
         {
@@ -3575,6 +3627,19 @@
         }
       ]
     },
+    "_value": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "__value"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "transfer_owenership_expression"
+        }
+      ]
+    },
     "_literal": {
       "type": "CHOICE",
       "members": [
@@ -3588,15 +3653,19 @@
         },
         {
           "type": "SYMBOL",
-          "name": "datum_literal"
-        },
-        {
-          "type": "SYMBOL",
           "name": "character"
         },
         {
           "type": "SYMBOL",
           "name": "null"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "invoke_extension_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "embed_extension_block"
         }
       ]
     },
@@ -4035,30 +4104,30 @@
     ],
     [
       "property_definition",
-      "_value"
+      "__value"
     ],
     [
       "attribute_definition",
-      "_value"
+      "__value"
     ],
     [
       "_basic_type_value"
     ],
     [
       "type_expression",
-      "_value"
+      "__value"
     ],
     [
       "_polymorph_type_value",
-      "_value"
+      "__value"
     ],
     [
       "expression_statement",
-      "_value"
+      "__value"
     ],
     [
       "scope_expression",
-      "_value"
+      "__value"
     ],
     [
       "scope_expression"
@@ -4092,11 +4161,11 @@
     [
       "type_expression",
       "_base_type",
-      "_value"
+      "__value"
     ],
     [
       "_base_type",
-      "_value"
+      "__value"
     ],
     [
       "case_statement"
@@ -4118,7 +4187,7 @@
     ],
     [
       "identifier_expression",
-      "_value"
+      "__value"
     ],
     [
       "access_expression",
@@ -4129,7 +4198,7 @@
     ],
     [
       "container_expression",
-      "_value"
+      "__value"
     ],
     [
       "_base_type",
@@ -4147,6 +4216,10 @@
     [
       "class_definition",
       "binding_expression"
+    ],
+    [
+      "transfer_owenership_expression",
+      "_value"
     ]
   ],
   "externals": [],
