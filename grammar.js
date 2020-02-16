@@ -1,6 +1,8 @@
 module.exports = grammar({
   name: 'marshmallow',
 
+  word: $ => $.identifier,
+
   extras: $ => [
       /\s/,
       $._comment,
@@ -162,7 +164,7 @@ module.exports = grammar({
       field('access_control',optional($.access_control)),
       field('declaration_type',choice('declare','external')),
       choice(
-       $.code_definition,
+       $.code_signature,
        $.variable_definition,
       ),
       $.end_of_line,

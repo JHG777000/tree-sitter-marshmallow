@@ -27,6 +27,17 @@ module mymod.
 
 use module othermod.
 
+external function puts(s8 string).
+
+class myclass*.
+ u32 val := 42.
+ otherclass val2.
+end class.
+
+class otherclass.
+ s8 val.
+end class.
+
 class generic_list_class( polymorph type t )*.
  private polymorph type list_type := t.
  private allocator_type memalloc := _get_lambda(mmalloc).

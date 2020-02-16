@@ -1172,7 +1172,7 @@
       "required": true,
       "types": [
         {
-          "type": "code_definition",
+          "type": "code_signature",
           "named": true
         },
         {

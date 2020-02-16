@@ -1,5 +1,6 @@
 {
   "name": "marshmallow",
+  "word": "identifier",
   "rules": {
     "source_file": {
       "type": "SEQ",
@@ -496,7 +497,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "code_definition"
+              "name": "code_signature"
             },
             {
               "type": "SYMBOL",
