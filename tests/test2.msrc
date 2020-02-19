@@ -89,6 +89,7 @@ end class.
  message "hello world".
   parameter i32 z.
   returns i32, u8.
+  i32 y := conditional((z == 1),1,2).
   hello x := ($i8($$$u64($$$int*($$int[](array))))).
   i32[5] myvar2 := get_val(transfer_owenership val)-->got(default)[1].
   x := (1 (+) 1).

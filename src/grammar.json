@@ -3259,6 +3259,10 @@
         {
           "type": "STRING",
           "value": "_get_returns"
+        },
+        {
+          "type": "STRING",
+          "value": "conditional"
         }
       ]
     },

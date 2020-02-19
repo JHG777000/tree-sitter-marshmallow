@@ -871,6 +871,7 @@ module.exports = grammar({
     '_get_lambda',
     '_get_return',
     '_get_returns',
+    'conditional',
   ),
 
   one_word_operator: $ => seq(

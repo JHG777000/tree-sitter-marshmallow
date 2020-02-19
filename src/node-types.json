@@ -3793,6 +3793,10 @@
     "named": false
   },
   {
+    "type": "conditional",
+    "named": false
+  },
+  {
     "type": "datum",
     "named": false
   },
@@ -3894,11 +3898,11 @@
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "if",
