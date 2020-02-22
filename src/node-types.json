@@ -686,10 +686,6 @@
           "named": true
         },
         {
-          "type": "class_definition",
-          "named": true
-        },
-        {
           "type": "class_parameter_list",
           "named": true
         },
@@ -1177,6 +1173,10 @@
         },
         {
           "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {

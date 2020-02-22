@@ -167,6 +167,12 @@ module.exports = grammar({
        $.code_signature,
        $.variable_definition,
       ),
+      optional(
+        seq(
+         'as',
+         $.identifier,
+       ),
+      ),
       $.end_of_line,
     ),
 
@@ -257,7 +263,6 @@ module.exports = grammar({
       choice(
        $.traits_block,
        $.variable_definition,
-       $.class_definition,
        $.call_expression,
        $.call_statement,
       ),

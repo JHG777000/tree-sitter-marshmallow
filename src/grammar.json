@@ -506,6 +506,27 @@
           ]
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "as"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "end_of_line"
         }
@@ -880,10 +901,6 @@
               {
                 "type": "SYMBOL",
                 "name": "variable_definition"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "class_definition"
               },
               {
                 "type": "SYMBOL",
