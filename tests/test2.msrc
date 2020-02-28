@@ -46,7 +46,7 @@ class generic_list( polymorph type t )*.
  private generic_list_node last.
 end class.
 
-class generic_list_node( t := generic_list_class->list_type )*.
+class generic_list_node( t := generic_list->list_type )*.
  private generic_list_node before.
  private generic_list_node after.
  private t data.
@@ -83,6 +83,7 @@ end class.
  end function.
 
  operator + (i32 a, i32 b) returns get_type().
+  get_type().
   array:{array:i32,array:i32} myarray := new(new(1,2,3,4,5),new(1,2,3,4,5)).
   return (a + b).
  end operator.

@@ -162,7 +162,7 @@ module.exports = grammar({
 
     declaration_definition: $ => seq(
       field('access_control',optional($.access_control)),
-      field('declaration_type',choice('declare','external')),
+      field('declaration_type',choice('declare','external','protocol')),
       choice(
        $.code_signature,
        $.variable_definition,
@@ -247,6 +247,7 @@ module.exports = grammar({
 
     class_definition: $ => seq(
      field('access_control',optional($.access_control)),
+     field('class_type',optional(choice('final','abstract','protocol'))),
      'class',
      optional($.array_definition),
      $.identifier,
@@ -703,6 +704,7 @@ module.exports = grammar({
     expression_statement: $ => seq(
      choice(
       $.group_expression,
+      $.binding_expression,
       $.assignment_expression,
      ),
      $.end_of_line
@@ -845,14 +847,12 @@ module.exports = grammar({
       ),
     ),
 
-    binding_expression: $ => seq(
-     choice(
+    binding_expression: $ => choice(
      $.access_expression,
      $.index_expression,
      $.call_expression,
      $.scope_expression,
-   )
-  ),
+    ),
 
   identifier_expression: $ => choice($.identifier,$.scope_expression),
 
@@ -1019,7 +1019,7 @@ module.exports = grammar({
 
      _comma_list_class_parameter_variable_definition: $ => seq($._class_parameter_variable_definition,repeat(seq(',',$._class_parameter_variable_definition))),
 
-     access_control: $ => choice('private', 'protected'),
+     access_control: $ => choice('private', 'protected','inherit'),
 
      end_of_line: $ => '.',
 

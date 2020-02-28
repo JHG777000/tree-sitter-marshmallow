@@ -488,6 +488,10 @@
               {
                 "type": "STRING",
                 "value": "external"
+              },
+              {
+                "type": "STRING",
+                "value": "protocol"
               }
             ]
           }
@@ -818,6 +822,35 @@
               {
                 "type": "SYMBOL",
                 "name": "access_control"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "class_type",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "final"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "abstract"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "protocol"
+                  }
+                ]
               },
               {
                 "type": "BLANK"
@@ -2676,6 +2709,10 @@
             },
             {
               "type": "SYMBOL",
+              "name": "binding_expression"
+            },
+            {
+              "type": "SYMBOL",
               "name": "assignment_expression"
             }
           ]
@@ -3160,28 +3197,23 @@
       ]
     },
     "binding_expression": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "access_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "index_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "call_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "scope_expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "access_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "index_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "scope_expression"
         }
       ]
     },
@@ -4098,6 +4130,10 @@
         {
           "type": "STRING",
           "value": "protected"
+        },
+        {
+          "type": "STRING",
+          "value": "inherit"
         }
       ]
     },

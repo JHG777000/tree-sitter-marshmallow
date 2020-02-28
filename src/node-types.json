@@ -667,6 +667,24 @@
             "named": true
           }
         ]
+      },
+      "class_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "abstract",
+            "named": false
+          },
+          {
+            "type": "final",
+            "named": false
+          },
+          {
+            "type": "protocol",
+            "named": false
+          }
+        ]
       }
     },
     "children": {
@@ -1159,6 +1177,10 @@
           {
             "type": "external",
             "named": false
+          },
+          {
+            "type": "protocol",
+            "named": false
           }
         ]
       }
@@ -1432,6 +1454,10 @@
       "types": [
         {
           "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "binding_expression",
           "named": true
         },
         {
@@ -3757,6 +3783,10 @@
     "named": false
   },
   {
+    "type": "abstract",
+    "named": false
+  },
+  {
     "type": "access_op",
     "named": true
   },
@@ -3857,6 +3887,10 @@
     "named": false
   },
   {
+    "type": "final",
+    "named": false
+  },
+  {
     "type": "float",
     "named": true
   },
@@ -3898,11 +3932,11 @@
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "if",
@@ -3914,6 +3948,10 @@
   },
   {
     "type": "in",
+    "named": false
+  },
+  {
+    "type": "inherit",
     "named": false
   },
   {
@@ -4030,6 +4068,10 @@
   },
   {
     "type": "protected_write",
+    "named": false
+  },
+  {
+    "type": "protocol",
     "named": false
   },
   {
