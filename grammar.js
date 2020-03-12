@@ -43,6 +43,7 @@ module.exports = grammar({
     [$._comma_list_assignment_or_values],
     [$.class_definition,$.binding_expression],
     [$.transfer_owenership_expression,$._value],
+    [$.expression_statement,$.binding_expression],
    ],
 
   rules: {
@@ -363,6 +364,7 @@ module.exports = grammar({
       'type',
       'anyvar',
       'vardef',
+      'subclass',
       'arguments',
       'identifier',
     ),
@@ -409,7 +411,7 @@ module.exports = grammar({
        field('is_export',optional('export')),
        optional($.readability),
        $.type_expression,
-       $.identifier,
+       optional($.identifier),
        optional($.static_assignment),
        $.end_of_line,
      ),
@@ -429,7 +431,7 @@ module.exports = grammar({
         ),
        ),
        $.type_expression,
-       $.identifier,
+       optional($.identifier),
        optional($.static_assignment),
        $.end_of_line,
      ),
@@ -581,8 +583,6 @@ module.exports = grammar({
        $.call_statement,
        $.while_statement,
        $.switch_statement,
-       $.case_statement,
-       $.default_statement,
        $.goto_statement,
        $.section_statement,
        $.single_line_if_statement,
@@ -704,7 +704,7 @@ module.exports = grammar({
     expression_statement: $ => seq(
      choice(
       $.group_expression,
-      $.binding_expression,
+      $.call_expression,
       $.assignment_expression,
      ),
      $.end_of_line
@@ -716,9 +716,11 @@ module.exports = grammar({
 
     overridable_access_op: $ => '-->',
 
-    safe_index_op: $ => seq('[',$._value,']'),
+    reflection_index_op: $ => seq('[',$.string,']'),
 
-    unsafe_index_op: $ => seq('[[',$._value,']]'),
+    safe_index_op: $ => seq('[',$._number,']'),
+
+    unsafe_index_op: $ => seq('[[',$._number,']]'),
 
     _cast_ops: $ => seq(
      choice(
@@ -826,6 +828,7 @@ module.exports = grammar({
     index_expression: $ => choice(
       seq($._value,$.safe_index_op),
       seq($._value,$.unsafe_index_op),
+      seq($._value,$.reflection_index_op),
     ),
 
     call_expression: $ => seq(
@@ -837,6 +840,8 @@ module.exports = grammar({
 
     scope_expression: $ => seq(
       choice(
+       'procedure',
+       'function',
        $.identifier,
        $.scope_expression,
       ),

@@ -1110,14 +1110,6 @@
           "named": true
         },
         {
-          "type": "case_statement",
-          "named": true
-        },
-        {
-          "type": "default_statement",
-          "named": true
-        },
-        {
           "type": "goto_statement",
           "named": true
         },
@@ -1457,7 +1449,7 @@
           "named": true
         },
         {
-          "type": "binding_expression",
+          "type": "call_expression",
           "named": true
         },
         {
@@ -1851,6 +1843,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "reflection_index_op",
           "named": true
         },
         {
@@ -2445,6 +2441,21 @@
     }
   },
   {
+    "type": "reflection_index_op",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "return_list",
     "named": true,
     "fields": {},
@@ -2582,23 +2593,7 @@
           "named": true
         },
         {
-          "type": "binding_expression",
-          "named": true
-        },
-        {
-          "type": "character",
-          "named": true
-        },
-        {
-          "type": "collection",
-          "named": true
-        },
-        {
           "type": "double",
-          "named": true
-        },
-        {
-          "type": "embed_extension_block",
           "named": true
         },
         {
@@ -2606,15 +2601,7 @@
           "named": true
         },
         {
-          "type": "group_expression",
-          "named": true
-        },
-        {
           "type": "hex",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
@@ -2622,31 +2609,11 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
           "named": true
         },
         {
-          "type": "null",
-          "named": true
-        },
-        {
           "type": "oct",
-          "named": true
-        },
-        {
-          "type": "one_word_operator",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "transfer_owenership_expression",
           "named": true
         }
       ]
@@ -3219,23 +3186,7 @@
           "named": true
         },
         {
-          "type": "binding_expression",
-          "named": true
-        },
-        {
-          "type": "character",
-          "named": true
-        },
-        {
-          "type": "collection",
-          "named": true
-        },
-        {
           "type": "double",
-          "named": true
-        },
-        {
-          "type": "embed_extension_block",
           "named": true
         },
         {
@@ -3243,15 +3194,7 @@
           "named": true
         },
         {
-          "type": "group_expression",
-          "named": true
-        },
-        {
           "type": "hex",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
@@ -3259,31 +3202,11 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
           "named": true
         },
         {
-          "type": "null",
-          "named": true
-        },
-        {
           "type": "oct",
-          "named": true
-        },
-        {
-          "type": "one_word_operator",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "transfer_owenership_expression",
           "named": true
         }
       ]
@@ -4112,6 +4035,10 @@
   },
   {
     "type": "static",
+    "named": false
+  },
+  {
+    "type": "subclass",
     "named": false
   },
   {
