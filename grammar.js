@@ -43,7 +43,12 @@ module.exports = grammar({
     [$._comma_list_assignment_or_values],
     [$.class_definition,$.binding_expression],
     [$.transfer_owenership_expression,$._value],
-    [$.expression_statement,$.binding_expression],
+    [$.arrow_expression,$._comma_list_parameter_variable_definition],
+    [$.arrow_expression,$.__value],
+    [$.arrow_expression,$.binding_expression],
+    [$.arrow_expression,$.index_expression],
+    [$.assignment_expression,$.index_expression],
+    [$.assignment_expression,$.access_expression],
    ],
 
   rules: {
@@ -431,7 +436,7 @@ module.exports = grammar({
         ),
        ),
        $.type_expression,
-       optional($.identifier),
+       $.identifier,
        optional($.static_assignment),
        $.end_of_line,
      ),
@@ -831,6 +836,23 @@ module.exports = grammar({
       seq($._value,$.reflection_index_op),
     ),
 
+    arrow_expression: $ => seq(
+      '(',
+       optional(
+         choice(
+         $.parameter_variable_definition,
+         $._comma_list_parameter_variable_definition,
+       ),
+      ),
+    ')',
+    '=>',
+     choice(
+      $.group_expression,
+      $.call_expression,
+      $.assignment_expression,
+     ),
+    ),
+
     call_expression: $ => seq(
       $._value,
       '(',
@@ -840,8 +862,6 @@ module.exports = grammar({
 
     scope_expression: $ => seq(
       choice(
-       'procedure',
-       'function',
        $.identifier,
        $.scope_expression,
       ),
@@ -853,6 +873,7 @@ module.exports = grammar({
     ),
 
     binding_expression: $ => choice(
+     $.arrow_expression,
      $.access_expression,
      $.index_expression,
      $.call_expression,

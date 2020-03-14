@@ -1564,16 +1564,8 @@
           "name": "type_expression"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "CHOICE",
@@ -3174,6 +3166,61 @@
         }
       ]
     },
+    "arrow_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "parameter_variable_definition"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_comma_list_parameter_variable_definition"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        },
+        {
+          "type": "STRING",
+          "value": "=>"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "group_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "call_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "assignment_expression"
+            }
+          ]
+        }
+      ]
+    },
     "call_expression": {
       "type": "SEQ",
       "members": [
@@ -3241,6 +3288,10 @@
     "binding_expression": {
       "type": "CHOICE",
       "members": [
+        {
+          "type": "SYMBOL",
+          "name": "arrow_expression"
+        },
         {
           "type": "SYMBOL",
           "name": "access_expression"
@@ -4322,8 +4373,28 @@
       "_value"
     ],
     [
-      "expression_statement",
+      "arrow_expression",
+      "_comma_list_parameter_variable_definition"
+    ],
+    [
+      "arrow_expression",
+      "__value"
+    ],
+    [
+      "arrow_expression",
       "binding_expression"
+    ],
+    [
+      "arrow_expression",
+      "index_expression"
+    ],
+    [
+      "assignment_expression",
+      "index_expression"
+    ],
+    [
+      "assignment_expression",
+      "access_expression"
     ]
   ],
   "externals": [],

@@ -84,7 +84,9 @@ end class.
 
  operator + (i32 a, i32 b) returns get_type().
   get_type().
-  array:{array:i32,array:i32} myarray := new(new(1,2,3,4,5),new(1,2,3,4,5)).
+  array:i32 myarray := new(1,2,3,4,5).
+  myarray->for_each_item((i32 item) => print_line(item)).
+  array:{array:{array:i32}} myarray2 := new(new(new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5))).
   return (a + b).
  end operator.
 
