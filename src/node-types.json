@@ -759,6 +759,10 @@
           "named": true
         },
         {
+          "type": "union_definition",
+          "named": true
+        },
+        {
           "type": "unsafe_array_definition",
           "named": true
         },
@@ -1377,6 +1381,11 @@
   },
   {
     "type": "end_traits",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "end_union",
     "named": true,
     "fields": {}
   },
@@ -3122,6 +3131,48 @@
     "fields": {}
   },
   {
+    "type": "union_definition",
+    "named": true,
+    "fields": {
+      "access_control": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "access_control",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "end_union",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "traits_block",
+          "named": true
+        },
+        {
+          "type": "variable_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "unsafe_array_definition",
     "named": true,
     "fields": {},
@@ -4118,6 +4169,10 @@
   },
   {
     "type": "u8",
+    "named": false
+  },
+  {
+    "type": "union",
     "named": false
   },
   {

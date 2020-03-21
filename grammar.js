@@ -243,6 +243,23 @@ module.exports = grammar({
      $.end_of_line,
     ),
 
+    end_union: $ => seq('end','union'),
+
+    union_definition: $ => seq(
+      field('access_control',optional($.access_control)),
+      'union',
+      optional($.identifier),
+      $.end_of_line,
+      repeat(
+       choice(
+        $.traits_block,
+        $.variable_definition,
+       ),
+      ),
+      $.end_union,
+      $.end_of_line,
+    ),
+
     class_parameter_list: $ => seq(
      '(',
      optional($._comma_list_class_parameter_variable_definition),
@@ -269,6 +286,7 @@ module.exports = grammar({
      repeat(
       choice(
        $.traits_block,
+       $.union_definition,
        $.variable_definition,
        $.call_expression,
        $.call_statement,

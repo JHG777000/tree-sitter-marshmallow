@@ -39,6 +39,10 @@ class otherclass.
 end class.
 
 class generic_list( polymorph type t )*.
+ union.
+  int inum.
+  private long lnum.
+ end union.
  private polymorph type list_type := t.
  private allocator_type memalloc := _get_lambda(mmalloc).
  private long num_of_nodes.

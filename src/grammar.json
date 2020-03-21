@@ -772,6 +772,84 @@
         }
       ]
     },
+    "end_union": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "STRING",
+          "value": "union"
+        }
+      ]
+    },
+    "union_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "access_control",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "access_control"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "union"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "traits_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "variable_definition"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_union"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        }
+      ]
+    },
     "class_parameter_list": {
       "type": "SEQ",
       "members": [
@@ -930,6 +1008,10 @@
               {
                 "type": "SYMBOL",
                 "name": "traits_block"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "union_definition"
               },
               {
                 "type": "SYMBOL",
