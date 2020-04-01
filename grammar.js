@@ -492,11 +492,7 @@ module.exports = grammar({
     ),
 
     operator_name: $ => choice(
-       seq(
-        $._operator_token,
-        optional($._operator_token),
-        optional($._operator_token),
-      ),
+      repeat1($._operator_token),
       '[]',
       '[[]]',
     ),
