@@ -3158,10 +3158,6 @@
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "traits_block",
           "named": true
         },

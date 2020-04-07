@@ -248,7 +248,6 @@ module.exports = grammar({
     union_definition: $ => seq(
       field('access_control',optional($.access_control)),
       'union',
-      optional($.identifier),
       $.end_of_line,
       repeat(
        choice(
