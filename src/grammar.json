@@ -1139,10 +1139,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_polymorph_type_value"
-        },
-        {
-          "type": "SYMBOL",
           "name": "_basic_type_value"
         }
       ]
@@ -1164,28 +1160,6 @@
             {
               "type": "SYMBOL",
               "name": "_basic_type_value"
-            }
-          ]
-        }
-      ]
-    },
-    "_polymorph_type_value": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "polymorph"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "polymorph_types"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "binding_expression"
             }
           ]
         }
@@ -1267,12 +1241,7 @@
         {
           "type": "STRING",
           "value": "field"
-        }
-      ]
-    },
-    "polymorph_types": {
-      "type": "CHOICE",
-      "members": [
+        },
         {
           "type": "STRING",
           "value": "type"
@@ -1288,6 +1257,10 @@
         {
           "type": "STRING",
           "value": "subclass"
+        },
+        {
+          "type": "STRING",
+          "value": "polymorph"
         },
         {
           "type": "STRING",
@@ -2048,19 +2021,6 @@
         }
       ]
     },
-    "end_extension_definition": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "end"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier_expression"
-        }
-      ]
-    },
     "extension_list": {
       "type": "SEQ",
       "members": [
@@ -2096,6 +2056,19 @@
         {
           "type": "STRING",
           "value": ","
+        }
+      ]
+    },
+    "end_extension_definition": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier_expression"
         }
       ]
     },
@@ -3564,7 +3537,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "[^*]*\\*+([^\\/*][^*]*\\*+)*"
+                "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
               },
               {
                 "type": "STRING",
@@ -4310,10 +4283,6 @@
     ],
     [
       "type_expression",
-      "__value"
-    ],
-    [
-      "_polymorph_type_value",
       "__value"
     ],
     [

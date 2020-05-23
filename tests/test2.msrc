@@ -38,12 +38,12 @@ class otherclass.
  s8 val.
 end class.
 
-class generic_list( polymorph type t )*.
+class generic_list( static polymorph t )*.
  union.
   int inum.
   private long lnum.
  end union.
- private polymorph type list_type := t.
+ private static polymorph list_type := t.
  private allocator_type memalloc := _get_lambda(mmalloc).
  private long num_of_nodes.
  private generic_list_node first.
@@ -69,7 +69,7 @@ end class.
   vector_name x,y,z.
  end vector.
 
- extension constructor,(polymorph type classtype),(polymorph arguments params).
+ extension constructor,(static polymorph classtype),(static arguments params).
   iff (_is_array(loop_array)).
   iff (_itemsof(loop_array) > 0).
   iff (_typeofvar(loop_item) == _typeofarray(loop_array)).
@@ -82,7 +82,7 @@ end class.
   lambda function() returns int, int mylambda.
  end extension.
 
- function get_type returns polymorph type.
+ function get_type returns static polymorph.
   return i32.
  end function.
 
@@ -124,7 +124,7 @@ end class.
   (myvar++)++.
  end constructor.
 
- function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, polymorph arguments my_args) returns i32, i32.
+ function myfunc(i8 arg1, i32 arg2 := '\0', f32* arg3 := null, static arguments my_args) returns i32, i32.
   f32 myvar := (.2f).
   f64[3][3] myvar := {{1,1,1},{1,1,1},{1,1,1}}.
   myvar := (3+(myvar:=1)).

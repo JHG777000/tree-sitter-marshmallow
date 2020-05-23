@@ -1597,10 +1597,6 @@
           "named": true
         },
         {
-          "type": "polymorph_types",
-          "named": true
-        },
-        {
           "type": "primitive_type",
           "named": true
         },
@@ -2238,10 +2234,6 @@
           "named": true
         },
         {
-          "type": "polymorph_types",
-          "named": true
-        },
-        {
           "type": "primitive_type",
           "named": true
         },
@@ -2348,11 +2340,6 @@
   },
   {
     "type": "pointer",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "polymorph_types",
     "named": true,
     "fields": {}
   },
@@ -3104,10 +3091,6 @@
         },
         {
           "type": "pointer",
-          "named": true
-        },
-        {
-          "type": "polymorph_types",
           "named": true
         },
         {
@@ -3937,11 +3920,11 @@
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "if",

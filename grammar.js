@@ -15,7 +15,6 @@ module.exports = grammar({
     [$.attribute_definition,$.__value],
     [$._basic_type_value],
     [$.type_expression,$.__value],
-    [$._polymorph_type_value,$.__value],
     [$.expression_statement,$.__value],
     [$.scope_expression,$.__value],
     [$.scope_expression],
@@ -334,7 +333,6 @@ module.exports = grammar({
 
     _type_value: $ => choice(
      $._static_type_value,
-     $._polymorph_type_value,
      $._basic_type_value,
     ),
 
@@ -343,14 +341,6 @@ module.exports = grammar({
       choice(
         $.static_types,
         $._basic_type_value,
-      ),
-    ),
-
-    _polymorph_type_value: $ => seq(
-      'polymorph',
-      choice(
-        $.polymorph_types,
-        $.binding_expression,
       ),
     ),
 
@@ -380,13 +370,11 @@ module.exports = grammar({
     static_types: $ => choice(
       'datum',
       'field',
-    ),
-
-    polymorph_types: $ => choice(
       'type',
       'anyvar',
       'vardef',
       'subclass',
+      'polymorph',
       'arguments',
       'identifier',
     ),
@@ -545,13 +533,13 @@ module.exports = grammar({
      $.end_of_line,
     ),
 
-    end_extension_definition: $ => seq('end',$.identifier_expression),
-
     extension_list: $ => seq(
      ',',
      seq($.parameter_list,repeat(seq(',',$.parameter_list))),
      ',',
     ),
+
+    end_extension_definition: $ => seq('end',$.identifier_expression),
 
     extension_definition: $ => seq(
      optional($.access_control),
