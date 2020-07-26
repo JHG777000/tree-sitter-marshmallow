@@ -1031,7 +1031,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "ownership_expression"
+          "name": "managed_expression"
         },
         {
           "type": "SYMBOL",
@@ -1047,22 +1047,22 @@
         }
       ]
     },
-    "ownership_expression": {
+    "managed_expression": {
       "type": "SEQ",
       "members": [
         {
           "type": "FIELD",
-          "name": "ownership_type",
+          "name": "managed_type",
           "content": {
             "type": "CHOICE",
             "members": [
               {
                 "type": "STRING",
-                "value": "owner"
+                "value": "manager"
               },
               {
                 "type": "STRING",
-                "value": "owned"
+                "value": "managed"
               }
             ]
           }
@@ -3749,12 +3749,12 @@
         }
       ]
     },
-    "transfer_owenership_expression": {
+    "transfer_management_expression": {
       "type": "SEQ",
       "members": [
         {
           "type": "STRING",
-          "value": "transfer_owenership"
+          "value": "transfer_management"
         },
         {
           "type": "SYMBOL",
@@ -3800,7 +3800,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "transfer_owenership_expression"
+          "name": "transfer_management_expression"
         }
       ]
     },
@@ -4382,7 +4382,7 @@
       "binding_expression"
     ],
     [
-      "transfer_owenership_expression",
+      "transfer_management_expression",
       "_value"
     ],
     [

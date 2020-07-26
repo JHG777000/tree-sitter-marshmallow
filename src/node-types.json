@@ -89,7 +89,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -172,7 +172,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -290,7 +290,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -393,7 +393,7 @@
             "named": true
           },
           {
-            "type": "transfer_owenership_expression",
+            "type": "transfer_management_expression",
             "named": true
           }
         ]
@@ -537,7 +537,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -632,7 +632,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -858,7 +858,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -1084,7 +1084,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         },
         {
@@ -1734,7 +1734,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         },
         {
@@ -1894,7 +1894,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         },
         {
@@ -1988,6 +1988,72 @@
         },
         {
           "type": "type_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "managed_expression",
+    "named": true,
+    "fields": {
+      "managed_type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "managed",
+            "named": false
+          },
+          {
+            "type": "manager",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "array_definition",
+          "named": true
+        },
+        {
+          "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "container_expression",
+          "named": true
+        },
+        {
+          "type": "freeable_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "lambda_type",
+          "named": true
+        },
+        {
+          "type": "pointer",
+          "named": true
+        },
+        {
+          "type": "primitive_type",
+          "named": true
+        },
+        {
+          "type": "static_types",
+          "named": true
+        },
+        {
+          "type": "unsafe_array_definition",
           "named": true
         }
       ]
@@ -2166,7 +2232,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -2181,72 +2247,6 @@
     "type": "overridable_operator",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "ownership_expression",
-    "named": true,
-    "fields": {
-      "ownership_type": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "owned",
-            "named": false
-          },
-          {
-            "type": "owner",
-            "named": false
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "array_definition",
-          "named": true
-        },
-        {
-          "type": "binding_expression",
-          "named": true
-        },
-        {
-          "type": "container_expression",
-          "named": true
-        },
-        {
-          "type": "freeable_expression",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "lambda_type",
-          "named": true
-        },
-        {
-          "type": "pointer",
-          "named": true
-        },
-        {
-          "type": "primitive_type",
-          "named": true
-        },
-        {
-          "type": "static_types",
-          "named": true
-        },
-        {
-          "type": "unsafe_array_definition",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "package_definition",
@@ -2435,7 +2435,7 @@
             "named": true
           },
           {
-            "type": "transfer_owenership_expression",
+            "type": "transfer_management_expression",
             "named": true
           }
         ]
@@ -2582,7 +2582,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -2834,7 +2834,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -2939,7 +2939,7 @@
     }
   },
   {
-    "type": "transfer_owenership_expression",
+    "type": "transfer_management_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -3086,7 +3086,7 @@
           "named": true
         },
         {
-          "type": "ownership_expression",
+          "type": "managed_expression",
           "named": true
         },
         {
@@ -3228,7 +3228,7 @@
           "named": true
         },
         {
-          "type": "transfer_owenership_expression",
+          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -3920,11 +3920,11 @@
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "if",
@@ -3961,6 +3961,14 @@
   {
     "type": "long",
     "named": true
+  },
+  {
+    "type": "managed",
+    "named": false
+  },
+  {
+    "type": "manager",
+    "named": false
   },
   {
     "type": "method",
@@ -4000,14 +4008,6 @@
   },
   {
     "type": "override",
-    "named": false
-  },
-  {
-    "type": "owned",
-    "named": false
-  },
-  {
-    "type": "owner",
     "named": false
   },
   {
@@ -4123,7 +4123,7 @@
     "named": false
   },
   {
-    "type": "transfer_owenership",
+    "type": "transfer_management",
     "named": false
   },
   {

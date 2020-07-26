@@ -41,7 +41,7 @@ module.exports = grammar({
     [$._comma_list_types],
     [$._comma_list_assignment_or_values],
     [$.class_definition,$.binding_expression],
-    [$.transfer_owenership_expression,$._value],
+    [$.transfer_management_expression,$._value],
     [$.arrow_expression,$._comma_list_parameter_variable_definition],
     [$.arrow_expression,$.__value],
     [$.arrow_expression,$.binding_expression],
@@ -295,17 +295,17 @@ module.exports = grammar({
     ),
 
     type_expression: $ => choice(
-      $.ownership_expression,
+      $.managed_expression,
       $.freeable_expression,
       $.container_expression,
       $._type_value,
     ),
 
-    ownership_expression: $ => seq(
-    field( 'ownership_type',
+   managed_expression: $ => seq(
+    field( 'managed_type',
      choice(
-       'owner',
-       'owned',
+       'manager',
+       'managed',
       ),
      ),
       choice(
@@ -979,8 +979,8 @@ module.exports = grammar({
      '}',
      ),
 
-     transfer_owenership_expression: $ => seq(
-       'transfer_owenership',
+     transfer_management_expression: $ => seq(
+       'transfer_management',
        $.__value,
      ),
 
@@ -995,7 +995,7 @@ module.exports = grammar({
 
      _value: $ => choice(
        $.__value,
-       $.transfer_owenership_expression,
+       $.transfer_management_expression,
       ),
 
      _literal: $ => choice(
