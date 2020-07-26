@@ -10,10 +10,11 @@
   "author": "Jacob Gordon",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.0"
+    "nan": "^2.14.0",
+    "tree-sitter": "^0.16.1"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.15.14"
+    "tree-sitter-cli": "^0.16.1"
   },
   "gypfile": true,
   "directories": {
