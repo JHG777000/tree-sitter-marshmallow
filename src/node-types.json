@@ -1994,10 +1994,10 @@
     }
   },
   {
-    "type": "managed_expression",
+    "type": "management_expression",
     "named": true,
     "fields": {
-      "managed_type": {
+      "management_type": {
         "multiple": false,
         "required": true,
         "types": [
@@ -3086,7 +3086,7 @@
           "named": true
         },
         {
-          "type": "managed_expression",
+          "type": "management_expression",
           "named": true
         },
         {

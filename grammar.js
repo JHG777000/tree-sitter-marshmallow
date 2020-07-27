@@ -295,14 +295,14 @@ module.exports = grammar({
     ),
 
     type_expression: $ => choice(
-      $.managed_expression,
+      $.management_expression,
       $.freeable_expression,
       $.container_expression,
       $._type_value,
     ),
 
-   managed_expression: $ => seq(
-    field( 'managed_type',
+   management_expression: $ => seq(
+    field( 'management_type',
      choice(
        'manager',
        'managed',

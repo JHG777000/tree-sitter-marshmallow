@@ -1031,7 +1031,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "managed_expression"
+          "name": "management_expression"
         },
         {
           "type": "SYMBOL",
@@ -1047,12 +1047,12 @@
         }
       ]
     },
-    "managed_expression": {
+    "management_expression": {
       "type": "SEQ",
       "members": [
         {
           "type": "FIELD",
-          "name": "managed_type",
+          "name": "management_type",
           "content": {
             "type": "CHOICE",
             "members": [
