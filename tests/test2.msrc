@@ -109,6 +109,7 @@ end class.
 
  constructor myclass().
   self->val2 := val.
+  composite{system_readwrite,thread_readwrite} i32 mynum.
   s8 mystring := "Hello World!!!!".
   f32 myvar := (.2f).
   i32 myvar2 := 1.

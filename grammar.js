@@ -286,6 +286,7 @@ module.exports = grammar({
        $.traits_block,
        $.union_definition,
        $.variable_definition,
+       $.declaration_definition,
        $.call_expression,
        $.call_statement,
       ),
@@ -404,14 +405,28 @@ module.exports = grammar({
       ']]',
     ),
 
+    _readability_list: $ => choice(
+      'readonly',
+      'writelimited',
+      'private_write',
+      'protected_write',
+      'system_readwrite',
+      'thread_readwrite',
+    ),
+
+    _comma_list_readability: $ => seq($._readability_list,repeat(seq(',',$._readability_list))),
+
+    composite_readability: $ => seq(
+      'composite',
+      '{',
+      $._comma_list_readability,
+      '}',
+    ),
+
     readability: $ => seq(
       choice(
-       'readonly',
-       'writelimited',
-       'private_write',
-       'protected_write',
-       'system_readwrite',
-       'thread_readwrite',
+       $._readability_list,
+       $.composite_readability,
       ),
       optional($.array_definition),
     ),
@@ -498,7 +513,6 @@ module.exports = grammar({
      $.traits_definition,
      $.local_variable_definition,
      $.extension_definition,
-     $.code_definition,
      $.statement,
      )
     ),
@@ -572,9 +586,17 @@ module.exports = grammar({
      $.returns_statment,
     ),
 
+    _define_element: $ => choice(
+      $._comma_list_defines,
+      $.identifier,
+      $.string,
+    ),
+
+    _comma_list_defines: $ => seq('{',seq($._define_element,repeat(seq(',',$._define_element))),'}'),
+
     define_statment: $ => seq(
      'define',
-     $.collection,
+     $._comma_list_defines,
      $.end_of_line,
     ),
 
@@ -840,10 +862,7 @@ module.exports = grammar({
     arrow_expression: $ => seq(
       '(',
        optional(
-         choice(
-         $.parameter_variable_definition,
          $._comma_list_parameter_variable_definition,
-       ),
       ),
     ')',
     '=>',

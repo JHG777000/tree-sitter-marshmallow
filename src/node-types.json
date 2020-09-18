@@ -739,6 +739,10 @@
           "named": true
         },
         {
+          "type": "declaration_definition",
+          "named": true
+        },
+        {
           "type": "end_class",
           "named": true
         },
@@ -872,10 +876,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "code_definition",
-          "named": true
-        },
         {
           "type": "extension_definition",
           "named": true
@@ -1095,6 +1095,11 @@
     }
   },
   {
+    "type": "composite_readability",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "container_expression",
     "named": true,
     "fields": {},
@@ -1267,11 +1272,15 @@
       "required": true,
       "types": [
         {
-          "type": "collection",
+          "type": "end_of_line",
           "named": true
         },
         {
-          "type": "end_of_line",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -2457,11 +2466,15 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "array_definition",
+          "named": true
+        },
+        {
+          "type": "composite_readability",
           "named": true
         }
       ]
@@ -3811,6 +3824,10 @@
     "named": false
   },
   {
+    "type": "composite",
+    "named": false
+  },
+  {
     "type": "conditional",
     "named": false
   },
@@ -3920,11 +3937,11 @@
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "if",
