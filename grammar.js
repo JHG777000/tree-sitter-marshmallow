@@ -354,6 +354,7 @@ module.exports = grammar({
         $.unsafe_array_definition,
       ),
      ),
+     repeat($.pointer),
     ),
 
     _base_type: $ => choice(
@@ -371,10 +372,8 @@ module.exports = grammar({
     static_types: $ => choice(
       'datum',
       'field',
-      'type',
-      'anyvar',
-      'vardef',
       'subclass',
+      'inferred',
       'polymorph',
       'arguments',
       'identifier',

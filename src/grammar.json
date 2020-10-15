@@ -1198,6 +1198,13 @@
               }
             ]
           }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "pointer"
+          }
         }
       ]
     },
@@ -1248,19 +1255,11 @@
         },
         {
           "type": "STRING",
-          "value": "type"
-        },
-        {
-          "type": "STRING",
-          "value": "anyvar"
-        },
-        {
-          "type": "STRING",
-          "value": "vardef"
-        },
-        {
-          "type": "STRING",
           "value": "subclass"
+        },
+        {
+          "type": "STRING",
+          "value": "inferred"
         },
         {
           "type": "STRING",
