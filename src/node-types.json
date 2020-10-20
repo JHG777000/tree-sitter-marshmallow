@@ -1625,11 +1625,23 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "statement",
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -1695,11 +1707,19 @@
           "named": true
         },
         {
+          "type": "double_nop",
+          "named": true
+        },
+        {
           "type": "embed_extension_block",
           "named": true
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "float_nop",
           "named": true
         },
         {
@@ -3844,7 +3864,15 @@
     "named": false
   },
   {
+    "type": "definition",
+    "named": false
+  },
+  {
     "type": "double",
+    "named": true
+  },
+  {
+    "type": "double_nop",
     "named": true
   },
   {
@@ -3884,15 +3912,15 @@
     "named": false
   },
   {
-    "type": "field",
-    "named": false
-  },
-  {
     "type": "final",
     "named": false
   },
   {
     "type": "float",
+    "named": true
+  },
+  {
+    "type": "float_nop",
     "named": true
   },
   {
@@ -3949,10 +3977,6 @@
   },
   {
     "type": "in",
-    "named": false
-  },
-  {
-    "type": "inferred",
     "named": false
   },
   {
@@ -4117,10 +4141,6 @@
   },
   {
     "type": "static",
-    "named": false
-  },
-  {
-    "type": "subclass",
     "named": false
   },
   {

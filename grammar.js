@@ -48,6 +48,9 @@ module.exports = grammar({
     [$.arrow_expression,$.index_expression],
     [$.assignment_expression,$.index_expression],
     [$.assignment_expression,$.access_expression],
+    [$._base_type,$._define_element,$.__value],
+    [$._define_element,$._literal],
+    [$.call_expression,$._group_value],
    ],
 
   rules: {
@@ -371,11 +374,9 @@ module.exports = grammar({
 
     static_types: $ => choice(
       'datum',
-      'field',
-      'subclass',
-      'inferred',
       'polymorph',
       'arguments',
+      'definition',
       'identifier',
     ),
 
@@ -601,7 +602,11 @@ module.exports = grammar({
 
     generate_statment: $ => seq(
      'generate',
-     $.statement,
+     choice(
+       $.collection,
+       $._comma_list_defines,
+     ),
+     $.end_of_line,
     ),
 
      control_flow_statement: $ => choice(
@@ -812,14 +817,14 @@ module.exports = grammar({
       choice(
         seq(
           $.unary_op,
-          $._value
+          $._group_value
         ),
         seq(
-          $._value,
+          $._group_value,
           $.binary_op,
-          $._value
+          $._group_value
         ),
-        $._value,
+        $._group_value,
         $.cast_expression,
         $.assignment_expression,
        ),
@@ -1011,6 +1016,12 @@ module.exports = grammar({
        $.one_word_operator,
      ),
 
+     _group_value: $ => choice(
+       $._value,
+       $.float_nop,
+       $.double_nop,
+     ),
+
      _value: $ => choice(
        $.__value,
        $.transfer_management_expression,
@@ -1034,6 +1045,10 @@ module.exports = grammar({
      float: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),'f',')')),
 
      double: $ => token(seq('(',choice(/\d+(\.(\d+)?)?/,/\.\d+/),')')),
+
+     float_nop: $ => token(seq(choice(/\d+(\.(\d+)?)?/,/\.\d+/),'f')),
+
+     double_nop: $ => token(choice(/\d+(\.(\d+)?)?/,/\.\d+/)),
 
      hex: $ => token(seq('0x', /[0-9a-fA-f]+/)),
 

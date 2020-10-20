@@ -78,7 +78,7 @@ end class.
      default, override, "new", params, classtype, invoke_extension_block
     }
   }.
-  generate x := (1 + 1).
+  generate { x := (1 + 1) }.
   lambda function() returns int, int mylambda.
  end extension.
 
@@ -91,7 +91,7 @@ end class.
   array:i32 myarray := new(1,2,3,4,5).
   myarray->for_each_item((i32 item) => print_line(item)).
   array:{array:{array:i32}} myarray2 := new(new(new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5))).
-  return (a + b).
+  return (a + 1.1).
  end operator.
 
  message "hello world".
