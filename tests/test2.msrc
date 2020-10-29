@@ -38,21 +38,24 @@ class otherclass.
  s8 val.
 end class.
 
-class generic_list( static polymorph t )*.
+class GenericList*.
  union.
   int inum.
   private long lnum.
  end union.
+ parameter static polymorph t.
  private static polymorph list_type := t.
- private allocator_type memalloc := _get_lambda(mmalloc).
+ private AllocatorType memalloc := _get_lambda(mmalloc).
  private long num_of_nodes.
- private generic_list_node first.
- private generic_list_node last.
+ private GenericListNode:t first.
+ private GenericListNode:t last.
 end class.
 
-class generic_list_node( t := generic_list->list_type )*.
- private generic_list_node before.
- private generic_list_node after.
+class GenericListNode*.
+ friend class GenericList:t.
+ parameter static polymorph t.
+ private GenericListNode:t before.
+ private GenericListNode:t after.
  private t data.
 end class.
 
@@ -90,7 +93,7 @@ end class.
   get_type().
   array:i32 myarray := new(1,2,3,4,5).
   myarray->for_each_item((i32 item) => print_line(item)).
-  array:{array:{array:i32}} myarray2 := new(new(new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5))).
+  array:{array:{array:i32}} myarray2 := new(new(new(1,2,3,4f,5.2),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5),new(1,2,3,4,5))).
   return (a + 1.1).
  end operator.
 

@@ -39,7 +39,7 @@ module.exports = grammar({
     [$._base_type,$.identifier_expression],
     [$.code_signature],
     [$._comma_list_types],
-    [$._comma_list_assignment_or_values],
+    [$._comma_list_assignment_or_group_values],
     [$.class_definition,$.binding_expression],
     [$.transfer_management_expression,$._value],
     [$.arrow_expression,$._comma_list_parameter_variable_definition],
@@ -167,10 +167,21 @@ module.exports = grammar({
        field('value',optional($._value)),
       $.end_of_line,
     ),
+     declaration_definition: $ => choice(
+       $._declaration_definition,
+       $.protocol_declaration_definition,
+     ),
 
-    declaration_definition: $ => seq(
+     protocol_declaration_definition: $ => seq(
+       field('access_control',optional($.access_control)),
+       'protocol',
+       $.code_signature,
+       $.end_of_line,
+     ),
+
+    _declaration_definition: $ => seq(
       field('access_control',optional($.access_control)),
-      field('declaration_type',choice('declare','external','protocol')),
+      field('declaration_type',choice('declare','external')),
       choice(
        $.code_signature,
        $.variable_definition,
@@ -261,13 +272,36 @@ module.exports = grammar({
       $.end_of_line,
     ),
 
-    class_parameter_list: $ => seq(
-     '(',
-     optional($._comma_list_class_parameter_variable_definition),
-     ')',
+    end_class: $ => seq('end','class'),
+
+    class_variable_definition: $ => seq(
+      choice(
+        seq(
+          optional($.class_access_control),
+          optional($.readability),
+          'class',
+          choice(
+            $.identifier,
+            $.container_expression,
+          ),
+        ),
+        seq(
+          optional($.access_control),
+          optional($.readability),
+          $.type_expression,
+          optional($.identifier),
+        ),
+      ),
+
+      optional($.static_assignment),
+      $.end_of_line,
     ),
 
-    end_class: $ => seq('end','class'),
+    class_parameter_variable_definition: $ => seq(
+      'parameter',
+      $.parameter_variable_definition,
+      $.end_of_line,
+    ),
 
     class_definition: $ => seq(
      field('access_control',optional($.access_control)),
@@ -275,7 +309,6 @@ module.exports = grammar({
      'class',
      optional($.array_definition),
      $.identifier,
-     optional($.class_parameter_list),
      repeat($.pointer),
      optional(
        choice(
@@ -287,11 +320,11 @@ module.exports = grammar({
      repeat(
       choice(
        $.traits_block,
-       $.union_definition,
-       $.variable_definition,
-       $.declaration_definition,
-       $.call_expression,
        $.call_statement,
+       $.call_expression,
+       $.union_definition,
+       $.class_variable_definition,
+       $.class_parameter_variable_definition,
       ),
      ),
      $.end_class,
@@ -374,6 +407,7 @@ module.exports = grammar({
 
     static_types: $ => choice(
       'datum',
+      'statment',
       'polymorph',
       'arguments',
       'definition',
@@ -626,11 +660,12 @@ module.exports = grammar({
      call_statement: $ => seq(
        'call',
        '(',
-       $._value,
+       $._comma_list_assignment_or_group_values,
        ')',
        $.end_of_line,
        repeat(
          seq(
+           'argument',
            $._assignment_or_value,
            $.end_of_line,
          ),
@@ -880,7 +915,7 @@ module.exports = grammar({
     call_expression: $ => seq(
       $._value,
       '(',
-      optional($._comma_list_assignment_or_values),
+      optional($._comma_list_assignment_or_group_values),
       ')',
     ),
 
@@ -932,7 +967,7 @@ module.exports = grammar({
   one_word_operator: $ => seq(
     $._one_word_operators,
     '(',
-    optional($._comma_list_assignment_or_values),
+    optional($._comma_list_assignment_or_group_values),
     ')',
   ),
 
@@ -998,7 +1033,7 @@ module.exports = grammar({
 
      collection: $ => seq(
      '{',
-      $._comma_list_assignment_or_value_or_type,
+      $._comma_list_assignment_or_group_value_or_type,
      '}',
      ),
 
@@ -1054,20 +1089,20 @@ module.exports = grammar({
 
      binary: $ => token(seq('0b', /[01]+/)),
 
-     _class_parameter_variable_definition: $ => choice($._comma_list_assignment_or_values,$.parameter_variable_definition),
-
-     _assignment_or_value_or_type: $ => choice($._assignment_or_value,$.type_expression),
+     _assignment_or_group_value_or_type: $ => choice($._assignment_or_group_value,$.type_expression),
 
      _assignment_or_value: $ => choice($._value,$.assignment_expression),
+
+     _assignment_or_group_value: $ => choice($._group_value,$.assignment_expression),
 
      _comma_list_variables: $ => seq($.variable_definition,
        repeat(seq(',',$.variable_definition))),
 
      _comma_list_values: $ => seq($._value,repeat(seq(',',$._value))),
 
-     _comma_list_assignment_or_values: $ => seq($._assignment_or_value,repeat(seq(',',$._assignment_or_value))),
+     _comma_list_assignment_or_group_values: $ => seq($._assignment_or_group_value,repeat(seq(',',$._assignment_or_group_value))),
 
-     _comma_list_assignment_or_value_or_type: $ => seq($._assignment_or_value_or_type,repeat(seq(',',$._assignment_or_value_or_type))),
+     _comma_list_assignment_or_group_value_or_type: $ => seq($._assignment_or_group_value_or_type,repeat(seq(',',$._assignment_or_group_value_or_type))),
 
      _comma_list_literals: $ => seq($._literal,repeat(seq(',',$._literal))),
 
@@ -1077,9 +1112,9 @@ module.exports = grammar({
 
      _comma_list_parameter_variable_definition: $ => seq($.parameter_variable_definition,repeat(seq(',',$.parameter_variable_definition))),
 
-     _comma_list_class_parameter_variable_definition: $ => seq($._class_parameter_variable_definition,repeat(seq(',',$._class_parameter_variable_definition))),
+     access_control: $ => choice('private', 'protected'),
 
-     access_control: $ => choice('private', 'protected','inherit'),
+     class_access_control: $ => choice('inherit','include','friend','protocol'),
 
      end_of_line: $ => '.',
 

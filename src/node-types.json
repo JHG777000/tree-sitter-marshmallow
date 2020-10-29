@@ -489,11 +489,19 @@
           "named": true
         },
         {
+          "type": "double_nop",
+          "named": true
+        },
+        {
           "type": "embed_extension_block",
           "named": true
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "float_nop",
           "named": true
         },
         {
@@ -576,6 +584,10 @@
           "named": true
         },
         {
+          "type": "double_nop",
+          "named": true
+        },
+        {
           "type": "embed_extension_block",
           "named": true
         },
@@ -589,6 +601,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "float_nop",
           "named": true
         },
         {
@@ -686,6 +702,11 @@
     "fields": {}
   },
   {
+    "type": "class_access_control",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "class_definition",
     "named": true,
     "fields": {
@@ -735,11 +756,11 @@
           "named": true
         },
         {
-          "type": "class_parameter_list",
+          "type": "class_parameter_variable_definition",
           "named": true
         },
         {
-          "type": "declaration_definition",
+          "type": "class_variable_definition",
           "named": true
         },
         {
@@ -769,60 +790,51 @@
         {
           "type": "unsafe_array_definition",
           "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "class_parameter_variable_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_of_line",
+          "named": true
         },
         {
-          "type": "variable_definition",
+          "type": "parameter_variable_definition",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "class_parameter_list",
+    "type": "class_variable_definition",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "assignment_expression",
+          "type": "access_control",
           "named": true
         },
         {
-          "type": "binary",
+          "type": "class_access_control",
           "named": true
         },
         {
-          "type": "binding_expression",
+          "type": "container_expression",
           "named": true
         },
         {
-          "type": "character",
-          "named": true
-        },
-        {
-          "type": "collection",
-          "named": true
-        },
-        {
-          "type": "double",
-          "named": true
-        },
-        {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "group_expression",
-          "named": true
-        },
-        {
-          "type": "hex",
+          "type": "end_of_line",
           "named": true
         },
         {
@@ -830,39 +842,15 @@
           "named": true
         },
         {
-          "type": "integer",
+          "type": "readability",
           "named": true
         },
         {
-          "type": "invoke_extension_block",
+          "type": "static_assignment",
           "named": true
         },
         {
-          "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
-          "named": true
-        },
-        {
-          "type": "oct",
-          "named": true
-        },
-        {
-          "type": "one_word_operator",
-          "named": true
-        },
-        {
-          "type": "parameter_variable_definition",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "transfer_management_expression",
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -1036,11 +1024,19 @@
           "named": true
         },
         {
+          "type": "double_nop",
+          "named": true
+        },
+        {
           "type": "embed_extension_block",
           "named": true
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "float_nop",
           "named": true
         },
         {
@@ -1200,7 +1196,7 @@
       },
       "declaration_type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "declare",
@@ -1208,10 +1204,6 @@
           },
           {
             "type": "external",
-            "named": false
-          },
-          {
-            "type": "protocol",
             "named": false
           }
         ]
@@ -1231,6 +1223,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "protocol_declaration_definition",
           "named": true
         },
         {
@@ -2213,11 +2209,19 @@
           "named": true
         },
         {
+          "type": "double_nop",
+          "named": true
+        },
+        {
           "type": "embed_extension_block",
           "named": true
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "float_nop",
           "named": true
         },
         {
@@ -2474,6 +2478,36 @@
       "multiple": false,
       "required": true,
       "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "protocol_declaration_definition",
+    "named": true,
+    "fields": {
+      "access_control": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "access_control",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "code_signature",
+          "named": true
+        },
         {
           "type": "end_of_line",
           "named": true
@@ -3812,6 +3846,10 @@
     "named": true
   },
   {
+    "type": "argument",
+    "named": false
+  },
+  {
     "type": "arguments",
     "named": false
   },
@@ -3928,6 +3966,10 @@
     "named": false
   },
   {
+    "type": "friend",
+    "named": false
+  },
+  {
     "type": "function",
     "named": false
   },
@@ -3977,6 +4019,10 @@
   },
   {
     "type": "in",
+    "named": false
+  },
+  {
+    "type": "include",
     "named": false
   },
   {
@@ -4141,6 +4187,10 @@
   },
   {
     "type": "static",
+    "named": false
+  },
+  {
+    "type": "statment",
     "named": false
   },
   {
