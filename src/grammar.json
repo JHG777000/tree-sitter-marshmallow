@@ -1376,8 +1376,16 @@
           "value": "lambda"
         },
         {
-          "type": "SYMBOL",
-          "name": "code_signature"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "code_signature"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -2414,15 +2422,15 @@
         },
         {
           "type": "SYMBOL",
-          "name": "define_statment"
+          "name": "define_statement"
         },
         {
           "type": "SYMBOL",
-          "name": "generate_statment"
+          "name": "generate_statement"
         },
         {
           "type": "SYMBOL",
-          "name": "returns_statment"
+          "name": "returns_statement"
         }
       ]
     },
@@ -2481,7 +2489,7 @@
         }
       ]
     },
-    "define_statment": {
+    "define_statement": {
       "type": "SEQ",
       "members": [
         {
@@ -2498,7 +2506,20 @@
         }
       ]
     },
-    "generate_statment": {
+    "end_generate": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "STRING",
+          "value": "generate"
+        }
+      ]
+    },
+    "generate_statement": {
       "type": "SEQ",
       "members": [
         {
@@ -2506,17 +2527,19 @@
           "value": "generate"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "collection"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_comma_list_defines"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "end_of_line"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "statement"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_generate"
         },
         {
           "type": "SYMBOL",
@@ -2631,7 +2654,7 @@
         }
       ]
     },
-    "returns_statment": {
+    "returns_statement": {
       "type": "SEQ",
       "members": [
         {

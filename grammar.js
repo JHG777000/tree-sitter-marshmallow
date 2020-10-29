@@ -402,7 +402,7 @@ module.exports = grammar({
 
     lambda_type: $ => seq(
       'lambda',
-      $.code_signature,
+      optional($.code_signature),
     ),
 
     static_types: $ => choice(
@@ -615,9 +615,9 @@ module.exports = grammar({
     statement: $ => choice(
      $.expression_statement,
      $.control_flow_statement,
-     $.define_statment,
-     $.generate_statment,
-     $.returns_statment,
+     $.define_statement,
+     $.generate_statement,
+     $.returns_statement,
     ),
 
     _define_element: $ => choice(
@@ -628,18 +628,21 @@ module.exports = grammar({
 
     _comma_list_defines: $ => seq('{',seq($._define_element,repeat(seq(',',$._define_element))),'}'),
 
-    define_statment: $ => seq(
+    define_statement: $ => seq(
      'define',
      $._comma_list_defines,
      $.end_of_line,
     ),
 
-    generate_statment: $ => seq(
+    end_generate: $ => seq('end','generate'),
+
+    generate_statement: $ => seq(
      'generate',
-     choice(
-       $.collection,
-       $._comma_list_defines,
+     $.end_of_line,
+     repeat1(
+       $.statement,
      ),
+     $.end_generate,
      $.end_of_line,
     ),
 
@@ -674,7 +677,7 @@ module.exports = grammar({
        $.end_of_line,
      ),
 
-     returns_statment: $ => seq(
+     returns_statement: $ => seq(
        'returns',
        $._comma_list_types,
        $.end_of_line,

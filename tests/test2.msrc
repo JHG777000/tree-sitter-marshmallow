@@ -81,7 +81,9 @@ end class.
      default, override, "new", params, classtype, invoke_extension_block
     }
   }.
-  generate { x := (1 + 1) }.
+  generate.
+   x := (1 + 1).
+  end generate.
   lambda function() returns int, int mylambda.
  end extension.
 
