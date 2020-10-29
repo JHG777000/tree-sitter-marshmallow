@@ -4187,11 +4187,11 @@
     "named": false
   },
   {
-    "type": "static",
+    "type": "statement",
     "named": false
   },
   {
-    "type": "statment",
+    "type": "static",
     "named": false
   },
   {

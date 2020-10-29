@@ -952,6 +952,18 @@
                   "type": "CHOICE",
                   "members": [
                     {
+                      "type": "STRING",
+                      "value": "protocol"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
                       "type": "SYMBOL",
                       "name": "access_control"
                     },
@@ -1398,7 +1410,7 @@
         },
         {
           "type": "STRING",
-          "value": "statment"
+          "value": "statement"
         },
         {
           "type": "STRING",
@@ -4569,10 +4581,6 @@
         {
           "type": "STRING",
           "value": "friend"
-        },
-        {
-          "type": "STRING",
-          "value": "protocol"
         }
       ]
     },

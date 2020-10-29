@@ -286,6 +286,7 @@ module.exports = grammar({
           ),
         ),
         seq(
+          optional('protocol'),
           optional($.access_control),
           optional($.readability),
           $.type_expression,
@@ -407,7 +408,7 @@ module.exports = grammar({
 
     static_types: $ => choice(
       'datum',
-      'statment',
+      'statement',
       'polymorph',
       'arguments',
       'definition',
@@ -1117,7 +1118,7 @@ module.exports = grammar({
 
      access_control: $ => choice('private', 'protected'),
 
-     class_access_control: $ => choice('inherit','include','friend','protocol'),
+     class_access_control: $ => choice('inherit','include','friend'),
 
      end_of_line: $ => '.',
 
