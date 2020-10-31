@@ -99,6 +99,7 @@ module.exports = grammar({
        $.class_definition,
        $.extension_definition,
        $.code_definition,
+       $.embed_block,
        $.control_flow_definition,
       )
      ),
@@ -290,7 +291,7 @@ module.exports = grammar({
           optional($.access_control),
           optional($.readability),
           $.type_expression,
-          optional($.identifier),
+          $.identifier,
         ),
       ),
 
@@ -408,9 +409,9 @@ module.exports = grammar({
 
     static_types: $ => choice(
       'datum',
-      'statement',
       'polymorph',
       'arguments',
+      'expression',
       'definition',
       'identifier',
     ),
@@ -547,7 +548,7 @@ module.exports = grammar({
      $.traits_block,
      $.traits_definition,
      $.local_variable_definition,
-     $.extension_definition,
+     $.embed_block,
      $.statement,
      )
     ),
@@ -787,7 +788,7 @@ module.exports = grammar({
 
     overridable_access_op: $ => '-->',
 
-    reflection_index_op: $ => seq('[',$.string,']'),
+    access_index_op: $ => seq('[',$.string,']'),
 
     safe_index_op: $ => seq('[',$._number,']'),
 
@@ -899,7 +900,7 @@ module.exports = grammar({
     index_expression: $ => choice(
       seq($._value,$.safe_index_op),
       seq($._value,$.unsafe_index_op),
-      seq($._value,$.reflection_index_op),
+      seq($._value,$.access_index_op),
     ),
 
     arrow_expression: $ => seq(
@@ -962,9 +963,11 @@ module.exports = grammar({
     '_is_class',
     '_is_subclass',
     '_is_superclass',
+    '_is_identifier',
     '_get_lambda',
     '_get_return',
     '_get_returns',
+    '_get_identifier',
     'conditional',
   ),
 
@@ -1007,6 +1010,8 @@ module.exports = grammar({
      identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
 
      string: $ => seq('"',repeat(choice(token.immediate(prec(1,(/[^\"]/))),$._escape_sequence)),'"'),
+
+     embed_block: $ => seq('§',repeat(choice(token.immediate(prec(1,(/[^§]/))),$._escape_sequence)),'§'),
 
      character: $ => seq("'",choice(token(/[^\'\s]/),$._escape_sequence),"'"),
 
@@ -1051,8 +1056,8 @@ module.exports = grammar({
        $.collection,
        $.identifier,
        $.group_expression,
-       $.binding_expression,
        $.one_word_operator,
+       $.binding_expression,
      ),
 
      _group_value: $ => choice(
@@ -1067,10 +1072,10 @@ module.exports = grammar({
       ),
 
      _literal: $ => choice(
-       $._number,
-       $.string,
-       $.character,
        $.null,
+       $.string,
+       $._number,
+       $.character,
        $.invoke_extension_block,
        $.embed_extension_block,
      ),

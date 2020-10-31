@@ -155,6 +155,6 @@ end class.
    end switch.
   end while.
   if (j) goto helloworld.
-  return {4,(1+1)}.
+  return {4,(1+1),hello::world}.
  end function.
 end module.
