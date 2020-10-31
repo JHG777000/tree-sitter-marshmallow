@@ -472,7 +472,7 @@ module.exports = grammar({
        field('is_export',optional('export')),
        optional($.readability),
        $.type_expression,
-       optional($.identifier),
+       optional($.identifier_or_string),
        optional($.static_assignment),
        $.end_of_line,
      ),
@@ -567,7 +567,7 @@ module.exports = grammar({
 
     code_signature: $ => seq(
       field('code_type',$._code_types),
-      optional(field('name',choice($.identifier,$.operator_name))),
+      optional(field('name',choice($.identifier_or_string,$.operator_name))),
       optional($.extension_list),
       optional($.parameter_list),
       optional($.return_list),
@@ -830,6 +830,8 @@ module.exports = grammar({
       '||',
       '>>',
       '<<',
+      '&&&',
+      '|||',
       $.overridable_operator,
     ),
 
@@ -926,6 +928,8 @@ module.exports = grammar({
 
     scope_expression: $ => seq(
       choice(
+       'nomangle',
+       'underscore',
        $.identifier,
        $.scope_expression,
       ),
@@ -1007,7 +1011,11 @@ module.exports = grammar({
 
      embed_extension_block: $ => 'embed_extension_block',
 
+     get_last_embed_block: $ => 'get_last_embed_block',
+
      identifier: $ => /[^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!_0-9][^\[\]\'\.\"\*\-\+\\%\s\(\)${}:=,!]*/,
+
+     identifier_or_string: $ => choice($.identifier,$.string),
 
      string: $ => seq('"',repeat(choice(token.immediate(prec(1,(/[^\"]/))),$._escape_sequence)),'"'),
 
@@ -1071,13 +1079,18 @@ module.exports = grammar({
        $.transfer_management_expression,
       ),
 
+      one_word_value: $ => choice(
+        $.null,
+        $.get_last_embed_block,
+        $.embed_extension_block,
+        $.invoke_extension_block,
+       ),
+
      _literal: $ => choice(
-       $.null,
        $.string,
        $._number,
        $.character,
-       $.invoke_extension_block,
-       $.embed_extension_block,
+       $.one_word_value,
      ),
 
      oct: $ => token(seq('0',/[0-7]/)),

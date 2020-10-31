@@ -155,6 +155,12 @@ end class.
    end switch.
   end while.
   if (j) goto helloworld.
-  return {4,(1+1),hello::world}.
+  return {
+  4,
+  (1+1),
+  hello::world,
+  nomangle::hello_world,
+  underscore::hello_world
+ }.
  end function.
 end module.

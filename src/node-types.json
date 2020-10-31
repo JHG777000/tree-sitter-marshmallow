@@ -37,10 +37,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -61,15 +57,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -78,6 +66,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -139,10 +131,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -163,15 +151,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -180,6 +160,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -257,10 +241,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -281,15 +261,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -298,6 +270,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -360,10 +336,6 @@
             "named": true
           },
           {
-            "type": "embed_extension_block",
-            "named": true
-          },
-          {
             "type": "float",
             "named": true
           },
@@ -384,15 +356,7 @@
             "named": true
           },
           {
-            "type": "invoke_extension_block",
-            "named": true
-          },
-          {
             "type": "long",
-            "named": true
-          },
-          {
-            "type": "null",
             "named": true
           },
           {
@@ -401,6 +365,10 @@
           },
           {
             "type": "one_word_operator",
+            "named": true
+          },
+          {
+            "type": "one_word_value",
             "named": true
           },
           {
@@ -508,10 +476,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -536,15 +500,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -553,6 +509,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -603,10 +563,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "end_call",
           "named": true
         },
@@ -639,15 +595,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -656,6 +604,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -977,7 +929,7 @@
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "identifier_or_string",
             "named": true
           },
           {
@@ -1043,10 +995,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -1071,15 +1019,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -1088,6 +1028,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -1728,10 +1672,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -1756,15 +1696,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -1773,6 +1705,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -1804,6 +1740,25 @@
         },
         {
           "type": "scope_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_or_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -1888,10 +1843,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -1912,15 +1863,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -1929,6 +1872,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -2238,10 +2185,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -2266,15 +2209,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -2286,11 +2221,42 @@
           "named": true
         },
         {
+          "type": "one_word_value",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
         {
           "type": "transfer_management_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "one_word_value",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "embed_extension_block",
+          "named": true
+        },
+        {
+          "type": "get_last_embed_block",
+          "named": true
+        },
+        {
+          "type": "invoke_extension_block",
+          "named": true
+        },
+        {
+          "type": "null",
           "named": true
         }
       ]
@@ -2445,10 +2411,6 @@
             "named": true
           },
           {
-            "type": "embed_extension_block",
-            "named": true
-          },
-          {
             "type": "float",
             "named": true
           },
@@ -2469,15 +2431,7 @@
             "named": true
           },
           {
-            "type": "invoke_extension_block",
-            "named": true
-          },
-          {
             "type": "long",
-            "named": true
-          },
-          {
-            "type": "null",
             "named": true
           },
           {
@@ -2486,6 +2440,10 @@
           },
           {
             "type": "one_word_operator",
+            "named": true
+          },
+          {
+            "type": "one_word_value",
             "named": true
           },
           {
@@ -2607,10 +2565,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "end_of_line",
           "named": true
         },
@@ -2635,15 +2589,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -2652,6 +2598,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -2863,10 +2813,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -2887,15 +2833,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -2904,6 +2842,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -3044,10 +2986,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -3068,15 +3006,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -3085,6 +3015,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -3257,10 +3191,6 @@
           "named": true
         },
         {
-          "type": "embed_extension_block",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -3281,15 +3211,7 @@
           "named": true
         },
         {
-          "type": "invoke_extension_block",
-          "named": true
-        },
-        {
           "type": "long",
-          "named": true
-        },
-        {
-          "type": "null",
           "named": true
         },
         {
@@ -3298,6 +3220,10 @@
         },
         {
           "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
           "named": true
         },
         {
@@ -3420,7 +3346,7 @@
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "identifier_or_string",
           "named": true
         },
         {
@@ -3585,6 +3511,10 @@
   },
   {
     "type": "&&",
+    "named": false
+  },
+  {
+    "type": "&&&",
     "named": false
   },
   {
@@ -4000,6 +3930,10 @@
     "named": false
   },
   {
+    "type": "get_last_embed_block",
+    "named": true
+  },
+  {
     "type": "goto",
     "named": false
   },
@@ -4025,11 +3959,11 @@
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "if",
@@ -4085,6 +4019,10 @@
   },
   {
     "type": "module",
+    "named": false
+  },
+  {
+    "type": "nomangle",
     "named": false
   },
   {
@@ -4252,6 +4190,10 @@
     "named": false
   },
   {
+    "type": "underscore",
+    "named": false
+  },
+  {
     "type": "union",
     "named": false
   },
@@ -4289,6 +4231,10 @@
   },
   {
     "type": "||",
+    "named": false
+  },
+  {
+    "type": "|||",
     "named": false
   },
   {

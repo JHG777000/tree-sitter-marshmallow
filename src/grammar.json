@@ -1694,7 +1694,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "identifier"
+              "name": "identifier_or_string"
             },
             {
               "type": "BLANK"
@@ -2121,7 +2121,7 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "identifier"
+                    "name": "identifier_or_string"
                   },
                   {
                     "type": "SYMBOL",
@@ -3234,6 +3234,14 @@
           "value": "<<"
         },
         {
+          "type": "STRING",
+          "value": "&&&"
+        },
+        {
+          "type": "STRING",
+          "value": "|||"
+        },
+        {
           "type": "SYMBOL",
           "name": "overridable_operator"
         }
@@ -3561,6 +3569,14 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "STRING",
+              "value": "nomangle"
+            },
+            {
+              "type": "STRING",
+              "value": "underscore"
+            },
+            {
               "type": "SYMBOL",
               "name": "identifier"
             },
@@ -3872,9 +3888,26 @@
       "type": "STRING",
       "value": "embed_extension_block"
     },
+    "get_last_embed_block": {
+      "type": "STRING",
+      "value": "get_last_embed_block"
+    },
     "identifier": {
       "type": "PATTERN",
       "value": "[^\\[\\]\\'\\.\\\"\\*\\-\\+\\\\%\\s\\(\\)${}:=,!_0-9][^\\[\\]\\'\\.\\\"\\*\\-\\+\\\\%\\s\\(\\)${}:=,!]*"
+    },
+    "identifier_or_string": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        }
+      ]
     },
     "string": {
       "type": "SEQ",
@@ -4152,13 +4185,30 @@
         }
       ]
     },
-    "_literal": {
+    "one_word_value": {
       "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
           "name": "null"
         },
+        {
+          "type": "SYMBOL",
+          "name": "get_last_embed_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "embed_extension_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "invoke_extension_block"
+        }
+      ]
+    },
+    "_literal": {
+      "type": "CHOICE",
+      "members": [
         {
           "type": "SYMBOL",
           "name": "string"
@@ -4173,11 +4223,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "invoke_extension_block"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "embed_extension_block"
+          "name": "one_word_value"
         }
       ]
     },
