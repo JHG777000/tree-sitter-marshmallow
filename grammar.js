@@ -51,6 +51,8 @@ module.exports = grammar({
     [$._base_type,$._define_element,$.__value],
     [$._define_element,$._literal],
     [$.call_expression,$._group_value],
+    [$._index_value,$._access_index_value],
+    [$._comma_list_assignment_or_group_value_or_type],
    ],
 
   rules: {
@@ -409,6 +411,7 @@ module.exports = grammar({
 
     static_types: $ => choice(
       'datum',
+      'field',
       'polymorph',
       'arguments',
       'expression',
@@ -428,7 +431,7 @@ module.exports = grammar({
     array_definition: $ => seq(
       '[',
        optional(
-         $._value,
+         $._index_value,
        ),
       ']',
     ),
@@ -436,7 +439,7 @@ module.exports = grammar({
     unsafe_array_definition: $ => seq(
       '[[',
        optional(
-         $._value,
+         $._index_value,
        ),
       ']]',
     ),
@@ -638,7 +641,7 @@ module.exports = grammar({
 
     end_generate: $ => seq('end','generate'),
 
-    generate_statement: $ => seq(
+    generate_block: $ => seq(
      'generate',
      $.end_of_line,
      repeat1(
@@ -646,6 +649,18 @@ module.exports = grammar({
      ),
      $.end_generate,
      $.end_of_line,
+    ),
+
+    _generate_statement: $ => seq(
+    'generate',
+    $.statement,
+    $.end_of_line,
+   ),
+
+
+    generate_statement: $ => choice(
+      $.generate_block,
+      $._generate_statement,
     ),
 
      control_flow_statement: $ => choice(
@@ -788,11 +803,11 @@ module.exports = grammar({
 
     overridable_access_op: $ => '-->',
 
-    access_index_op: $ => seq('[',$.string,']'),
+    access_index_op: $ => seq('[',$._access_index_value,']'),
 
-    safe_index_op: $ => seq('[',$._number,']'),
+    safe_index_op: $ => seq('[',$._index_value,']'),
 
-    unsafe_index_op: $ => seq('[[',$._number,']]'),
+    unsafe_index_op: $ => seq('[[',$._index_value,']]'),
 
     _cast_ops: $ => seq(
      choice(
@@ -1050,7 +1065,10 @@ module.exports = grammar({
 
      collection: $ => seq(
      '{',
-      $._comma_list_assignment_or_group_value_or_type,
+       seq(
+        $._comma_list_assignment_or_group_value_or_type,
+        optional(',')
+       ),
      '}',
      ),
 
@@ -1065,6 +1083,22 @@ module.exports = grammar({
        $.identifier,
        $.group_expression,
        $.one_word_operator,
+       $.binding_expression,
+     ),
+
+
+     _index_value: $ => choice(
+       $._number,
+       $.character,
+       $.identifier,
+       $.group_expression,
+       $.binding_expression,
+     ),
+
+     _access_index_value: $ => choice(
+       $.string,
+       $.identifier,
+       $.group_expression,
        $.binding_expression,
      ),
 

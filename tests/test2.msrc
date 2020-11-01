@@ -160,7 +160,7 @@ end class.
   (1+1),
   hello::world,
   nomangle::hello_world,
-  underscore::hello_world
+  underscore::hello_world,
  }.
  end function.
 end module.

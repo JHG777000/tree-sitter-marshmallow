@@ -96,6 +96,18 @@
       "required": true,
       "types": [
         {
+          "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "group_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         }
@@ -1586,7 +1598,7 @@
     }
   },
   {
-    "type": "generate_statement",
+    "type": "generate_block",
     "named": true,
     "fields": {},
     "children": {
@@ -1599,6 +1611,29 @@
         },
         {
           "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "generate_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "generate_block",
           "named": true
         },
         {
@@ -2647,6 +2682,14 @@
           "named": true
         },
         {
+          "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "character",
+          "named": true
+        },
+        {
           "type": "double",
           "named": true
         },
@@ -2655,7 +2698,15 @@
           "named": true
         },
         {
+          "type": "group_expression",
+          "named": true
+        },
+        {
           "type": "hex",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -3250,6 +3301,14 @@
           "named": true
         },
         {
+          "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "character",
+          "named": true
+        },
+        {
           "type": "double",
           "named": true
         },
@@ -3258,7 +3317,15 @@
           "named": true
         },
         {
+          "type": "group_expression",
+          "named": true
+        },
+        {
           "type": "hex",
+          "named": true
+        },
+        {
+          "type": "identifier",
           "named": true
         },
         {
@@ -3902,6 +3969,10 @@
     "named": false
   },
   {
+    "type": "field",
+    "named": false
+  },
+  {
     "type": "final",
     "named": false
   },
@@ -3959,11 +4030,11 @@
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "if",
