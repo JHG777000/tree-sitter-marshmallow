@@ -284,7 +284,10 @@ module.exports = grammar({
     class_variable_definition: $ => seq(
       choice(
         seq(
-          optional($.class_access_control),
+          choice(
+           $.class_access_control,
+           'anonymous',
+          ),
           optional($.readability),
           'class',
           choice(
@@ -582,6 +585,7 @@ module.exports = grammar({
     code_signature: $ => seq(
       field('code_type',$._code_types),
       optional(field('name',choice($.identifier_or_string,$.operator_name))),
+      optional(field('name2',$.identifier_or_string)),
       optional($.extension_list),
       optional($.parameter_list),
       optional($.return_list),
@@ -614,7 +618,7 @@ module.exports = grammar({
     extension_block: $ => seq(
      optional($.access_control),
      field('name',$.identifier_expression),
-     optional(choice($.identifier,$.string)),
+     choice($.identifier,$.string),
      repeat(choice($.identifier,$.string)),
      optional($.extension_block_argument_or_parameter_list),
      optional($.return_list),

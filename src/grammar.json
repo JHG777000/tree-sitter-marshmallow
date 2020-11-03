@@ -914,7 +914,8 @@
                       "name": "class_access_control"
                     },
                     {
-                      "type": "BLANK"
+                      "type": "STRING",
+                      "value": "anonymous"
                     }
                   ]
                 },
@@ -2164,6 +2165,22 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "FIELD",
+              "name": "name2",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier_or_string"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
               "type": "SYMBOL",
               "name": "extension_list"
             },
@@ -2358,20 +2375,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "identifier"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "string"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "identifier"
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "string"
             }
           ]
         },

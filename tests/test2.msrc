@@ -58,7 +58,7 @@ class GenericListNode*.
  private GenericListNode:t after.
  private t data.
  when (inherit || include).
-  foreach ( preserved static definition d, class->functions_and_methods ).
+  for each ( preserved static definition d, class->functions_and_methods ).
    preserved static definition other_def := MyClass->functions_and_methods[d->name].
    if ((d->name == other_def->name) && _is_lambda(other_def)).
     generate.

@@ -941,6 +941,16 @@
             "named": true
           }
         ]
+      },
+      "name2": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier_or_string",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -4071,6 +4081,10 @@
     "named": true
   },
   {
+    "type": "anonymous",
+    "named": false
+  },
+  {
     "type": "argument",
     "named": false
   },
@@ -4244,11 +4258,11 @@
   },
   {
     "type": "identifier",
-    "named": true
+    "named": false
   },
   {
     "type": "identifier",
-    "named": false
+    "named": true
   },
   {
     "type": "if",
