@@ -31,7 +31,7 @@ module.exports = grammar({
     [$.binding_expression,$.identifier_expression],
     [$.assignment_expression,$.identifier_expression],
     [$.code_block],
-    [$._base_type,$.extension_definition],
+    [$._base_type,$.extension_block],
     [$.identifier_expression,$.__value],
     [$.access_expression,$.index_expression],
     [$.extension_list],
@@ -53,6 +53,10 @@ module.exports = grammar({
     [$.call_expression,$._group_value],
     [$._index_value,$._access_index_value],
     [$._comma_list_assignment_or_group_value_or_type],
+    [$.extension_block],
+    [$.extension_block,$.__value],
+    [$.extension_block,$._literal],
+    [$._local_variable_definition,$.parameter_variable_definition],
    ],
 
   rules: {
@@ -99,7 +103,7 @@ module.exports = grammar({
        $.variable_definition,
        $.enum_definition,
        $.class_definition,
-       $.extension_definition,
+       $.extension_block,
        $.code_definition,
        $.embed_block,
        $.control_flow_definition,
@@ -324,7 +328,9 @@ module.exports = grammar({
      repeat(
       choice(
        $.traits_block,
+       $.when_statement,
        $.call_statement,
+       $.extension_block,
        $.call_expression,
        $.union_definition,
        $.class_variable_definition,
@@ -480,7 +486,7 @@ module.exports = grammar({
        $.end_of_line,
      ),
 
-     local_variable_definition: $ => seq(
+     _local_variable_definition: $ => seq(
        choice(
         'parameter',
         seq(
@@ -497,6 +503,10 @@ module.exports = grammar({
        $.type_expression,
        $.identifier,
        optional($.static_assignment),
+     ),
+
+     local_variable_definition: $ => seq(
+       $._local_variable_definition,
        $.end_of_line,
      ),
 
@@ -548,11 +558,12 @@ module.exports = grammar({
 
     code_block: $ => repeat1(
     choice(
-     $.traits_block,
-     $.traits_definition,
-     $.local_variable_definition,
-     $.embed_block,
-     $.statement,
+      $.statement,
+      $.embed_block,
+      $.traits_block,
+      $.extension_block,
+      $.traits_definition,
+      $.local_variable_definition,
      )
     ),
 
@@ -592,17 +603,24 @@ module.exports = grammar({
      ',',
     ),
 
-    end_extension_definition: $ => seq('end',$.identifier_expression),
+    extension_block_argument_or_parameter_list: $ => seq(
+     '(',
+     optional($._comma_list_assignment_or_group_value_or_parameter_local),
+     ')',
+    ),
 
-    extension_definition: $ => seq(
+    end_extension_block: $ => seq('end',$.identifier_expression),
+
+    extension_block: $ => seq(
      optional($.access_control),
      field('name',$.identifier_expression),
-     choice($.identifier,$.string),
+     optional(choice($.identifier,$.string)),
      repeat(choice($.identifier,$.string)),
-     optional($.parameter_list),
+     optional($.extension_block_argument_or_parameter_list),
+     optional($.return_list),
      $.end_of_line,
      optional($.code_block),
-     $.end_extension_definition,
+     $.end_extension_block,
      $.end_of_line,
     ),
 
@@ -618,11 +636,11 @@ module.exports = grammar({
     ),
 
     statement: $ => choice(
+     $.define_statement,
+     $.returns_statement,
+     $.generate_statement,
      $.expression_statement,
      $.control_flow_statement,
-     $.define_statement,
-     $.generate_statement,
-     $.returns_statement,
     ),
 
     _define_element: $ => choice(
@@ -666,13 +684,50 @@ module.exports = grammar({
      control_flow_statement: $ => choice(
        $.if_statement,
        $.iff_statement,
+       $.not_statement,
        $.call_statement,
-       $.while_statement,
-       $.switch_statement,
        $.goto_statement,
+       $.when_statement,
+       $.while_statement,
+       $.return_statement,
+       $.switch_statement,
        $.section_statement,
        $.single_line_if_statement,
-       $.return_statement,
+     ),
+
+     end_when: $ => seq('end','when'),
+
+     when_value: $ => choice(
+       'inherit',
+       'include',
+       'fallthrough',
+     ),
+
+     when_binary_op: $ => choice(
+       '&&',
+       '||',
+     ),
+
+     when_expression: $ => seq(
+       '(',
+        choice(
+          seq(
+            $.when_value,
+            $.when_binary_op,
+            $.when_value
+          ),
+          $.when_value,
+         ),
+       ')',
+     ),
+
+     when_statement: $ => seq(
+      'when',
+      $.when_expression,
+      $.end_of_line,
+      optional($.code_block),
+      $.end_when,
+      $.end_of_line,
      ),
 
      end_call: $ => seq('end','call'),
@@ -714,6 +769,12 @@ module.exports = grammar({
 
      iff_statement: $ => seq(
        'iff',
+       $.group_expression,
+       $.end_of_line,
+     ),
+
+     not_statement: $ => seq(
+       'not',
        $.group_expression,
        $.end_of_line,
      ),
@@ -1151,6 +1212,8 @@ module.exports = grammar({
 
      _assignment_or_group_value: $ => choice($._group_value,$.assignment_expression),
 
+     _assignment_or_group_value_or_parameter_local: $ => choice($._assignment_or_group_value,$.parameter_variable_definition,$._local_variable_definition),
+
      _comma_list_variables: $ => seq($.variable_definition,
        repeat(seq(',',$.variable_definition))),
 
@@ -1159,6 +1222,8 @@ module.exports = grammar({
      _comma_list_assignment_or_group_values: $ => seq($._assignment_or_group_value,repeat(seq(',',$._assignment_or_group_value))),
 
      _comma_list_assignment_or_group_value_or_type: $ => seq($._assignment_or_group_value_or_type,repeat(seq(',',$._assignment_or_group_value_or_type))),
+
+     _comma_list_assignment_or_group_value_or_parameter_local: $ => seq($._assignment_or_group_value_or_parameter_local,repeat(seq(',',$._assignment_or_group_value_or_parameter_local))),
 
      _comma_list_literals: $ => seq($._literal,repeat(seq(',',$._literal))),
 

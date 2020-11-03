@@ -135,10 +135,6 @@
           "named": true
         },
         {
-          "type": "collection",
-          "named": true
-        },
-        {
           "type": "double",
           "named": true
         },
@@ -168,22 +164,6 @@
         },
         {
           "type": "oct",
-          "named": true
-        },
-        {
-          "type": "one_word_operator",
-          "named": true
-        },
-        {
-          "type": "one_word_value",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -751,6 +731,10 @@
           "named": true
         },
         {
+          "type": "extension_block",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -768,6 +752,10 @@
         },
         {
           "type": "unsafe_array_definition",
+          "named": true
+        },
+        {
+          "type": "when_statement",
           "named": true
         }
       ]
@@ -845,6 +833,10 @@
       "types": [
         {
           "type": "embed_block",
+          "named": true
+        },
+        {
+          "type": "extension_block",
           "named": true
         },
         {
@@ -1129,6 +1121,10 @@
           "named": true
         },
         {
+          "type": "not_statement",
+          "named": true
+        },
+        {
           "type": "return_statement",
           "named": true
         },
@@ -1142,6 +1138,10 @@
         },
         {
           "type": "switch_statement",
+          "named": true
+        },
+        {
+          "type": "when_statement",
           "named": true
         },
         {
@@ -1326,7 +1326,7 @@
     "fields": {}
   },
   {
-    "type": "end_extension_definition",
+    "type": "end_extension_block",
     "named": true,
     "fields": {},
     "children": {
@@ -1377,6 +1377,11 @@
   },
   {
     "type": "end_vector",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "end_when",
     "named": true,
     "fields": {}
   },
@@ -1490,7 +1495,7 @@
     }
   },
   {
-    "type": "extension_definition",
+    "type": "extension_block",
     "named": true,
     "fields": {
       "name": {
@@ -1517,7 +1522,7 @@
           "named": true
         },
         {
-          "type": "end_extension_definition",
+          "type": "end_extension_block",
           "named": true
         },
         {
@@ -1525,15 +1530,165 @@
           "named": true
         },
         {
+          "type": "extension_block_argument_or_parameter_list",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "parameter_list",
+          "type": "return_list",
           "named": true
         },
         {
           "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "extension_block_argument_or_parameter_list",
+    "named": true,
+    "fields": {
+      "inoutpass": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "in",
+            "named": false
+          },
+          {
+            "type": "inout",
+            "named": false
+          },
+          {
+            "type": "out",
+            "named": false
+          },
+          {
+            "type": "pass",
+            "named": false
+          }
+        ]
+      },
+      "is_persistent": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "persistent",
+            "named": false
+          }
+        ]
+      },
+      "is_preserved": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "preserved",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "assignment_expression",
+          "named": true
+        },
+        {
+          "type": "binary",
+          "named": true
+        },
+        {
+          "type": "binding_expression",
+          "named": true
+        },
+        {
+          "type": "character",
+          "named": true
+        },
+        {
+          "type": "collection",
+          "named": true
+        },
+        {
+          "type": "double",
+          "named": true
+        },
+        {
+          "type": "double_nop",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "float_nop",
+          "named": true
+        },
+        {
+          "type": "group_expression",
+          "named": true
+        },
+        {
+          "type": "hex",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "long",
+          "named": true
+        },
+        {
+          "type": "oct",
+          "named": true
+        },
+        {
+          "type": "one_word_operator",
+          "named": true
+        },
+        {
+          "type": "one_word_value",
+          "named": true
+        },
+        {
+          "type": "parameter_variable_definition",
+          "named": true
+        },
+        {
+          "type": "readability",
+          "named": true
+        },
+        {
+          "type": "static_assignment",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "transfer_management_expression",
+          "named": true
+        },
+        {
+          "type": "type_expression",
           "named": true
         }
       ]
@@ -2153,7 +2308,7 @@
           "named": true
         },
         {
-          "type": "extension_definition",
+          "type": "extension_block",
           "named": true
         },
         {
@@ -2178,6 +2333,25 @@
         },
         {
           "type": "vector_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "not_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "group_expression",
           "named": true
         }
       ]
@@ -3234,10 +3408,6 @@
           "named": true
         },
         {
-          "type": "collection",
-          "named": true
-        },
-        {
           "type": "double",
           "named": true
         },
@@ -3267,22 +3437,6 @@
         },
         {
           "type": "oct",
-          "named": true
-        },
-        {
-          "type": "one_word_operator",
-          "named": true
-        },
-        {
-          "type": "one_word_value",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "transfer_management_expression",
           "named": true
         }
       ]
@@ -3512,6 +3666,62 @@
         }
       ]
     }
+  },
+  {
+    "type": "when_binary_op",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "when_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "when_binary_op",
+          "named": true
+        },
+        {
+          "type": "when_value",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "when_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "code_block",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "end_when",
+          "named": true
+        },
+        {
+          "type": "when_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "when_value",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "while_statement",
@@ -3969,6 +4179,10 @@
     "named": false
   },
   {
+    "type": "fallthrough",
+    "named": false
+  },
+  {
     "type": "field",
     "named": false
   },
@@ -4094,6 +4308,10 @@
   },
   {
     "type": "nomangle",
+    "named": false
+  },
+  {
+    "type": "not",
     "named": false
   },
   {
@@ -4278,6 +4496,10 @@
   },
   {
     "type": "vector_name",
+    "named": false
+  },
+  {
+    "type": "when",
     "named": false
   },
   {

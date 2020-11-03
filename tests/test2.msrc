@@ -57,6 +57,16 @@ class GenericListNode*.
  private GenericListNode:t before.
  private GenericListNode:t after.
  private t data.
+ when (inherit || include).
+  foreach ( preserved static definition d, class->functions_and_methods ).
+   preserved static definition other_def := MyClass->functions_and_methods[d->name].
+   if ((d->name == other_def->name) && _is_lambda(other_def)).
+    generate.
+     _get_identifier(get_object_name(MyClass))[d->name] := _get_lambda(d).
+    end generate.
+   end if.
+  end foreach.
+ end when.
 end class.
 
  enum i32 myenum.
