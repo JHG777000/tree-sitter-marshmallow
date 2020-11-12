@@ -57,6 +57,8 @@ module.exports = grammar({
     [$.extension_block,$.__value],
     [$.extension_block,$._literal],
     [$._local_variable_definition,$.parameter_variable_definition],
+    [$.lambda_type],
+    [$.variable_definition,$.code_definition_type],
    ],
 
   rules: {
@@ -316,7 +318,10 @@ module.exports = grammar({
 
     class_definition: $ => seq(
      field('access_control',optional($.access_control)),
-     field('class_type',optional(choice('final','abstract','protocol'))),
+     choice(
+      optional(field('extension_attribute',$.identifier_expression)),
+      field('class_type',optional(choice('final','abstract','protocol'))),
+     ),
      'class',
      optional($.array_definition),
      $.identifier,
@@ -484,7 +489,7 @@ module.exports = grammar({
        field('is_export',optional('export')),
        optional($.readability),
        $.type_expression,
-       optional($.identifier_or_string),
+       choice($.identifier,$.mangle_expression),
        optional($.static_assignment),
        $.end_of_line,
      ),
@@ -583,9 +588,9 @@ module.exports = grammar({
     end_code: $ => seq('end',field('end_code_type',$._code_types)),
 
     code_signature: $ => seq(
+      optional(field('extension_attribute',$.identifier_expression)),
       field('code_type',$._code_types),
-      optional(field('name',choice($.identifier_or_string,$.operator_name))),
-      optional(field('name2',$.identifier_or_string)),
+      optional(field('name',choice($.identifier,$.mangle_expression,$.operator_name))),
       optional($.extension_list),
       optional($.parameter_list),
       optional($.return_list),
@@ -613,14 +618,29 @@ module.exports = grammar({
      ')',
     ),
 
-    end_extension_block: $ => seq('end',$.identifier_expression),
+    extension_signature: $ => choice(
+      seq(
+        $.identifier,
+        repeat($.identifier_or_string),
+        $.extension_block_argument_or_parameter_list,
+      ),
+      seq(
+        $.string,
+        repeat(choice($.identifier,$.string)),
+        optional($.extension_block_argument_or_parameter_list),
+      ),
+    ),
+
+    end_extension_block: $ => seq(
+     'end',
+     $.identifier_expression,
+     optional($.identifier),
+    ),
 
     extension_block: $ => seq(
      optional($.access_control),
      field('name',$.identifier_expression),
-     choice($.identifier,$.string),
-     repeat(choice($.identifier,$.string)),
-     optional($.extension_block_argument_or_parameter_list),
+     $.extension_signature,
      optional($.return_list),
      $.end_of_line,
      optional($.code_block),
@@ -1004,6 +1024,18 @@ module.exports = grammar({
       '(',
       optional($._comma_list_assignment_or_group_values),
       ')',
+    ),
+
+    mangle_expression: $ => seq(
+      choice(
+       'nomangle',
+       'underscore',
+      ),
+      $._scope_op,
+      choice(
+        $.identifier,
+        $.mangle_expression,
+      ),
     ),
 
     scope_expression: $ => seq(

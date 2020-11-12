@@ -696,6 +696,16 @@
             "named": false
           }
         ]
+      },
+      "extension_attribute": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier_expression",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -928,26 +938,30 @@
           }
         ]
       },
+      "extension_attribute": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier_expression",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "identifier_or_string",
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "mangle_expression",
             "named": true
           },
           {
             "type": "operator_name",
-            "named": true
-          }
-        ]
-      },
-      "name2": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier_or_string",
             "named": true
           }
         ]
@@ -1340,9 +1354,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
         {
           "type": "identifier_expression",
           "named": true
@@ -1540,19 +1558,11 @@
           "named": true
         },
         {
-          "type": "extension_block_argument_or_parameter_list",
-          "named": true
-        },
-        {
-          "type": "identifier",
+          "type": "extension_signature",
           "named": true
         },
         {
           "type": "return_list",
-          "named": true
-        },
-        {
-          "type": "string",
           "named": true
         }
       ]
@@ -1714,6 +1724,33 @@
       "types": [
         {
           "type": "parameter_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "extension_signature",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "extension_block_argument_or_parameter_list",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_or_string",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
@@ -2247,6 +2284,25 @@
         },
         {
           "type": "unsafe_array_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "mangle_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "mangle_expression",
           "named": true
         }
       ]
@@ -3577,7 +3633,11 @@
           "named": true
         },
         {
-          "type": "identifier_or_string",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "mangle_expression",
           "named": true
         },
         {

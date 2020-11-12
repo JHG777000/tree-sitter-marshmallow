@@ -34,7 +34,7 @@ class myclass*.
  otherclass val2.
 end class.
 
-class otherclass.
+dynamic class otherclass.
  s8 val.
 end class.
 
@@ -58,14 +58,14 @@ class GenericListNode*.
  private GenericListNode:t after.
  private t data.
  when (inherit || include).
-  for each ( preserved static definition d, class->functions_and_methods ).
-   preserved static definition other_def := MyClass->functions_and_methods[d->name].
+  for each ( preserved static definition d, class->routines ).
+   preserved static definition other_def := MyClass->routines[d->name].
    if ((d->name == other_def->name) && _is_lambda(other_def)).
     generate.
      _get_identifier(get_object_name(MyClass))[d->name] := _get_lambda(d).
     end generate.
    end if.
-  end foreach.
+  end for.
  end when.
 end class.
 
