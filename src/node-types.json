@@ -763,10 +763,6 @@
         {
           "type": "unsafe_array_definition",
           "named": true
-        },
-        {
-          "type": "when_statement",
-          "named": true
         }
       ]
     }
@@ -1288,6 +1284,11 @@
     "fields": {}
   },
   {
+    "type": "end_capture",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "end_case",
     "named": true,
     "fields": {},
@@ -1385,6 +1386,11 @@
   },
   {
     "type": "end_package",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "end_packed",
     "named": true,
     "fields": {}
   },
@@ -3435,6 +3441,10 @@
       "required": true,
       "types": [
         {
+          "type": "class_variable_definition",
+          "named": true
+        },
+        {
           "type": "end_of_line",
           "named": true
         },
@@ -3447,7 +3457,7 @@
           "named": true
         },
         {
-          "type": "variable_definition",
+          "type": "traits_definition",
           "named": true
         }
       ]
@@ -3738,30 +3748,6 @@
     }
   },
   {
-    "type": "when_binary_op",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "when_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "when_binary_op",
-          "named": true
-        },
-        {
-          "type": "when_value",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "when_statement",
     "named": true,
     "fields": {},
@@ -3782,16 +3768,11 @@
           "named": true
         },
         {
-          "type": "when_expression",
+          "type": "group_expression",
           "named": true
         }
       ]
     }
-  },
-  {
-    "type": "when_value",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "while_statement",
@@ -4169,6 +4150,10 @@
     "named": false
   },
   {
+    "type": "capture",
+    "named": false
+  },
+  {
     "type": "case",
     "named": false
   },
@@ -4250,10 +4235,6 @@
   },
   {
     "type": "f64",
-    "named": false
-  },
-  {
-    "type": "fallthrough",
     "named": false
   },
   {
@@ -4422,6 +4403,10 @@
   },
   {
     "type": "package",
+    "named": false
+  },
+  {
+    "type": "packed",
     "named": false
   },
   {

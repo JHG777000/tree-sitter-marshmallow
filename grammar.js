@@ -274,10 +274,45 @@ module.exports = grammar({
       repeat(
        choice(
         $.traits_block,
-        $.variable_definition,
+        $.traits_definition,
+        $.class_variable_definition,
        ),
       ),
       $.end_union,
+      $.end_of_line,
+    ),
+
+    end_packed: $ => seq('end','packed'),
+
+    packed_definition: $ => seq(
+      field('access_control',optional($.access_control)),
+      'packed',
+      $.end_of_line,
+      repeat(
+       choice(
+        $.traits_block,
+        $.traits_definition,
+        $.class_variable_definition,
+       ),
+      ),
+      $.end_packed,
+      $.end_of_line,
+    ),
+
+    end_capture: $ => seq('end','capture'),
+
+    capture_definition: $ => seq(
+      field('access_control',optional($.access_control)),
+      'capture',
+      $.end_of_line,
+      repeat(
+       choice(
+        $.traits_block,
+        $.traits_definition,
+        $.class_variable_definition,
+       ),
+      ),
+      $.end_capture,
       $.end_of_line,
     ),
 
@@ -336,7 +371,6 @@ module.exports = grammar({
      repeat(
       choice(
        $.traits_block,
-       $.when_statement,
        $.call_statement,
        $.extension_block,
        $.call_expression,
@@ -721,33 +755,9 @@ module.exports = grammar({
 
      end_when: $ => seq('end','when'),
 
-     when_value: $ => choice(
-       'inherit',
-       'include',
-       'fallthrough',
-     ),
-
-     when_binary_op: $ => choice(
-       '&&',
-       '||',
-     ),
-
-     when_expression: $ => seq(
-       '(',
-        choice(
-          seq(
-            $.when_value,
-            $.when_binary_op,
-            $.when_value
-          ),
-          $.when_value,
-         ),
-       ')',
-     ),
-
      when_statement: $ => seq(
       'when',
-      $.when_expression,
+      $.group_expression,
       $.end_of_line,
       optional($.code_block),
       $.end_when,
