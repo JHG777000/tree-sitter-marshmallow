@@ -1328,6 +1328,14 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "packed_definition"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "capture_definition"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "class_variable_definition"
               },
               {

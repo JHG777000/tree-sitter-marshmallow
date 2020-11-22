@@ -375,6 +375,8 @@ module.exports = grammar({
        $.extension_block,
        $.call_expression,
        $.union_definition,
+       $.packed_definition,
+       $.capture_definition,
        $.class_variable_definition,
        $.class_parameter_variable_definition,
       ),

@@ -614,6 +614,48 @@
     }
   },
   {
+    "type": "capture_definition",
+    "named": true,
+    "fields": {
+      "access_control": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "access_control",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "class_variable_definition",
+          "named": true
+        },
+        {
+          "type": "end_capture",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "traits_block",
+          "named": true
+        },
+        {
+          "type": "traits_definition",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "case_statement",
     "named": true,
     "fields": {},
@@ -725,6 +767,10 @@
           "named": true
         },
         {
+          "type": "capture_definition",
+          "named": true
+        },
+        {
           "type": "class_parameter_variable_definition",
           "named": true
         },
@@ -746,6 +792,10 @@
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "packed_definition",
           "named": true
         },
         {
@@ -2600,6 +2650,48 @@
         },
         {
           "type": "use_definition_package",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "packed_definition",
+    "named": true,
+    "fields": {
+      "access_control": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "access_control",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "class_variable_definition",
+          "named": true
+        },
+        {
+          "type": "end_of_line",
+          "named": true
+        },
+        {
+          "type": "end_packed",
+          "named": true
+        },
+        {
+          "type": "traits_block",
+          "named": true
+        },
+        {
+          "type": "traits_definition",
           "named": true
         }
       ]
