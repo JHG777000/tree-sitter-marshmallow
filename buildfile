@@ -1,10 +1,10 @@
 project := "tree-sitter-marshmallow-parser-project".
 
-project_version := "0.0.73".
+project_version := "0.0.74".
 
 buildfile_version := "1.0".
 
-url_to_src := "https://github.com/JHG777000/tree-sitter-marshmallow/archive/master.zip".
+url_to_src := "https://github.com/JHG777000/tree-sitter-marshmallow/archive/main.zip".
 
 build tree_sitter_marshmallow_parser.
 
